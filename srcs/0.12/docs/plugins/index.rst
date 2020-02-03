@@ -1,56 +1,56 @@
 .. module:: bottle
 
 =========================
-List of available Plugins
+사용 가능한 플러그인 목록
 =========================
 
-This is a list of third-party plugins that add extend Bottles core functionality or integrate other libraries with the Bottle framework.
+다음은 보틀 핵심 기능을 확장해 주거나 다른 라이브러리를 보틀 프레임워크에 통합해 주는 서드파티 플러그인들이다.
 
-Have a look at :ref:`plugins` for general questions about plugins (installation, usage). If you plan to develop a new plugin, the :doc:`/plugindev` may help you.
+플러그인에 대한 일반적인 질문(설치, 사용)은 :ref:`plugins` 절을 보라. 새 플러그인을 개발할 생각이라면 :doc:`/plugindev`\가 도움이 될 수 있다.
 
 `Bottle-Cork <http://cork.firelet.net/>`_
-	Cork provides a simple set of methods to implement Authentication and Authorization in web applications based on Bottle.
+    Cork은 보틀 기반 웹 응용에서 인증 및 인가를 구현하기 위한 간단한 메소드들을 제공한다.
 
 `Bottle-Extras <http://pypi.python.org/pypi/bottle-extras/>`_
-	Meta package to install the bottle plugin collection.
+    보틀 플러그인 모음을 설치하기 위한 메타 패키지.
 
 `Bottle-Flash <http://pypi.python.org/pypi/bottle-flash/>`_
-	flash plugin for bottle
+    보틀 플래시 메시지 플러그인.
 
 `Bottle-Hotqueue <http://pypi.python.org/pypi/bottle-hotqueue/>`_
-	FIFO Queue for Bottle built upon redis
+    redis 기반의 보틀용 FIFO 큐.
 
 `Macaron <http://nobrin.github.com/macaron/webapp.html>`_
-	Macaron is an object-relational mapper (ORM) for SQLite.
+    Macaron은 SQLite용 객체 관계 매퍼(ORM)다.
 
 `Bottle-Memcache <http://pypi.python.org/pypi/bottle-memcache/>`_
-	Memcache integration for Bottle.
+    보틀에 Memcache 통합.
 
 `Bottle-MongoDB <http://pypi.python.org/pypi/bottle-mongodb/>`_
-	MongoDB integration for Bottle
+    보틀에 MongoDB 통합.
 
 `Bottle-Redis <http://pypi.python.org/pypi/bottle-redis/>`_
-	Redis integration for Bottle.
+    보틀에 Redis 통합.
 
 `Bottle-Renderer <http://pypi.python.org/pypi/bottle-renderer/>`_
-	Renderer plugin for bottle
+    보틀을 위한 렌더러 플러그인.
 
 `Bottle-Servefiles <http://pypi.python.org/pypi/bottle-servefiles/>`_
-	A reusable app that serves static files for bottle apps
+    보틀 앱에서 정적 파일을 처리해 주는 재사용 가능 앱.
 
 `Bottle-Sqlalchemy <http://pypi.python.org/pypi/bottle-sqlalchemy/>`_
-	SQLAlchemy integration for Bottle.
+    보틀에 SQLAlchemy 통합.
 
 `Bottle-Sqlite <http://pypi.python.org/pypi/bottle-sqlite/>`_
-	SQLite3 database integration for Bottle.
+    보틀에 SQLite3 데이터베이스 통합.
 
 `Bottle-Web2pydal <http://pypi.python.org/pypi/bottle-web2pydal/>`_
-	Web2py Dal integration for Bottle.
+    보틀에 Web2py Dal 통합.
 
 `Bottle-Werkzeug <http://pypi.python.org/pypi/bottle-werkzeug/>`_
-	Integrates the `werkzeug` library (alternative request and response objects, advanced debugging middleware and more).
+    `werkzeug` 라이브러리 통합. (새로운 요청 및 응답 객체, 고급 디버깅 미들웨어 등)
 
-Plugins listed here are not part of Bottle or the Bottle project, but developed and maintained by third parties.
+여기 나열된 플러그인들은 보틀이나 보틀 프로젝트의 일부가 아니며 제삼자가 개발 및 유지하는 것이다.
 
 .. toctree::
     :glob:
