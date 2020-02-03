@@ -1,5 +1,5 @@
 ==============================
-API Reference
+API 참조
 ==============================
 
 .. module:: bottle
@@ -7,16 +7,16 @@ API Reference
    :synopsis: WSGI micro framework
 .. moduleauthor:: Marcel Hellkamp <marc@gsites.de>
 
-This is a mostly auto-generated API. If you are new to bottle, you might find the
-narrative :doc:`tutorial` more helpful.
+대부분 자동 생성된 API 문서다. 보틀이 처음이라면 서술식으로 된
+:doc:`tutorial`\가 더 도움이 될 수 있다.
 
 
 
 
-Module Contents
+모듈들
 =====================================
 
-The module defines several functions, constants, and an exception.
+모듈에는 여러 함수, 상수, 예외가 정의돼 있다.
 
 .. autofunction:: debug
 
@@ -35,13 +35,13 @@ The module defines several functions, constants, and an exception.
 .. function:: app()
               default_app()
 
-    Return the current :ref:`default-app`. Actually, these are callable instances of :class:`AppStack` and implement a stack-like API.
+    현재 :ref:`default-app`\을 반환. 실제로 이는 호출 가능한 :class:`AppStack` 인스턴스이며 스택 같은 API를 구현하고 있다.
 
 
-Routing
+라우팅
 -------------------
 
-Bottle maintains a stack of :class:`Bottle` instances (see :func:`app` and :class:`AppStack`) and uses the top of the stack as a *default application* for some of the module-level functions and decorators.
+보틀은 :class:`Bottle` 인스턴스의 스택을 유지하며 (:func:`app` 및 :class:`AppStack` 참고) 스택 최상단 인스턴스를 일부 모듈 층위 함수와 데코레이터에서 *기본 응용*\으로 쓴다.
 
 
 .. function:: route(path, method='GET', callback=None, **options)
@@ -50,15 +50,15 @@ Bottle maintains a stack of :class:`Bottle` instances (see :func:`app` and :clas
               put(...)
               delete(...)
 
-   Decorator to install a route to the current default application. See :meth:`Bottle.route` for details.
+   현재 기본 응용에 라우트를 설치하는 데코레이터. 자세한 내용은 :meth:`Bottle.route` 참고.
 
 
 .. function:: error(...)
 
-   Decorator to install an error handler to the current default application. See :meth:`Bottle.error` for details.
+   현재 기본 응용에 오류 핸들러를 설치하는 데코레이터. 자세한 내용은 :meth:`Bottle.error` 참고.
 
 
-WSGI and HTTP Utilities
+WSGI 및 HTTP 유틸리티
 ----------------------------
 
 .. autofunction:: parse_date
@@ -76,7 +76,7 @@ WSGI and HTTP Utilities
 .. autofunction:: path_shift
 
 
-Data Structures
+자료 구조
 ----------------------
 
 .. autoclass:: MultiDict
@@ -96,7 +96,7 @@ Data Structures
 
    .. method:: pop()
 
-      Return the current default application and remove it from the stack.
+      현재 기본 응용을 반환하고 스택에서 제거.
 
 .. autoclass:: ResourceManager
    :members:
@@ -104,7 +104,7 @@ Data Structures
 .. autoclass:: FileUpload
    :members:
 
-Exceptions
+예외
 ---------------
 
 .. autoexception:: BottleException
@@ -112,7 +112,7 @@ Exceptions
 
 
 
-The :class:`Bottle` Class
+:class:`Bottle` 클래스
 =========================
 
 .. autoclass:: Bottle
@@ -122,10 +122,10 @@ The :class:`Bottle` Class
     :members:
 
 
-The :class:`Request` Object
+:class:`Request` 객체
 ===================================================
 
-The :class:`Request` class wraps a WSGI environment and provides helpful methods to parse and access form data, cookies, file uploads and other metadata. Most of the attributes are read-only.
+:class:`Request` 클래스는 WSGI 환경을 포장한 것이며 양식 데이터, 쿠키, 파일 업로드, 기타 메타데이터를 파싱 하고 접근하는 유용한 메소드들을 제공한다. 대부분 속성이 읽기 전용이다.
 
 .. autoclass:: Request
    :members:
@@ -133,7 +133,7 @@ The :class:`Request` class wraps a WSGI environment and provides helpful methods
 .. autoclass:: BaseRequest
    :members:
 
-The module-level :data:`bottle.request` is a proxy object (implemented in :class:`LocalRequest`) and always refers to the `current` request, or in other words, the request that is currently processed by the request handler in the current thread. This `thread locality` ensures that you can safely use a global instance in a multi-threaded environment.
+모듈 층위의 :data:`bottle.request`\는 프록시 객체(:class:`LocalRequest`\에 구현)이며 항상 `현재` 요청, 즉 현재 스레드에서 현재 요청 핸들러가 처리 중인 요청을 가리킨다. 이 `스레드 로컬` 덕분에 다중 스레드 환경에서 전역 인스턴스를 안전하게 이용할 수 있다.
 
 .. autoclass:: LocalRequest
    :members:
@@ -141,10 +141,10 @@ The module-level :data:`bottle.request` is a proxy object (implemented in :class
 
 .. autodata:: request
 
-The :class:`Response` Object
+:class:`Response` 객체
 ===================================================
 
-The :class:`Response` class stores the HTTP status code as well as headers and cookies that are to be sent to the client. Similar to :data:`bottle.request` there is a thread-local :data:`bottle.response` instance that can be used to adjust the `current` response. Moreover, you can instantiate :class:`Response` and return it from your request handler. In this case, the custom instance overrules the headers and cookies defined in the global one.
+:class:`Response` 클래스는 클라이언트에게 보낼 HTTP 상태 코드와 헤더 및 쿠키를 담는다. :data:`bottle.request`\와 비슷하게 스레드 로컬인 :data:`bottle.response` 인스턴스가 있어서 `현재` 응답을 조정하는 데 쓸 수 있다. 더불어 요청 핸들러 안에서 :class:`Response` 인스턴스를 만들어 반환할 수도 있다. 그 경우 전역 인스턴스 대신 새로 만든 인스턴스에 정의된 헤더와 쿠키가 쓰인다.
 
 .. autoclass:: Response
    :members:
@@ -156,7 +156,7 @@ The :class:`Response` class stores the HTTP status code as well as headers and c
    :members:
 
 
-The following two classes can be raised as an exception. The most noticeable difference is that bottle invokes error handlers for :class:`HTTPError`, but not for :class:`HTTPResponse` or other response types.
+다음 두 클래스를 예외로 던질 수 있다. 둘의 중요한 차이는 :class:`HTTPError`\에 대해선 보틀이 오류 핸들러를 호출하지만 :class:`HTTPResponse`\나 다른 응답 타입에 대해선 하지 않는다는 것이다.
 
 .. autoexception:: HTTPResponse
    :members:
@@ -167,10 +167,10 @@ The following two classes can be raised as an exception. The most noticeable dif
 
 
 
-Templates
-=========
+템플릿
+======
 
-All template engines supported by :mod:`bottle` implement the :class:`BaseTemplate` API. This way it is possible to switch and mix template engines without changing the application code at all.
+:mod:`bottle`\에서 지원하는 모든 템플릿 엔진은 :class:`BaseTemplate` API를 구현하고 있다. 그래서 응용 코드를 전혀 바꾸지 않고도 템플릿 엔진을 바꾸거나 혼용하는 게 가능하다.
 
 .. autoclass:: BaseTemplate
    :members:
@@ -181,10 +181,10 @@ All template engines supported by :mod:`bottle` implement the :class:`BaseTempla
 
 .. autofunction:: template
 
-You can write your own adapter for your favourite template engine or use one of the predefined adapters. Currently there are four fully supported template engines:
+좋아하는 템플릿 엔진을 위한 어댑터를 작성하거나 기존 어댑터를 이용할 수 있다. 제대로 지원하는 템플릿 엔진이 현재 네 가지 있다.
 
 ========================   ===============================   ====================   ========================
-Class                      URL                               Decorator              Render function
+클래스                     URL                               데코레이터             렌더링 함수
 ========================   ===============================   ====================   ========================
 :class:`SimpleTemplate`    :doc:`stpl`                       :func:`view`           :func:`template`
 :class:`MakoTemplate`      http://www.makotemplates.org      :func:`mako_view`      :func:`mako_template`
@@ -192,7 +192,7 @@ Class                      URL                               Decorator          
 :class:`Jinja2Template`    http://jinja.pocoo.org/           :func:`jinja2_view`    :func:`jinja2_template`
 ========================   ===============================   ====================   ========================
 
-To use :class:`MakoTemplate` as your default template engine, just import its specialised decorator and render function::
+:class:`MakoTemplate`\을 기본 템플릿 엔진으로 쓰려면 특수 데코레이터와 렌더링 함수를 임포트 하기만 하면 된다. ::
 
   from bottle import mako_view as view, mako_template as template
 
