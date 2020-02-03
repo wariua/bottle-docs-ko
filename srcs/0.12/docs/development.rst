@@ -1,176 +1,176 @@
-Developer Notes
+개발자를 위해
 =================
 
-This document is intended for developers and package maintainers interested in the bottle development and release workflow. If you want to contribute, you are just right!
+보틀 개발과 릴리스 작업에 관심 있는 개발자와 패키지 제작자를 위한 문서다. 기여하고 싶다면 언제든 환영이다!
 
 
-Get involved
-------------
+참여하기
+--------
 
-There are several ways to join the community and stay up to date. Here are some of them:
+공통체에 참여해서 최신 소식을 받을 수 있는 방법이 여러 가지 있다. 다음이 그 중 일부다.
 
-* **Mailing list**: Join our mailing list by sending an email to `bottlepy+subscribe@googlegroups.com <mailto:bottlepy+subscribe@googlegroups.com>`_ (no google account required).
-* **Twitter**: `Follow us on Twitter <twitter.com/bottlepy>`_ or search for the `#bottlepy <https://twitter.com/#!/search/%23bottlepy>`_ tag.
-* **IRC**: Join `#bottlepy on irc.freenode.net <irc://irc.freenode.net/bottlepy>`_ or use the `web chat interface <http://webchat.freenode.net/?channels=bottlepy>`_.
-* **Google plus**: We sometimes `blog about Bottle, releases and technical stuff <https://plus.google.com/b/104025895326575643538/104025895326575643538/posts>`_ on our Google+ page.
+* **메일링 리스트**: `bottlepy+subscribe@googlegroups.com <mailto:bottlepy+subscribe@googlegroups.com>`_\로 이메일 보내서 메일링 리스트에 가입. (구글 계정 필요 없음.)
+* **트위터**: `트위터에서 팔로우 <twitter.com/bottlepy>`_ 하거나 `#bottlepy <https://twitter.com/#!/search/%23bottlepy>`_ 태그 검색.
+* **IRC**: `irc.freenode.net의 #bottlepy <irc://irc.freenode.net/bottlepy>`_ 가입하거나 `웹 채팅 인터페이스 <http://webchat.freenode.net/?channels=bottlepy>`_ 이용.
+* **구글 플러스**: 가끔씩 Google+ 페이지에 `보틀, 릴리스, 기술적 내용에 대한 글 <https://plus.google.com/b/104025895326575643538/104025895326575643538/posts>`_\이 올라간다.
 
 
-Get the Sources
----------------
+소스 받기
+---------
 
-The bottle `development repository <https://github.com/defnull/bottle>`_ and the `issue tracker <https://github.com/defnull/bottle/issues>`_ are both hosted at `github <https://github.com/defnull/bottle>`_. If you plan to contribute, it is a good idea to create an account there and fork the main repository. This way your changes and ideas are visible to other developers and can be discussed openly. Even without an account, you can clone the repository or just download the latest development version as a source archive.
+보틀 `개발용 저장소 <https://github.com/defnull/bottle>`_\와 `이슈 트래커 <https://github.com/defnull/bottle/issues>`_ 모두 `github <https://github.com/defnull/bottle>`_\에 있다. 기여를 할 생각이라면 거기 계정을 만들어서 주 저장소를 포크 하는 방식이 좋다. 그러면 변경 내용과 아이디어를 다른 개발자들이 보면서 함께 토론할 수 있다. 계정이 없어도 저장소를 복제하거나 최신 개발 버전을 소스 아카이브로 다운로드 하는 건 가능하다.
 
 * **git:** ``git clone git://github.com/defnull/bottle.git``
 * **git/https:** ``git clone https://github.com/defnull/bottle.git``
-* **Download:** Development branch as `tar archive <http://github.com/defnull/bottle/tarball/master>`_ or `zip file <http://github.com/defnull/bottle/zipball/master>`_.
+* **다운로드:** 개발 브랜치를 `tar 아카이브 <http://github.com/defnull/bottle/tarball/master>`_ 또는 `zip 파일 <http://github.com/defnull/bottle/zipball/master>`_\로.
 
 
-Releases and Updates
---------------------
+릴리스와 업데이트
+-----------------
 
-Bottle is released at irregular intervals and distributed through `PyPI <http://pypi.python.org/pypi/bottle>`_. Release candidates and bugfix-revisions of outdated releases are only available from the git repository mentioned above. Some Linux distributions may offer packages for outdated releases, though.
+보틀은 비정기적으로 릴리스 되고 `PyPI <http://pypi.python.org/pypi/bottle>`_\를 통해 배포된다. 릴리스 후보 버전과 과거 릴리스의 버그 수정 버전은 위에서 말한 git 저장소에서만 얻을 수 있다. 다만 일부 리눅스 배포판에서 과거 릴리스의 패키지를 제공할 수도 있다.
 
-The Bottle version number splits into three parts (**major.minor.revision**). These are *not* used to promote new features but to indicate important bug-fixes and/or API changes. Critical bugs are fixed in at least the two latest minor releases and announced in all available channels (mailinglist, twitter, github). Non-critical bugs or features are not guaranteed to be backported. This may change in the future, through.
+보틀 버전 번호는 세 부분(**major.minor.revision**)으로 이뤄져 있다. 버전 번호의 용도는 새 기능을 알리는 게 *아니라* 중요한 버그 수정 및/또는 API 변경을 나타내는 것이다. 중대한 버그는 최근의 최소 두 개 마이너 릴리스에서 수정이 이뤄지며 가능한 모든 채널(메일링 리스트, 트위터, github)로 알린다. 중대하지 않은 버그나 기능은 백포트를 보장하지 않는다. 다만 이는 나중에 바뀔 수 있다.
 
-Major Release (x.0)
-    The major release number is increased on important milestones or updates that completely break backward compatibility. You probably have to work over your entire application to use a new release. These releases are very rare, through.
+메이저 릴리스 (x.0)
+    중요한 마일스톤이나 하위 호환성을 완전히 깨는 업데이트에서 메이저 번호를 올린다. 새 릴리스를 이용하려면 아마 응용 전체에 작업을 해 줘야 할 것이다. 하지만 이 릴리스는 아주 드물다.
 
-Minor Release (x.y)
-    The minor release number is increased on updates that change the API or behaviour in some way. You might get some depreciation warnings any may have to tweak some configuration settings to restore the old behaviour, but in most cases these changes are designed to be backward compatible for at least one minor release. You should update to stay up do date, but don't have to. An exception is 0.8, which *will* break backward compatibility hard. (This is why 0.7 was skipped). Sorry about that.
+마이너 릴리스 (x.y)
+    API나 동작이 어떤 식으로든 바뀌는 업데이트에서 마이너 번호를 올린다. 폐기 예정 경고를 보게 될 수도 있고 이전 동작 방식을 살리기 위해 설정을 좀 건드려야 할 수도 있지만 대부분의 경우 그런 변화는 적어도 마이너 릴리스 한 개에 대해선 하위 호환성이 있도록 설계된다. 업데이트 해서 최신으로 만드는 게 좋지만 필수는 아니다. 0.8은 예외인데, 하위 호환성을 완전히 깼다. (그래서 0.7을 건너뛰었다.) 그렇게 돼서 유감이다.
 
-Revision (x.y.z)
-    The revision number is increased on bug-fixes and other patches that do not change the API or behaviour. You can safely update without editing your application code. In fact, you really should as soon as possible, because important security fixes are released this way.
+리비전 (x.y.z)
+    버그 수정, 또는 API나 동작을 바꾸지 않는 기타 패치에서 리비전 번호를 올린다. 응용 코드를 편집할 필요 없이 안전하게 업데이트 할 수 있다. 실제로는 되도록 빨리 업데이트 하는 게 좋다. 중요한 보안 문제 수정이 이 방식으로 릴리스 되기 때문이다.
 
-Pre-Release Versions
-    Release candidates are marked by an ``rc`` in their revision number. These are API stable most of the time and open for testing, but not officially released yet. You should not use these for production.
-
-
-Repository Structure
---------------------
-
-The source repository is structured as follows:
-
-``master`` branch
-  This is the integration, testing and development branch. All changes that are planned to be part of the next release are merged and tested here.
-
-``release-x.y`` branches
-  As soon as the master branch is (almost) ready for a new release, it is branched into a new release branch. This "release candidate" is feature-frozen but may receive bug-fixes and last-minute changes until it is considered production ready and officially released. From that point on it is called a "support branch" and still receives bug-fixes, but only important ones. The revision number is increased on each push to these branches, so you can keep up with important changes.
-
-``bugfix_name-x.y`` branches
-  These branches are only temporary and used to develop and share non-trivial bug-fixes for existing releases. They are merged into the corresponding release branch and deleted soon after that.
-
-Feature branches
-  All other branches are feature branches. These are based on the master branch and only live as long as they are still active and not merged back into ``master``.
+릴리스 전 버전
+    릴리스 후보는 리비전 번호에 ``rc`` 표시가 붙어 있다. API가 거의 안정적이고 테스트 준비가 되었지만 아직 공식적으로 릴리스 되지는 않은 버전이다. 운용 환경에 이 버전을 사용해선 안 된다.
 
 
-.. rubric:: What does this mean for a developer?
+저장소 구조
+-----------
 
-If you want to add a feature, create a new branch from ``master``. If you want to fix a bug, branch ``release-x.y`` for each affected release. Please use a separate branch for each feature or bug to make integration as easy as possible. Thats all. There are git workflow examples at the bottom of this page.
+소스 저장소는 다음 구조로 돼 있다.
 
-Oh, and never ever change the release number. We'll do that on integration. You never know in which order we pull pending requests anyway :)
+``master`` 브랜치
+  통합, 테스트, 개발이 이뤄지는 브랜치다. 다음 릴리스에 포함될 계획인 모든 변경 사항이 여기 병합되고 테스트가 이뤄진다.
 
+``release-x.y`` 브랜치
+  마스터 브랜치에서 새 릴리스 준비가 (거의) 되면 새 릴리스 브랜치를 딴다. 그 "릴리스 후보"는 피처를 고정하되 버그 수정과 막바지 변경 사항은 받을 수 있으며, 출시 준비가 됐다 싶으면 공식적으로 릴리스 한다. 그때부터는 "지원 브랜치"라고 부르게 되며, 계속 버그 수정을 받기는 하되 중요한 것으로 한정한다. 그 브랜치에 푸시를 할 때마다 리비전 번호가 올라가므로 중요한 변경 사항을 계속 따라갈 수 있다.
 
-.. rubric:: What does this mean for a maintainer ?
+``bugfix_name-x.y`` 브랜치
+  일시적인 브랜치로 기존 릴리스에 대한 사소하지 않은 버그 수정을 개발하고 공유하는 데 쓴다. 대응하는 릴리스 브랜치로 병합된 후 곧 삭제된다.
 
-Watch the tags (and the mailing list) for bug-fixes and new releases. If you want to fetch a specific release from the git repository, trust the tags, not the branches. A branch may contain changes that are not released yet, but a tag marks the exact commit which changed the version number.
-
-
-Submitting Patches
-------------------
-
-The best way to get your changes integrated into the main development branch is to fork the main repository at github, create a new feature-branch, apply your changes and send a pull-request. Further down this page is a small collection of git workflow examples that may guide you. Submitting git-compatible patches to the mailing list is fine too. In any case, please follow some basic rules:
-
-* **Documentation:** Tell us what your patch does. Comment your code. If you introduced a new feature, add to the documentation so others can learn about it.
-* **Test:** Write tests to prove that your code works as expected and does not break anything. If you fixed a bug, write at least one test-case that triggers the bug. Make sure that all tests pass before you submit a patch.
-* **One patch at a time:** Only fix one bug or add one feature at a time. Design your patches so that they can be applyed as a whole. Keep your patches clean, small and focused. 
-* **Sync with upstream:** If the ``upstream/master`` branch changed while you were working on your patch, rebase or pull to make sure that your patch still applies without conflicts.
+피처 브랜치
+  다른 브랜치는 모두 피처 브랜치다. 마스터 브랜치를 기반으로 하며, 활동이 계속 있고 ``master``\로 병합되지 않은 동안만 브랜치가 살아 있다.
 
 
-Building the Documentation
---------------------------
+.. rubric:: 개발자는 어떻게 하면 되나?
 
-You need a recent version of Sphinx to build the documentation. The recommended way is to install :command:`virtualenv` using your distribution package repository and install sphinx manually to get an up-to-date version.
+피처를 추가하고 싶으면 ``master``\에서 새 브랜치를 만들면 된다. 버그를 고치고 싶으면 영향 받는 브랜치 각각에 대해 ``bugfix_name-x.y`` 브랜치를 따면 된다. 통합이 되도록 쉽게 이뤄지도록 각 피처 내지 버그마다 브랜치를 따로 만들어 달라. 이게 전부다. 이 페이지 아래에 git 작업 흐름 예시가 있다.
+
+아, 그리고 절대로 릴리스 번호는 바꾸지 말아 달라. 우리가 통합하면서 바꾼다. 대기 중인 요청들을 우리가 어떤 순서로 당겨 갈지 알 수 없잖은가. :)
+
+
+.. rubric:: 배포판 관리자는 어떻게 하면 되나?
+
+버그 수정과 새 릴리스는 태그를 (그리고 메일링 리스트를) 지켜보면 된다. git 저장소에서 특정 릴리스를 가져오고 싶다면 브랜치 말고 태그를 믿으면 된다. 브랜치에는 아직 릴리스 되지 않은 변경 사항이 포함돼 있을 수 있지만 태그는 버전 번호를 바꾼 바로 그 커밋을 나타낸다.
+
+
+패치 제출하기
+-------------
+
+변경 사항을 주 개발 브랜치로 합치는 최선의 방법은 github에서 주 저장소를 포크 하고 새 피처 브랜치를 만들어서 변경 사항을 적용한 다음 pull 요청을 보내는 것이다. 아래에 길잡이가 될 수도 있는 몇 가지 git 작업 흐름 예시들이 있다. git 호환 패치를 메일링 리스트에 제출하는 것도 괜찮다. 어느 경우든 다음 기본 규칙을 따라 주길 바란다.
+
+* **문서:** 패치가 하는 게 뭔지 적자. 코드에 주석을 달자. 새 기능을 추가하는 거면 다른 사람들이 알 수 있도록 문서에 내용을 추가하자.
+* **테스트:** 코드가 예상대로 동작하며 어디에도 문제를 일으키지 않는다는 걸 증명하는 테스트를 작성하자. 버그를 수정했으면 그 버그를 유발시키는 테스트 케이스를 적어도 하나는 작성하자. 패치 제출 전에 테스트가 전부 통과하는지 확인하자.
+* **한 번에 패치 하나씩:** 버그 수정이든 기능 추가든 한 번에 한 개씩만 하자. 패치들을 한 덩어리로 적용할 수 있도록 설계하자. 패치를 깔끔하고 작게, 한 가지에 집중하도록 작성하자.
+* **업스트림과 동기화:** 패치 작업 중에 ``upstream/master`` 브랜치에 변경이 있었으면 rebase나 pull을 해서 패치가 충돌 없이 적용되도록 만들자.
+
+
+문서 빌드 하기
+--------------
+
+문서를 빌드 하려면 Sphinx 최신 버전이 필요하다. 배포판 패키지 저장소를 이용해 :command:`virtualenv`\를 설치한 다음 sphinx를 직접 설치해서 최신 버전을 받는 방법을 권장한다.
 
 .. code-block:: bash
 
-  # Install prerequisites
+  # 필요한 패키지 설치
   which virtualenv || sudo apt-get install python-virtualenv
   virtualenv --no-site-dependencies venv
   ./venv/pip install -U sphinx
 
-  # Clone or download bottle from github
+  # github에서 보틀 복제하거나 내려받기
   git clone https://github.com/defnull/bottle.git
 
-  # Activate build environment
+  # 빌드 환경 활성화
   source ./venv/bin/activate
 
-  # Build HTML docs
+  # HTML 문서 빌드
   cd bottle/docs
   make html
 
-  # Optional: Install prerequisites for PDF generation
+  # 선택적: PDF 생성에 필요한 패키지 설치
   sudo apt-get install texlive-latex-extra \
                        texlive-latex-recommended \
                        texlive-fonts-recommended
 
-  # Optional: Build the documentation as PDF
+  # 선택적: PDF로 문서 빌드
   make latex
   cd ../build/docs/latex
   make pdf
 
 
-GIT Workflow Examples
----------------------
+GIT 작업 흐름 예시
+------------------
 
-The following examples assume that you have an (free) `github account <https://github.com>`_. This is not mandatory, but makes things a lot easier.
+아래 예시에선 (무료인) `github 계정 <https://github.com>`_\이 있다고 가정한다. 필수는 아니지만 일이 훨씬 쉬워진다.
 
-First of all you need to create a fork (a personal clone) of the official repository. To do this, you simply click the "fork" button on the `bottle project page <https://github.com/defnull/bottle>`_. When the fork is done, you will be presented with a short introduction to your new repository.
+일단은 공식 저장소의 포크(개인용 복제)를 만들어야 한다. `보틀 프로젝트 페이지 <https://github.com/defnull/bottle>`_\에서 "fork" 버튼을 누르기만 하면 된다. 포크가 끝나면 새 저장소에 대한 짧은 소개가 나올 것이다.
 
-The fork you just created is hosted at github and read-able by everyone, but write-able only by you. Now you need to clone the fork locally to actually make changes to it. Make sure you use the private (read-write) URL and *not* the public (read-only) one::
+방금 만든 포크는 github에 호스팅 돼 있으며 모두가 읽을 수 있지만 쓰는 건 여러분만 가능하다. 이제 실제 변경 작업을 하기 위해 그 포크를 로컬로 clone 해야 한다. (읽기 전용인) 공개 URL *말고* (읽기 및 쓰기가 가능한) 비공개 URL을 쓰도록 하자. ::
 
   git clone git@github.com:your_github_account/bottle.git
 
-Once the clone is complete your repository will have a remote named "origin" that points to your fork on github. Don’t let the name confuse you, this does not point to the original bottle repository, but to your own fork. To keep track of the official repository, add another remote named "upstream"::
+clone이 완료되면 "origin"이라는 리모트가 있어서 github의 포크를 가리키게 된다. 이름을 오해하지 말자. 보틀 원본 저장소가 아니라 포크를 가리키는 거다. 공식 저장소를 따라가기 위해 "upstream"이라는 또 다른 리모트를 추가하자. ::
 
   cd bottle
   git remote add upstream git://github.com/defnull/bottle.git
   git fetch upstream
 
-Note that "upstream" is a public clone URL, which is read-only. You cannot push changes directly to it. Instead, we will pull from your public repository. This is described later.
+보다시피 "upstream"은 읽기 전용인 공개 clone URL이다. 거기로는 변경 사항을 바로 push 할 수 없다. 대신 그 저장소에서 pull을 하게 되는데, 좀 있다 설명한다.
 
-.. rubric:: Submit a Feature
+.. rubric:: 기능 제출
 
-New features are developed in separate feature-branches to make integration easy. Because they are going to be integrated into the ``master`` branch, they must be based on ``upstream/master``. To create a new feature-branch, type the following::
+통합을 쉽게 하기 위해 별도의 피처 브랜치에서 새 기능을 개발한다. ``master`` 브랜치로 통합될 거니까 ``upstream/master``\를 기반으로 해야 한다. 새 피처 브랜치를 만들려면 다음을 입력하면 된다. ::
 
   git checkout -b cool_feature upstream/master
-  
-Now implement your feature, write tests, update the documentation, make sure that all tests pass and commit your changes::
+ 
+이제 피처를 구현하고, 테스트를 작성하고, 문서를 갱신하고, 모든 테스트가 통과하는지 확인한 다음 변경 사항을 커밋 하자. ::
 
   git commit -a -m "Cool Feature"
 
-If the ``upstream/master`` branch changed in the meantime, there may be conflicts with your changes. To solve these, 'rebase' your feature-branch onto the top of the updated ``upstream/master`` branch::
+그사이 ``upstream/master`` 브랜치가 바뀌었으면 작성한 변경 내용과 충돌이 날 수 있다. 해결을 위해 최신 ``upstream/master`` 브랜치 위로 피처 브랜치를 'rebase' 하자. ::
 
   git fetch upstream
   git rebase upstream
 
-This is equivalent to undoing all your changes, updating your branch to the latest version and reapplying all your patches again. If you released your branch already (see next step), this is not an option because it rewrites your history. You can do a normal pull instead. Resolve any conflicts, run the tests again and commit. 
+이건 변경 내용을 모두 되돌린 다음 브랜치를 최신 버전으로 업데이트 하고서 패치들을 모두 재적용하는 것과 같다. 브랜치를 이미 보냈다면 (다음 단계 참고) 이 방법을 택할 수 없다. 변경 이력을 다시 만들기 때문이다. 그 경우엔 일반 pull을 할 수 있다. 충돌을 해소하고 다시 테스트를 돌린 다음 커밋 하면 된다.
 
-Now you are almost ready to send a pull request. But first you need to make your feature-branch public by pushing it to your github fork::
+이제 pull 요청을 보낼 준비가 거의 다 됐다. 하지만 그 전에 피처 브랜치를 github 포크로 push 해서 공개로 만들어 줘야 한다. ::
 
   git push origin cool_feature
 
-After you’ve pushed your commit(s) you need to inform us about the new feature. One way is to send a pull-request using github. Another way would be to start a thread in the mailing-list, which is recommended. It allows other developers to see and discuss your patches and you get some feedback for free :)
+커밋(들)을 push한 후에는 우리에게 새 피처에 대해 알려 줘야 한다. 일단 github를 이용해 pull 요청을 보내는 방법이 있다. 그리고 메일링 리스트에서 새 스레드를 시작하는 방법도 있는데, 이걸 권장한다. 그러면 다른 개발자들이 패치를 보고 토론할 수 있으니 여러분은 무료 피드백을 얻게 된다. :)
 
-If we accept your patch, we will integrate it into the official development branch and make it part of the next release.
+우리가 패치를 받아들이면 공식 개발 브랜치로 통합해서 다음 릴리스에 포함시키게 된다.
 
-.. rubric:: Fix a Bug
+.. rubric:: 버그 수정
 
-The workflow for bug-fixes is very similar to the one for features, but there are some differences:
+버그 수정 작업 흐름은 피처 추가와 아주 비슷하되 몇 가지 차이가 있다.
 
-1) Branch off of the affected release branches instead of just the development branch.
-2) Write at least one test-case that triggers the bug.
-3) Do this for each affected branch including ``upstream/master`` if it is affected. ``git cherry-pick`` may help you reducing repetitive work.
-4) Name your branch after the release it is based on to avoid confusion. Examples: ``my_bugfix-x.y`` or ``my_bugfix-dev``.
+1) 개발 브랜치가 아니라 영향 받는 릴리스 브랜치들에서 브랜치를 딴다.
+2) 버그를 유발하는 테스트 케이스를 적어도 한 개 작성한다.
+3) 해당하는 경우 ``upstream/master``\까지 포함해서 영향 받는 각 브랜치에 대해 그렇게 한다. 반복 작업을 줄이는 데 ``git cherry-pick``\이 도움이 될 수 있다.
+4) 혼동을 피하기 위해 기반이 된 릴리스를 따라 브랜치 이름을 짓는다. 예: ``my_bugfix-x.y`` 또는 ``my_bugfix-dev``
 
 
 
