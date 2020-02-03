@@ -1,23 +1,23 @@
 .. module:: bottle
 
 
-========================
-Plugin Development Guide
-========================
+====================
+플러그인 개발 안내서
+====================
 
-This guide explains the plugin API and how to write custom plugins. I suggest reading :ref:`plugins` first if you have not done that already. You might also want to have a look at the :doc:`/plugins/index` for some practical examples.
+이 안내서에서는 플러그인 API와 새 플러그인 작성 방법을 설명한다. :ref:`plugins` 절을 아직 안 읽었으면 먼저 읽기를 권한다. :doc:`plugins/index`\에서 몇몇 실제 예를 보고 싶을 수도 있겠다.
 
 .. note::
 
-    This is a draft. If you see any errors or find that a specific part is not explained clear enough, please tell the `mailing-list <mailto:bottlepy@googlegroups.com>`_ or file a `bug report <https://github.com/defnull/bottle/issues>`_.
+    작업 중인 문서다. 오류가 있거나 특정 부분의 설명이 명확하지 않다면 `메일링 리스트 <mailto:bottlepy@googlegroups.com>`_\로 알려 주거나 `버그 보고 <https://github.com/defnull/bottle/issues>`_\를 해 주길 바란다.
 
 
-How Plugins Work: The Basics
-============================
+플러그인 기본 동작 방식
+=======================
 
-The plugin API builds on the concept of `decorators <http://docs.python.org/glossary.html#term-decorator>`_. To put it briefly, a plugin is a decorator applied to every single route callback of an application.
+플러그인 API는 `데코레이터 <http://docs.python.org/glossary.html#term-decorator>`_  개념을 바탕으로 한다. 간단히 말해 플러그인이란 응용의 각 라우트 콜백에 적용되는 데코레이터다.
 
-Of course, this is just a simplification. Plugins can do a lot more than just decorating route callbacks, but it is a good starting point. Lets have a look at some code::
+물론 단순화하면 그렇다는 것이고 플러그인은 라우트 콜백을 꾸미는 것보다 훨씬 많은 걸 할 수 있다. 하지만 시작점으로는 좋다. 코드를 좀 보자. ::
 
     from bottle import response, install
     import time
@@ -33,122 +33,120 @@ Of course, this is just a simplification. Plugins can do a lot more than just de
 
     install(stopwatch)
 
-This plugin measures the execution time for each request and adds an appropriate ``X-Exec-Time`` header to the response. As you can see, the plugin returns a wrapper and the wrapper calls the original callback recursively. This is how decorators usually work.
+이 플러그인은 각 요청의 실행 시간을 측정해서 그에 따른 ``X-Exec-Time`` 헤더를 응답에 추가한다. 보다시피 플러그인은 래퍼를 반환하고 그 래퍼가 다시 원래 콜백을 호출한다. 데코레이터가 일반적으로 이렇게 동작한다.
 
-The last line tells Bottle to install the plugin to the default application. This causes the plugin to be automatically applied to all routes of that application. In other words, ``stopwatch()`` is called once for each route callback and the return value is used as a replacement for the original callback.
+마지막 행은 기본 응용에 플러그인을 설치하도록 한다. 그러면 그 응용의 모든 라우트에 자동으로 그 플러그인이 적용된다. 달리 말해 각 라우트 콜백마다 한 번씩 ``stopwatch()``\가 호출되고 그 반환 값이 원래 콜백 대신 쓰인다.
 
-Plugins are applied on demand, that is, as soon as a route is requested for the first time. For this to work properly in multi-threaded environments, the plugin should be thread-safe. This is not a problem most of the time, but keep it in mind.
+플러그인은 온디맨드 방식이다. 즉 라우트에 처음으로 요청이 있을 때 적용된다. 다중 스레드 환경에서 이게 제대로 동작하려면 플러그인이 스레드에 안전해야 한다. 대부분의 경우는 문제가 되지 않지만 유념하고 있어야 한다.
 
-Once all plugins are applied to a route, the wrapped callback is cached and subsequent requests are handled by the cached version directly. This means that a plugin is usually applied only once to a specific route. That cache, however, is cleared every time the list of installed plugins changes. Your plugin should be able to decorate the same route more than once.
+라우트에 플러그인들을 모두 적용하고 나면 포장된 콜백을 캐싱 해서 이후 요청은 캐싱 된 버전을 바로 사용해 처리한다. 즉 개별 라우트에 대해 일반적으로 플러그인이 한 번만 적용된다. 하지만 그 캐시는 설치 플러그인 목록이 바뀔 때마다 비워진다. 따라서 플러그인이 같은 라우트를 여러 번 꾸밀 수 있도록 해야 한다.
 
-The decorator API is quite limited, though. You don't know anything about the route being decorated or the associated application object and have no way to efficiently store data that is shared among all routes. But fear not! Plugins are not limited to just decorator functions. Bottle accepts anything as a plugin as long as it is callable or implements an extended API. This API is described below and gives you a lot of control over the whole process.
+하지만 데코레이터 API는 상당히 제한적이다. 꾸미고 있는 라우트나 연관 응용 객체에 대해 아무것도 알 수 없으며 모든 라우트에 대해 공유하는 데이터를 저장할 효율적인 방법도 없다. 하지만 걱정 말자. 플러그인은 데코레이터 함수만 가능한 게 아니다. 호출 가능하거나 어떤 API를 구현하고 있기만 하다면 뭐든 보틀에서 플러그인으로 받아들인다. 아래 설명하는 그 API를 통해 전체 과정을 상당히 통제할 수 있다.
 
 
-Plugin API
-==========
+플러그인 API
+============
 
-:class:`Plugin` is not a real class (you cannot import it from :mod:`bottle`) but an interface that plugins are expected to implement. Bottle accepts any object of any type as a plugin, as long as it conforms to the following API.
+:class:`Plugin`\은 진짜 클래스가 아니라 (:mod:`bottle`\로부터 임포트 할 수 없음) 플러그인이 구현해야 할 인터페이스다. 다음 API를 준수하기만 한다면 어떤 타입의 어떤 객체든 플러그인으로 받아들인다.
 
 .. class:: Plugin(object)
 
-    Plugins must be callable or implement :meth:`apply`. If :meth:`apply` is defined, it is always preferred over calling the plugin directly. All other methods and attributes are optional.
+    플러그인은 호출 가능하거나 :meth:`apply`\를 구현해야 한다. :meth:`apply`\가 정의돼 있으면 항상 그걸 플러그인 직접 호출보다 우선한다. 다른 메소드와 속성들은 모두 선택적이다.
 
     .. attribute:: name
 
-        Both :meth:`Bottle.uninstall` and the `skip` parameter of :meth:`Bottle.route()` accept a name string to refer to a plugin or plugin type. This works only for plugins that have a name attribute.
+        :meth:`Bottle.uninstall`\과 :meth:`Bottle.route()`\의 `skip` 매개변수는 플러그인 또는 그 타입을 나타내는 이름 문자열을 받는다. name 속성이 있는 플러그인에만 그게 동작한다.
 
     .. attribute:: api
 
-        The Plugin API is still evolving. This integer attribute tells bottle which version to use. If it is missing, bottle defaults to the first version. The current version is ``2``. See :ref:`plugin-changelog` for details.
+        플러그인 API는 계속 진화하고 있다. 이 정수 속성은 어느 버전을 사용해야 할지를 보틀에게 알려 준다. 속성이 없으면 첫 버전을 상정한다. 최신 버전은 ``2``\다. 자세한 내용은 :ref:`plugin-changelog` 참고.
 
     .. method:: setup(self, app)
 
-        Called as soon as the plugin is installed to an application (see :meth:`Bottle.install`). The only parameter is the associated application object.
+        응용에 플러그인이 설치되자마자 호출된다. (:meth:`Bottle.install` 참고.) 유일한 매개변수는 연계된 응용 객체다.
 
     .. method:: __call__(self, callback)
 
-        As long as :meth:`apply` is not defined, the plugin itself is used as a decorator and applied directly to each route callback. The only parameter is the callback to decorate. Whatever is returned by this method replaces the original callback. If there is no need to wrap or replace a given callback, just return the unmodified callback parameter.
+        :meth:`apply`\가 정의돼 있지 않으면 플러그인 자체를 데코레이터로 사용해서 각 라우트 콜백에 직접 적용한다. 유일한 매개변수는 꾸며야 할 콜백이다. 이 메소드가 뭘 반환하든 그게 원래 콜백을 대체한다. 받은 콜백을 포장하거나 대체할 필요가 없다면 callback 매개변수를 변경 없이 반환하면 된다.
 
     .. method:: apply(self, callback, route)
 
-        If defined, this method is used in favor of :meth:`__call__` to decorate route callbacks. The additional `route` parameter is an instance of :class:`Route` and provides a lot of meta-information and context for that route. See :ref:`route-context` for details.
+        정의돼 있으면 :meth:`__call__` 대신 이 메소드를 써서 라우트 콜백을 꾸민다. 추가로 있는 `route` 매개변수는 :class:`Route` 인스턴스로, 그 라우트에 대한 많은 메타 정보와 문맥을 제공한다. 자세한 내용은 :ref:`route-context` 참고.
 
     .. method:: close(self)
 
-        Called immediately before the plugin is uninstalled or the application is closed (see :meth:`Bottle.uninstall` or :meth:`Bottle.close`).
+        플러그인이 제거되거나 응용이 끝나기 직전에 호출된다. (:meth:`Bottle.uninstall` 또는 :meth:`Bottle.close` 참고.)
 
 
-Both :meth:`Plugin.setup` and :meth:`Plugin.close` are *not* called for plugins that are applied directly to a route via the :meth:`Bottle.route()` decorator, but only for plugins installed to an application.
+:meth:`Bottle.route()` 데코레이터를 통해 라우트에 직접 적용된 플러그인에 대해선 :meth:`Plugin.setup`\과 :meth:`Plugin.close`\가 호출되지 *않는다*. 응용에 설치된 플러그인에 대해서만 호출된다.
 
 
 .. _plugin-changelog:
 
-Plugin API changes
-------------------
+플러그인 API 변경 사항
+----------------------
 
-The Plugin API is still evolving and changed with Bottle 0.10 to address certain issues with the route context dictionary. To ensure backwards compatibility with 0.9 Plugins, we added an optional :attr:`Plugin.api` attribute to tell bottle which API to use. The API differences are summarized here.
+플러그인 API는 계속 진화하고 있으며 보틀 0.10에서 라우트 문맥 딕셔너리 관련 이슈를 해결하기 위해 바뀐 적이 있다. 0.9 플러그인과 하위 호환성을 보장하기 위해 선택적인 :attr:`Plugin.api` 속성을 추가해서 어떤 API를 써야 하는지 알려 주도록 했다. API 차이를 요약하면 다음과 같다.
 
-* **Bottle 0.9 API 1** (:attr:`Plugin.api` not present)
+* **보틀 0.9 API 1** (:attr:`Plugin.api` 없음)
 
-  * Original Plugin API as described in the 0.9 docs.
+  * 0.9 문서에 기술돼 있던 초판 플러그인 API.
 
-* **Bottle 0.10 API 2** (:attr:`Plugin.api` equals 2)
+* **보틀 0.10 API 2** (:attr:`Plugin.api`\가 2)
 
-  * The `context` parameter of the :meth:`Plugin.apply` method is now an instance of :class:`Route` instead of a context dictionary.
+  * :meth:`Plugin.apply` 메소드의 `context` 매개변수가 이제 딕셔너리가 아니라 :class:`Route` 인스턴스다.
 
 .. _route-context:
 
 
-The Route Context
-=================
+라우트 문맥
+===========
 
-The :class:`Route` instance passed to :meth:`Plugin.apply` provides detailed informations about the associated route. The most important attributes are summarized here:
+:meth:`Plugin.apply`\로 전달되는 :class:`Route` 인스턴스는 연관 라우트에 대한 자세한 정보를 제공한다. 중요한 속성들로 다음이 있다.
 
 ===========  =================================================================
-Attribute    Description
+속성         설명
 ===========  =================================================================
-app          The application object this route is installed to.
-rule         The rule string (e.g. ``/wiki/:page``).
-method       The HTTP method as a string (e.g. ``GET``).
-callback     The original callback with no plugins applied. Useful for
-             introspection.
-name         The name of the route (if specified) or ``None``.
-plugins      A list of route-specific plugins. These are applied in addition to
-             application-wide plugins. (see :meth:`Bottle.route`).
-skiplist     A list of plugins to not apply to this route (again, see
-             :meth:`Bottle.route`).
-config       Additional keyword arguments passed to the :meth:`Bottle.route`
-             decorator are stored in this dictionary. Used for route-specific
-             configuration and meta-data.
+app          이 라우트가 설치된 응용 객체.
+rule         규칙 문자열. (예: ``/wiki/:page``)
+method       HTTP 메소드 문자열. (예: ``GET``)
+callback     어떤 플러그인도 적용되지 않은 원래 콜백. 인트로스펙션에 유용함.
+name         라우트의 이름. 지정돼 있지 않으면 ``None``.
+plugins      라우트별 플러그인 목록. 응용 전역 플러그인들에 더해서
+             이 플러그인들이 적용된다. (:meth:`Bottle.route` 참고.)
+skiplist     이 라우트에 적용하지 않을 플러그인 목록. (:meth:`Bottle.route`
+             참고.)
+config       :meth:`Bottle.route` 데코레이터에 추가로 준 키워드 인자들이
+             이 딕셔너리에 저장된다. 라우트별 설정 및 메타데이터에 쓰인다.
 ===========  =================================================================
 
-For your plugin, :attr:`Route.config` is probably the most important attribute. Keep in mind that this dictionary is local to the route, but shared between all plugins. It is always a good idea to add a unique prefix or, if your plugin needs a lot of configuration, store it in a separate namespace within the `config` dictionary. This helps to avoid naming collisions between plugins.
+아마 :attr:`Route.config`\가 가장 중요한 속성일 것이다. 그 딕셔너리가 라우트에 로컬이긴 하지만 모든 플러그인들이 공유한다는 걸 유념해야 한다. 고유 접두부를 붙이는 것도 당연히 좋은 생각이고, 플러그인에 설정이 많이 필요하다면 `config` 딕셔너리 안의 별도 네임스페이스에 저장하면 된다. 그러면 플러그인들 간의 이름 충돌을 피할 수 있다.
 
 
-Changing the :class:`Route` object
-----------------------------------
+:class:`Route` 객체 바꾸기
+--------------------------
 
-While some :class:`Route` attributes are mutable, changes may have unwanted effects on other plugins. It is most likely a bad idea to monkey-patch a broken route instead of providing a helpful error message and let the user fix the problem.
+:class:`Route` 속성 중 일부가 변경 가능하긴 하지만 다른 플러그인에 의도치 않은 영향을 줄 수도 있다. 이상 있는 라우트가 있을 때 유용한 오류 메시지를 제공해서 사용자가 문제를 고치게 하지 않고 그냥 몽키 패치 하는 건 안 좋은 생각일 가능성이 높다.
 
-In some rare cases, however, it might be justifiable to break this rule. After you made your changes to the :class:`Route` instance, raise :exc:`RouteReset` as an exception. This removes the current route from the cache and causes all plugins to be re-applied. The router is not updated, however. Changes to `rule` or `method` values have no effect on the router, but only on plugins. This may change in the future, though.
-
-
-Runtime optimizations
-=====================
-
-Once all plugins are applied to a route, the wrapped route callback is cached to speed up subsequent requests. If the behavior of your plugin depends on configuration, and you want to be able to change that configuration at runtime, you need to read the configuration on each request. Easy enough.
-
-For performance reasons, however, it might be worthwhile to choose a different wrapper based on current needs, work with closures, or enable or disable a plugin at runtime. Let's take the built-in HooksPlugin as an example: If no hooks are installed, the plugin removes itself from all affected routes and has virtaully no overhead. As soon as you install the first hook, the plugin activates itself and takes effect again.
-
-To achieve this, you need control over the callback cache: :meth:`Route.reset` clears the cache for a single route and :meth:`Bottle.reset` clears all caches for all routes of an application at once. On the next request, all plugins are re-applied to the route as if it were requested for the first time.
-
-Both methods won't affect the current request if called from within a route callback, of cause. To force a restart of the current request, raise :exc:`RouteReset` as an exception.
+하지만 몇몇 드문 경우들에선 이 규칙을 깨는 게 정당화될 수도 있다. :class:`Route` 인스턴스를 변경한 후에는 :exc:`RouteReset`\을 예외로 던져야 한다. 그러면 현 라우트가 캐시에서 제거되고 모든 플러그인들이 다시 적용된다. 하지만 라우터는 갱신되지 않는다. `rule`\이나 `method` 값을 바꿔도 라우터에는 아무 영향이 없고 플러그인에만 효과가 있다. 다만 이는 향후에 바뀔 수도 있다.
 
 
-Plugin Example: SQLitePlugin
-============================
+런타임 최적화
+=============
 
-This plugin provides an sqlite3 database connection handle as an additional keyword argument to wrapped callbacks, but only if the callback expects it. If not, the route is ignored and no overhead is added. The wrapper does not affect the return value, but handles plugin-related exceptions properly. :meth:`Plugin.setup` is used to inspect the application and search for conflicting plugins.
+라우트에 모든 플러그인들이 적용되고 나면 포장된 라우트 콜백을 캐싱 해서 이후 요청들의 처리 속도를 높인다. 작성하려는 플러그인의 동작 방식이 설정에 따라 달라지는데 런타임에 그 설정을 바꿀 수 있게 하고 싶다면 매 요청마다 그 설정을 읽어야 한다. 아주 간단하다.
+
+하지만 성능상의 이슈로 그때 그때 필요에 따라 다른 래퍼를 선택하거나, 클로저를 쓰거나, 런타임에 플러그인을 켜고 끄는 걸 할 만할 수도 있다. 내장된 HooksPlugin을 예로 들어 보자. 훅이 전혀 설치돼 있지 않으면 영향 받은 모든 라우트에서 플러그인 스스로를 제거해서 사실상 오버헤드가 전혀 없다. 그러다 첫 번째 훅을 설치하면 플러그인 스스로를 활성화해서 다시 효력이 생긴다.
+
+이게 가능하려면 콜백 캐시를 통제할 수 있어야 한다. :meth:`Route.reset`\은 그 한 라우트에 대한 캐시를 지우고 :meth:`Bottle.reset`\은 응용의 모든 라우트에 대한 캐시 전체를 한꺼번에 지운다. 다음 요청에서 모든 플러그인들이 라우트에 처음 적용 요청한 것처럼 재적용된다.
+
+당연하지만 두 메소드 모두 라우트 콜백 내에서 호출 시 현재 요청에는 영향을 주지 않는다. 현재 요청을 재시작하게 하고 싶으면 :exc:`RouteReset`\을 예외로 던지면 된다.
+
+
+예시 플러그인: SQLitePlugin
+===========================
+
+이 플러그인은 포장되는 콜백에 sqlite3 데이터베이스 연결 핸들을 추가 키워드 인자로 제공하되, 콜백에서 받으려는 경우에만 그렇게 한다. 원치 않으면 그 라우트를 무시하며 어떤 오버헤드도 더해지지 않는다. 래퍼가 반환 값에는 영향을 주지 않지만 플러그인 관련 예외를 제대로 처리해 준다. :meth:`Plugin.setup`\으로 응용을 조사해서 충돌하는 플러그인을 찾아 본다.
 
 ::
 
@@ -156,10 +154,10 @@ This plugin provides an sqlite3 database connection handle as an additional keyw
     import inspect
 
     class SQLitePlugin(object):
-        ''' This plugin passes an sqlite3 database handle to route callbacks
-        that accept a `db` keyword argument. If a callback does not expect
-        such a parameter, no connection is made. You can override the database
-        settings on a per-route basis. '''
+        ''' 이 플러그인은 키워드 인자 `db`\를 받는 라우트 콜백에 sqlite3
+        데이터베이스 핸들을 전달해 준다. 콜백에서 그런 매개변수를 받지
+        않는 경우엔 연결을 만들지 않는다. 라우트별로 데이터베이스 설정을
+        오버라이드 할 수 있다. '''
 
         name = 'sqlite'
         api = 2
@@ -172,8 +170,8 @@ This plugin provides an sqlite3 database connection handle as an additional keyw
              self.keyword = keyword
 
         def setup(self, app):
-            ''' Make sure that other installed plugins don't affect the same
-                keyword argument.'''
+            ''' 설치된 다른 플러그인에서 같은 키워드 인자에 영향 주지
+                않는지 확인한다.'''
             for other in app.plugins:
                 if not isinstance(other, SQLitePlugin): continue
                 if other.keyword == self.keyword:
@@ -181,25 +179,25 @@ This plugin provides an sqlite3 database connection handle as an additional keyw
                     "conflicting settings (non-unique keyword).")
 
         def apply(self, callback, context):
-            # Override global configuration with route-specific values.
+            # 라우트별 값으로 전역 설정 오버라이드
             conf = context.config.get('sqlite') or {}
             dbfile = conf.get('dbfile', self.dbfile)
             autocommit = conf.get('autocommit', self.autocommit)
             dictrows = conf.get('dictrows', self.dictrows)
             keyword = conf.get('keyword', self.keyword)
 
-            # Test if the original callback accepts a 'db' keyword.
-            # Ignore it if it does not need a database handle.
+            # 원래 콜백이 'db' 키워드를 받는지 확인한다.
+            # 데이터베이스 핸들을 필요로 하지 않으면 무시.
             args = inspect.getargspec(context.callback)[0]
             if keyword not in args:
                 return callback
 
             def wrapper(*args, **kwargs):
-                # Connect to the database
+                # 데이터베이스에 연결
                 db = sqlite3.connect(dbfile)
-                # This enables column access by name: row['column_name']
+                # 이름으로 (row['column_name']) 컬럼 접근
                 if dictrows: db.row_factory = sqlite3.Row
-                # Add the connection handle as a keyword argument.
+                # 키워드 인자에 연결 핸들 추가
                 kwargs[keyword] = db
 
                 try:
@@ -212,10 +210,10 @@ This plugin provides an sqlite3 database connection handle as an additional keyw
                     db.close()
                 return rv
 
-            # Replace the route callback with the wrapped one.
+            # 라우트 콜백을 포장된 버전으로 교체
             return wrapper
 
-This plugin is actually useful and very similar to the version bundled with Bottle. Not bad for less than 60 lines of code, don't you think? Here is a usage example::
+실제로 유용한 플러그인이며 보틀에 딸려 있는 것과 아주 비슷하다. 60행도 안 되는 코드 치고는 나쁘지 않다. 안 그런가? 다음이 사용례다. ::
 
     sqlite = SQLitePlugin(dbfile='/tmp/test.db')
     bottle.install(sqlite)
@@ -236,5 +234,5 @@ This plugin is actually useful and very similar to the version bundled with Bott
         sqlite.dbfile = '/tmp/%s.db' % db
         return "Switched DB to %s.db" % db
 
-The first route needs a database connection and tells the plugin to create a handle by requesting a ``db`` keyword argument. The second route does not need a database and is therefore ignored by the plugin. The third route does expect a 'db' keyword argument, but explicitly skips the sqlite plugin. This way the argument is not overruled by the plugin and still contains the value of the same-named url argument.
+첫 번째 라우트에선 데이터베이스 연결이 필요하기 때문에 키워드 인자 ``db``\를 요청해서 플러그인에서 핸들을 만들게 한다. 두 번째 라우트에는 데이터베이스가 필요 없고, 그래서 플러그인에서 무시한다. 세 번째 라우트는 키워드 인자 'db'를 받긴 하지만 sqlite 플러그인을 명시적으로 건너뛴다. 이렇게 하면 플러그인에서 그 인자를 덮어 쓰지 않아서 같은 이름의 URL 인자 값이 그대로 오게 된다.
 
