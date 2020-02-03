@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>배치 &#8212; Bottle 0.12.18 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial-deployment">
+<span id="id1"></span><h1>배치<a class="headerlink" href="#tutorial-deployment" title="Permalink to this headline">¶</a></h1>
+<p>아무 인자 없이 보틀의 <code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code> 함수를 호출하면 8080 포트로 로컬 개발 서버를 띄운다. 같은 호스트에 있으면 <a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a>을 통해 응용에 접근해서 테스트 할 수 있다.</p>
+<p>바깥 세상에서도 응용을 쓸 수 있게 하려면 서버가 리슨 할 인터페이스 IP를 지정하거나(예: <code class="docutils literal notranslate"><span class="pre">run(host='192.168.0.1')</span></code>) 서버가 모든 인터페이스에 리슨 하게(예: <code class="docutils literal notranslate"><span class="pre">run(host='0.0.0.0')</span></code>) 하면 된다. 리슨 할 포트도 비슷하게 바꿀 수 있지만 1024 아래 포트를 쓰려면 root 내지 관리자 권한이 필요하다. 80 포트가 HTTP 서버를 위한 표준이다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span> <span class="c1"># 모든 인터페이스에서 HTTP 요청 받기</span>
+</pre></div>
+</div>
+<div class="section" id="id2">
+<h2>서버 선택지<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>기본 내장 서버는 <a class="reference external" href="http://docs.python.org/library/wsgiref.html#module-wsgiref.simple_server">wsgiref WSGI 서버</a>를 기반으로 한 것이다. 스레드 안 쓰는 이 HTTP 서버가 개발 및 운용 초기에는 충분할 수 있지만 서버 부하가 커지면 성능 병목이 될 수 있다. 그 병목을 없앨 수 있는 방법이 세 가지 있다.</p>
+<ul class="simple">
+<li><p>다중 스레드거나 비동기인 다른 서버 쓰기.</p></li>
+<li><p>서버 프로세스를 여러 개 띄우고 로드 밸런서로 부하 나누기.</p></li>
+<li><p>둘 다 하기.</p></li>
+</ul>
+<p><strong>다중 스레드</strong> 서버는 ‘전통적’ 방법이다. 매우 견고하고 충분히 빠르며 관리하기 쉽다. 단점으로는, 동시에 처리할 수 있는 연결 수가 제한돼 있고 “전역 인터프리터 락(GIL)” 때문에 CPU 코어를 한 개만 활용한다. 대부분 응용에선 어차피 네트워크 IO에 대기하며 대부분의 시간을 보내기 때문에 문제가 되지 않지만 CPU 집약적인 작업(예: 이미지 처리)은 속도가 떨어질 수 있다.</p>
+<p><strong>비동기</strong> 서버는 아주 빠르고 실질적으로 무한대의 동시 연결을 처리할 수 있으며 관리하기 쉽지만 좀 까다로울 수 있다. 그 잠재력을 완전히 이용하려면 그에 맞도록 응용을 설계해야 하며 개별 서버의 개념들을 이해해야 한다.</p>
+<p><strong>다중 프로세스</strong>(포크) 서버는 GIL의 제약을 받지 않아서 CPU 코어를 여러 개 활용할 수 있지만 서버 인스턴스 간 통신 비용이 커진다. 프로세스들 사이에 상태를 공유하려면 데이터베이스나 외부 메시지 큐가 필요하다. 아니면 아예 공유 상태가 필요 없도록 응용을 설계해야 한다. 구성 역시 좀 복잡하지만 잘 작성된 튜토리얼들이 있다.</p>
+</div>
+<div class="section" id="id3">
+<h2>서버 백엔드 바꾸기<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>성능을 높이는 가장 쉬운 방법은 <a class="reference external" href="http://pythonpaste.org/">paste</a>나 <a class="reference external" href="http://www.cherrypy.org/">cherrypy</a> 같은 다중 스레드 서버 라이브러리를 설치하고 보틀에서 단일 스레드 서버 대신 그걸 쓰게 하는 것이다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;paste&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>보틀에는 많이 쓰는 WSGI 서버 대부분을 위한 어댑터가 딸려 있어서 구성 과정을 자동으로 대신 해 준다. 다음은 그 일부다.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>이름</p></th>
+<th class="head"><p>홈페이지</p></th>
+<th class="head"><p>설명</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>cgi</p></td>
+<td></td>
+<td><p>CGI 스크립트 실행</p></td>
+</tr>
+<tr class="row-odd"><td><p>flup</p></td>
+<td><p><a class="reference external" href="http://trac.saddi.com/flup">flup</a></p></td>
+<td><p>FastCGI 프로세스로 실행</p></td>
+</tr>
+<tr class="row-even"><td><p>gae</p></td>
+<td><p><a class="reference external" href="http://code.google.com/appengine/docs/python/overview.html">gae</a></p></td>
+<td><p>구글 앱 엔진 도입 위한 헬퍼</p></td>
+</tr>
+<tr class="row-odd"><td><p>wsgiref</p></td>
+<td><p><a class="reference external" href="http://docs.python.org/library/wsgiref.html">wsgiref</a></p></td>
+<td><p>기본 단일 스레드 서버</p></td>
+</tr>
+<tr class="row-even"><td><p>cherrypy</p></td>
+<td><p><a class="reference external" href="http://www.cherrypy.org/">cherrypy</a></p></td>
+<td><p>다중 스레드, 매우 안정적</p></td>
+</tr>
+<tr class="row-odd"><td><p>paste</p></td>
+<td><p><a class="reference external" href="http://pythonpaste.org/">paste</a></p></td>
+<td><p>다중 스레드, 안정적, 경험으로 확인</p></td>
+</tr>
+<tr class="row-even"><td><p>rocket</p></td>
+<td><p><a class="reference external" href="http://pypi.python.org/pypi/rocket">rocket</a></p></td>
+<td><p>다중 스레드</p></td>
+</tr>
+<tr class="row-odd"><td><p>waitress</p></td>
+<td><p><a class="reference external" href="http://readthedocs.org/docs/waitress/en/latest/">waitress</a></p></td>
+<td><p>다중 스레드, Pyramid에서 사용</p></td>
+</tr>
+<tr class="row-even"><td><p>gunicorn</p></td>
+<td><p><a class="reference external" href="http://pypi.python.org/pypi/gunicorn">gunicorn</a></p></td>
+<td><p>사전 포크, 일부는 C로 작성</p></td>
+</tr>
+<tr class="row-odd"><td><p>eventlet</p></td>
+<td><p><a class="reference external" href="http://eventlet.net/">eventlet</a></p></td>
+<td><p>WSGI 지원하는 비동기 프레임워크</p></td>
+</tr>
+<tr class="row-even"><td><p>gevent</p></td>
+<td><p><a class="reference external" href="http://www.gevent.org/">gevent</a></p></td>
+<td><p>비동기 (greenlet)</p></td>
+</tr>
+<tr class="row-odd"><td><p>diesel</p></td>
+<td><p><a class="reference external" href="http://dieselweb.org/">diesel</a></p></td>
+<td><p>비동기 (greenlet)</p></td>
+</tr>
+<tr class="row-even"><td><p>fapws3</p></td>
+<td><p><a class="reference external" href="http://www.fapws.org/">fapws3</a></p></td>
+<td><p>비동기 (네트워크 쪽만), C로 작성</p></td>
+</tr>
+<tr class="row-odd"><td><p>tornado</p></td>
+<td><p><a class="reference external" href="http://www.tornadoweb.org/">tornado</a></p></td>
+<td><p>비동기, Facebook 일부에서 사용</p></td>
+</tr>
+<tr class="row-even"><td><p>twisted</p></td>
+<td><p><a class="reference external" href="http://twistedmatrix.com/">twisted</a></p></td>
+<td><p>비동기, 충분히 검증됐지만… 뒤틀렸음</p></td>
+</tr>
+<tr class="row-odd"><td><p>meinheld</p></td>
+<td><p><a class="reference external" href="http://pypi.python.org/pypi/meinheld">meinheld</a></p></td>
+<td><p>비동기, 일부는 C로 작성</p></td>
+</tr>
+<tr class="row-even"><td><p>bjoern</p></td>
+<td><p><a class="reference external" href="http://pypi.python.org/pypi/bjoern">bjoern</a></p></td>
+<td><p>비동기, 매우 빠르고 C로 작성</p></td>
+</tr>
+<tr class="row-odd"><td><p>auto</p></td>
+<td></td>
+<td><p>사용 가능한 서버 어댑터를 자동으로 선택</p></td>
+</tr>
+</tbody>
+</table>
+<p>전체 목록은 <code class="xref py py-data docutils literal notranslate"><span class="pre">server_names</span></code>를 통해 얻을 수 있다.</p>
+<p>원하는 서버를 위한 어댑터가 없거나 서버 구성을 좀 더 제어해야 한다면 서버를 직접 띄우고 싶을 수 있다. 서버 문서에서 WSGI 응용을 실행하는 방법을 찾아 보면 된다. 다음 예는 <a class="reference external" href="http://pythonpaste.org/">paste</a>를 띄우는 방법이다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">application</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">default_app</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">paste</span> <span class="kn">import</span> <span class="n">httpserver</span>
+<span class="n">httpserver</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="apache-mod-wsgi">
+<h3>Apache mod_wsgi<a class="headerlink" href="#apache-mod-wsgi" title="Permalink to this headline">¶</a></h3>
+<p>보틀 내에서 자체 HTTP 서버를 돌리지 않고 <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a>를 쓰는 <a class="reference external" href="apache">Apache 서버</a>에 보틀 응용을 붙일 수도 있다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">application</span></code> 객체를 제공하는 <code class="docutils literal notranslate"><span class="pre">app.wsgi</span></code> 파일만 만들어 주면 된다. mod_wsgi에서 그 객체를 써서 응용을 띄우는데 WSGI 호환 파이썬 콜러블이어야 한다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">/var/www/yourapp/app.wsgi</span></code> 파일:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 상대 경로가 (그리고 템플릿 탐색이) 동작하도록 작업 디렉터리 바꾸기</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">bottle</span>
+<span class="c1"># ... 여기서 보틀 응용을 구성 또는 임포트 ...</span>
+<span class="c1"># bottle.run()을 mod_wsgi과 함께 사용하지 말 것</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">default_app</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Apache 설정은 다음처럼 된다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*&gt;</span>
+    <span class="n">ServerName</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+
+    <span class="n">WSGIDaemonProcess</span> <span class="n">yourapp</span> <span class="n">user</span><span class="o">=</span><span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">group</span><span class="o">=</span><span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">processes</span><span class="o">=</span><span class="mi">1</span> <span class="n">threads</span><span class="o">=</span><span class="mi">5</span>
+    <span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">yourapp</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">yourapp</span><span class="o">&gt;</span>
+        <span class="n">WSGIProcessGroup</span> <span class="n">yourapp</span>
+        <span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+        <span class="n">Order</span> <span class="n">deny</span><span class="p">,</span><span class="n">allow</span>
+        <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>구글 앱 엔진<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.9.</span></p>
+</div>
+<p>서버 어댑터 <code class="docutils literal notranslate"><span class="pre">gae</span></code>를 써서 구글 앱 엔진에서 응용을 돌릴 수 있다. HTTP 서버를 새로 시작하지 않는다는 점에서 <code class="docutils literal notranslate"><span class="pre">cgi</span></code> 어댑터와 비슷하지만 더불어 구글 앱 엔진에 맞게 응용을 준비 및 최적화하고 그 API에 맞게 만들어 준다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;gae&#39;</span><span class="p">)</span> <span class="c1"># host나 port 설정 필요 없음</span>
+</pre></div>
+</div>
+<p>정적 파일은 GAE에서 직접 제공하도록 하는 게 좋다. 다음이 <code class="docutils literal notranslate"><span class="pre">app.yaml</span></code> 예시다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">application</span><span class="p">:</span> <span class="n">myapp</span>
+<span class="n">version</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">runtime</span><span class="p">:</span> <span class="n">python</span>
+<span class="n">api_version</span><span class="p">:</span> <span class="mi">1</span>
+
+<span class="n">handlers</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">url</span><span class="p">:</span> <span class="o">/</span><span class="n">static</span>
+  <span class="n">static_dir</span><span class="p">:</span> <span class="n">static</span>
+
+<span class="o">-</span> <span class="n">url</span><span class="p">:</span> <span class="o">/.*</span>
+  <span class="n">script</span><span class="p">:</span> <span class="n">myapp</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>로드 밸런서 (수동 구성)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>파이썬 프로세스 하나는 가용 CPU 코어가 몇 개든 한 번에 한 CPU만 활용할 수 있다. 이때 가능한 기법은 독립된 파이썬 프로세스들로 부하를 분산해서 CPU 코어를 모두 활용하는 것이다.</p>
+<p>보틀 응용 서버를 하나만 띄우는 게 아니라 사용 가능한 CPU 코어마다 로컬 포트를 다르게 해서 (localhost:8080, 8081, 8082, …) 한 인스턴스씩 실행한다. 원하는 대로 서버 어댑터를 고를 수 있고 비동기 어댑터도 쓸 수 있다. 다음으로 고성능 로드 밸런서가 역방향 프록시 역할을 하며 각 요청을 무작위 포트로 전달하고, 그래서 동작 중인 모든 백엔드로 부하를 분산시킨다. 이렇게 하면 모든 CPU 코어를 쓸 수 있고 심지어 여러 물리적 서버로 부하를 나눌 수도 있다.</p>
+<p>아주 빠른 로드 밸런서로 <a class="reference external" href="http://www.apsis.ch/pound">Pound</a>가 있지만 많이 쓰는 웹 서버 대부분에도 그 일을 잘 해 주는 프록시 모듈이 있다.</p>
+<p>Pound 예시:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ListenHTTP</span>
+    <span class="n">Address</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+    <span class="n">Port</span>    <span class="mi">80</span>
+
+    <span class="n">Service</span>
+        <span class="n">BackEnd</span>
+            <span class="n">Address</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+            <span class="n">Port</span>    <span class="mi">8080</span>
+        <span class="n">End</span>
+        <span class="n">BackEnd</span>
+            <span class="n">Address</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+            <span class="n">Port</span>    <span class="mi">8081</span>
+        <span class="n">End</span>
+    <span class="n">End</span>
+<span class="n">End</span>
+</pre></div>
+</div>
+<p>Apache 예시:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Proxy</span> <span class="n">balancer</span><span class="p">:</span><span class="o">//</span><span class="n">mycluster</span><span class="o">&gt;</span>
+<span class="n">BalancerMember</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.50</span><span class="p">:</span><span class="mi">80</span>
+<span class="n">BalancerMember</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.51</span><span class="p">:</span><span class="mi">80</span>
+<span class="o">&lt;/</span><span class="n">Proxy</span><span class="o">&gt;</span>
+<span class="n">ProxyPass</span> <span class="o">/</span> <span class="n">balancer</span><span class="p">:</span><span class="o">//</span><span class="n">mycluster</span>
+</pre></div>
+</div>
+<p>Lighttpd 예시:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span><span class="o">.</span><span class="n">modules</span> <span class="o">+=</span> <span class="p">(</span> <span class="s2">&quot;mod_proxy&quot;</span> <span class="p">)</span>
+<span class="n">proxy</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;&quot;</span> <span class="o">=&gt;</span> <span class="p">(</span>
+        <span class="s2">&quot;wsgi1&quot;</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="s2">&quot;host&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span> <span class="o">=&gt;</span> <span class="mi">8080</span> <span class="p">),</span>
+        <span class="s2">&quot;wsgi2&quot;</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="s2">&quot;host&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span> <span class="o">=&gt;</span> <span class="mi">8081</span> <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cgi">
+<h2>옛 시절의 CGI<a class="headerlink" href="#cgi" title="Permalink to this headline">¶</a></h2>
+<p>CGI 서버는 요청마다 새 프로세스를 시작한다. 이로 인한 오버헤드가 크지만 때로는, 특히 저렴한 호스팅 환경에선 유일한 선택지일 수 있다. 서버 어댑터 <cite>cgi</cite>는 실제 CGI 서버를 띄우는 게 아니라 보틀 응용을 유효한 CGI 응용으로 바꿔 준다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;cgi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bottle</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">릴리스 노트와 변경 로그</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id2">기여자</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">개발자를 위해</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2020, Marcel Hellkamp.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/deployment.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

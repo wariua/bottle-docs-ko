@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>릴리스 노트와 변경 로그 &#8212; Bottle 0.12.18 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="개발자를 위해" href="development.html" />
+    <link rel="prev" title="자주 묻는 질문" href="faq.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>릴리스 노트와 변경 로그<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="release-0-12">
+<h2>Release 0.12<a class="headerlink" href="#release-0-12" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>New SimpleTemplate parser implementation
+* Support for multi-line code blocks (<cite>&lt;% … %&gt;</cite>).
+* The keywords <cite>include</cite> and <cite>rebase</cite> are functions now and can accept variable template names.</p></li>
+<li><p>The new <a class="reference internal" href="api.html#bottle.BaseRequest.route" title="bottle.BaseRequest.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseRequest.route()</span></code></a> property returns the <a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> that originally matched the request.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">BaseRequest.MAX_PARAMS</span></code> limit. The hash collision bug in CPythons dict() implementation was fixed over a year ago. If you are still using Python 2.5 in production, consider upgrading or at least make sure that you get security fixed from your distributor.</p></li>
+<li><p>New <a class="reference internal" href="configuration.html#bottle.ConfigDict" title="bottle.ConfigDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code></a> API (see <a class="reference internal" href="configuration.html"><span class="doc">설정 (작업 중)</span></a>)</p></li>
+</ul>
+<p>More information can be found in this <a class="reference external" href="http://blog.bottlepy.org/2013/07/19/preview-bottle-012.html">development blog post</a>.</p>
+</div>
+<div class="section" id="release-0-11">
+<h2>Release 0.11<a class="headerlink" href="#release-0-11" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Native support for Python 2.x and 3.x syntax. No need to run 2to3 anymore.</p></li>
+<li><p>Support for partial downloads (<code class="docutils literal notranslate"><span class="pre">Range</span></code> header) in <code class="xref py py-func docutils literal notranslate"><span class="pre">static_file()</span></code>.</p></li>
+<li><p>The new <a class="reference internal" href="api.html#bottle.ResourceManager" title="bottle.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a> interface helps locating files bundled with an application.</p></li>
+<li><p>Added a server adapter for <a class="reference external" href="http://docs.pylonsproject.org/projects/waitress/en/latest/">waitress</a>.</p></li>
+<li><p>New <a class="reference internal" href="api.html#bottle.Bottle.merge" title="bottle.Bottle.merge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.merge()</span></code></a> method to install all routes from one application into another.</p></li>
+<li><p>New <a class="reference internal" href="api.html#bottle.BaseRequest.app" title="bottle.BaseRequest.app"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.app</span></code></a> property to get the application object that handles a request.</p></li>
+<li><p>Added <a class="reference internal" href="api.html#bottle.FormsDict.decode" title="bottle.FormsDict.decode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FormsDict.decode()</span></code></a> to get an all-unicode version (needed by WTForms).</p></li>
+<li><p><a class="reference internal" href="api.html#bottle.MultiDict" title="bottle.MultiDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiDict</span></code></a> and subclasses are now pickle-able.</p></li>
+</ul>
+<p class="rubric">API Changes</p>
+<ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Response.status</span></code> is a read-write property that can be assigned either a numeric status code or a status string with a reason phrase (<code class="docutils literal notranslate"><span class="pre">200</span> <span class="pre">OK</span></code>). The return value is now a string to better match existing APIs (WebOb, werkzeug). To be absolutely clear, you can use the read-only properties <a class="reference internal" href="api.html#bottle.BaseResponse.status_code" title="bottle.BaseResponse.status_code"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseResponse.status_code</span></code></a> and <a class="reference internal" href="api.html#bottle.BaseResponse.status_line" title="bottle.BaseResponse.status_line"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseResponse.status_line</span></code></a>.</p></li>
+</ul>
+<p class="rubric">API Deprecations</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleTALTemplate</span></code> is now deprecating. There seems to be no demand.</p></li>
+</ul>
+</div>
+<div class="section" id="release-0-10">
+<h2>Release 0.10<a class="headerlink" href="#release-0-10" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Plugin API v2</p>
+<ul>
+<li><p>To use the new API, set <a class="reference internal" href="plugindev.html#bottle.Plugin.api" title="bottle.Plugin.api"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Plugin.api</span></code></a> to <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p></li>
+<li><p><a class="reference internal" href="plugindev.html#bottle.Plugin.apply" title="bottle.Plugin.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.apply()</span></code></a> receives a <a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> object instead of a context dictionary as second parameter. The new object offers some additional information and may be extended in the future.</p></li>
+<li><p>Plugin names are considered unique now. The topmost plugin with a given name on a given route is installed, all other plugins with the same name are silently ignored.</p></li>
+</ul>
+</li>
+<li><p>The Request/Response Objects</p>
+<ul>
+<li><p>Added <a class="reference internal" href="api.html#bottle.BaseRequest.json" title="bottle.BaseRequest.json"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.json</span></code></a>, <a class="reference internal" href="api.html#bottle.BaseRequest.remote_route" title="bottle.BaseRequest.remote_route"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.remote_route</span></code></a>, <a class="reference internal" href="api.html#bottle.BaseRequest.remote_addr" title="bottle.BaseRequest.remote_addr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.remote_addr</span></code></a>, <a class="reference internal" href="api.html#bottle.BaseRequest.query" title="bottle.BaseRequest.query"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.query</span></code></a> and <a class="reference internal" href="api.html#bottle.BaseRequest.script_name" title="bottle.BaseRequest.script_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.script_name</span></code></a>.</p></li>
+<li><p>Added <a class="reference internal" href="api.html#bottle.BaseResponse.status_line" title="bottle.BaseResponse.status_line"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseResponse.status_line</span></code></a> and <a class="reference internal" href="api.html#bottle.BaseResponse.status_code" title="bottle.BaseResponse.status_code"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseResponse.status_code</span></code></a> attributes. In future releases, <a class="reference internal" href="api.html#bottle.BaseResponse.status" title="bottle.BaseResponse.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseResponse.status</span></code></a> will return a string (e.g. <code class="docutils literal notranslate"><span class="pre">200</span> <span class="pre">OK</span></code>) instead of an integer to match the API of other common frameworks. To make the transition as smooth as possible, you should use the verbose attributes from now on.</p></li>
+<li><p>Replaced <a class="reference internal" href="api.html#bottle.MultiDict" title="bottle.MultiDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiDict</span></code></a> with a specialized <a class="reference internal" href="api.html#bottle.FormsDict" title="bottle.FormsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormsDict</span></code></a> in many places. The new dict implementation allows attribute access and handles unicode form values transparently.</p></li>
+</ul>
+</li>
+<li><p>Templates</p>
+<ul>
+<li><p>Added three new functions to the SimpleTemplate default namespace that handle undefined variables: <a class="reference internal" href="stpl.html#stpl.defined" title="stpl.defined"><code class="xref py py-func docutils literal notranslate"><span class="pre">stpl.defined()</span></code></a>, <a class="reference internal" href="stpl.html#stpl.get" title="stpl.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">stpl.get()</span></code></a> and <a class="reference internal" href="stpl.html#stpl.setdefault" title="stpl.setdefault"><code class="xref py py-func docutils literal notranslate"><span class="pre">stpl.setdefault()</span></code></a>.</p></li>
+<li><p>The default escape function for SimpleTemplate now additionally escapes single and double quotes.</p></li>
+</ul>
+</li>
+<li><p>Routing</p>
+<ul>
+<li><p>A new route syntax (e.g. <code class="docutils literal notranslate"><span class="pre">/object/&lt;id:int&gt;</span></code>) and support for route wildcard filters.</p></li>
+<li><p>Four new wildcard filters: <cite>int</cite>, <cite>float</cite>, <cite>path</cite> and <cite>re</cite>.</p></li>
+</ul>
+</li>
+<li><p>Other changes</p>
+<ul>
+<li><p>Added command line interface to load applications and start servers.</p></li>
+<li><p>Introduced a <a class="reference internal" href="configuration.html#bottle.ConfigDict" title="bottle.ConfigDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code></a> that makes accessing configuration a lot easier (attribute access and auto-expanding namespaces).</p></li>
+<li><p>Added support for raw WSGI applications to <a class="reference internal" href="api.html#bottle.Bottle.mount" title="bottle.Bottle.mount"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.mount()</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="api.html#bottle.Bottle.mount" title="bottle.Bottle.mount"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.mount()</span></code></a> parameter order changed.</p></li>
+<li><p><a class="reference internal" href="api.html#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> now accpets an import string for the <code class="docutils literal notranslate"><span class="pre">callback</span></code> parameter.</p></li>
+<li><p>Dropped Gunicorn 0.8 support. Current supported version is 0.13.</p></li>
+<li><p>Added custom options to Gunicorn server.</p></li>
+<li><p>Finally dropped support for type filters. Replace with a custom plugin of needed.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="release-0-9">
+<h2>Release 0.9<a class="headerlink" href="#release-0-9" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Whats new?</p>
+<ul class="simple">
+<li><p>A brand new plugin-API. See <a class="reference internal" href="tutorial.html#plugins"><span class="std std-ref">플러그인</span></a> and <a class="reference internal" href="plugindev.html"><span class="doc">플러그인 개발 안내서</span></a> for details.</p></li>
+<li><p>The <a class="reference internal" href="api.html#bottle.route" title="bottle.route"><code class="xref py py-func docutils literal notranslate"><span class="pre">route()</span></code></a> decorator got a lot of new features. See <a class="reference internal" href="api.html#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> for details.</p></li>
+<li><p>New server adapters for <a class="reference external" href="http://www.gevent.org/">gevent</a>, <a class="reference external" href="http://meinheld.org/">meinheld</a> and <a class="reference external" href="https://github.com/jonashaag/bjoern">bjoern</a>.</p></li>
+<li><p>Support for SimpleTAL templates.</p></li>
+<li><p>Better runtime exception handling for mako templates in debug mode.</p></li>
+<li><p>Lots of documentation, fixes and small improvements.</p></li>
+<li><p>A new <code class="xref py py-data docutils literal notranslate"><span class="pre">Request.urlparts</span></code> property.</p></li>
+</ul>
+<p class="rubric">Performance improvements</p>
+<ul class="simple">
+<li><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code> now special-cases <code class="docutils literal notranslate"><span class="pre">wsgi.run_once</span></code> environments to speed up CGI.</p></li>
+<li><p>Reduced module load time by ~30% and optimized template parser. See <a class="reference external" href="/commit/8ccb2d">8ccb2d</a>, <a class="reference external" href="/commit/f72a7c">f72a7c</a> and <a class="reference external" href="/commit/b14b9a">b14b9a</a> for details.</p></li>
+<li><p>Support for “App Caching” on Google App Engine. See <a class="reference external" href="/commit/af93ec">af93ec</a>.</p></li>
+<li><p>Some of the rarely used or deprecated features are now plugins that avoid overhead if the feature is not used.</p></li>
+</ul>
+<p class="rubric">API changes</p>
+<p>This release is mostly backward compatible, but some APIs are marked deprecated now and will be removed for the next release. Most noteworthy:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">static</span></code> route parameter is deprecated. You can escape wild-cards with a backslash.</p></li>
+<li><p>Type-based output filters are deprecated. They can easily be replaced with plugins.</p></li>
+</ul>
+</div>
+<div class="section" id="release-0-8">
+<h2>Release 0.8<a class="headerlink" href="#release-0-8" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">API changes</p>
+<p>These changes may break compatibility with previous versions.</p>
+<ul class="simple">
+<li><p>The built-in Key/Value database is not available anymore. It is marked deprecated since 0.6.4</p></li>
+<li><p>The Route syntax and behaviour changed.</p>
+<ul>
+<li><p>Regular expressions must be encapsulated with <code class="docutils literal notranslate"><span class="pre">#</span></code>. In 0.6 all non-alphanumeric characters not present in the regular expression were allowed.</p></li>
+<li><p>Regular expressions not part of a route wildcard are escaped automatically. You don’t have to escape dots or other regular control characters anymore. In 0.6 the whole URL was interpreted as a regular expression. You can use anonymous wildcards (<code class="docutils literal notranslate"><span class="pre">/index:#(\.html)?#</span></code>) to achieve a similar behaviour.</p></li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">BreakTheBottle</span></code> exception is gone. Use <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a> instead.</p></li>
+<li><p>The <a class="reference internal" href="stpl.html#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleTemplate</span></code></a> engine escapes HTML special characters in <code class="docutils literal notranslate"><span class="pre">{{bad_html}}</span></code> expressions automatically. Use the new <code class="docutils literal notranslate"><span class="pre">{{!good_html}}</span></code> syntax to get old behaviour (no escaping).</p></li>
+<li><p>The <a class="reference internal" href="stpl.html#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleTemplate</span></code></a> engine returns unicode strings instead of lists of byte strings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bottle.optimize()</span></code> and the automatic route optimization is obsolete.</p></li>
+<li><p>Some functions and attributes were renamed:</p>
+<ul>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Request._environ</span></code> is now <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.environ</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Response.header</span></code> is now <code class="xref py py-attr docutils literal notranslate"><span class="pre">Response.headers</span></code></p></li>
+<li><p><a class="reference internal" href="api.html#bottle.default_app" title="bottle.default_app"><code class="xref py py-func docutils literal notranslate"><span class="pre">default_app()</span></code></a> is obsolete. Use <a class="reference internal" href="api.html#bottle.app" title="bottle.app"><code class="xref py py-func docutils literal notranslate"><span class="pre">app()</span></code></a> instead.</p></li>
+</ul>
+</li>
+<li><p>The default <code class="xref py py-func docutils literal notranslate"><span class="pre">redirect()</span></code> code changed from 307 to 303.</p></li>
+<li><p>Removed support for <code class="docutils literal notranslate"><span class="pre">&#64;default</span></code>. Use <code class="docutils literal notranslate"><span class="pre">&#64;error(404)</span></code> instead.</p></li>
+</ul>
+<p class="rubric">New features</p>
+<p>This is an incomplete list of new features and improved functionality.</p>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="api.html#bottle.Request" title="bottle.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> object got new properties: <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.body</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.auth</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.url</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.header</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.forms</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Request.files</span></code>.</p></li>
+<li><p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">Response.set_cookie()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">Request.get_cookie()</span></code> methods are now able to encode and decode python objects. This is called a <em>secure cookie</em> because the encoded values are signed and protected from changes on client side. All pickle-able data structures are allowed.</p></li>
+<li><p>The new <code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code> class drastically improves performance for setups with lots of dynamic routes and supports named routes (named route + dict = URL string).</p></li>
+<li><p>It is now possible (and recommended) to return <a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a> and <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a> instances or other exception objects instead of raising them.</p></li>
+<li><p>The new function <code class="xref py py-func docutils literal notranslate"><span class="pre">static_file()</span></code> equals <code class="xref py py-func docutils literal notranslate"><span class="pre">send_file()</span></code> but returns a <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a> or <a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a> instead of raising it. <code class="xref py py-func docutils literal notranslate"><span class="pre">send_file()</span></code> is deprecated.</p></li>
+<li><p>New <a class="reference internal" href="api.html#bottle.get" title="bottle.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">get()</span></code></a>, <a class="reference internal" href="api.html#bottle.post" title="bottle.post"><code class="xref py py-func docutils literal notranslate"><span class="pre">post()</span></code></a>, <a class="reference internal" href="api.html#bottle.put" title="bottle.put"><code class="xref py py-func docutils literal notranslate"><span class="pre">put()</span></code></a> and <a class="reference internal" href="api.html#bottle.delete" title="bottle.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a> decorators.</p></li>
+<li><p>The <a class="reference internal" href="stpl.html#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleTemplate</span></code></a> engine got full unicode support.</p></li>
+<li><p>Lots of non-critical bugfixes.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h1>기여자<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<p>Bottle is written and maintained by Marcel Hellkamp &lt;<a class="reference external" href="mailto:marc&#37;&#52;&#48;bottlepy&#46;org">marc<span>&#64;</span>bottlepy<span>&#46;</span>org</a>&gt;.</p>
+<p>Thanks to all the people who found bugs, sent patches, spread the word, helped each other on the mailing-list and made this project possible. I hope the following (alphabetically sorted) list is complete. If you miss your name on that list (or want your name removed) please <a class="reference internal" href="contact.html"><span class="doc">tell me</span></a> or add it yourself.</p>
+<ul class="simple">
+<li><p>acasajus</p></li>
+<li><p>Adam R. Smith</p></li>
+<li><p>Alexey Borzenkov</p></li>
+<li><p>Alexis Daboville</p></li>
+<li><p>Anton I. Sipos</p></li>
+<li><p>Anton Kolechkin</p></li>
+<li><p>apexi200sx</p></li>
+<li><p>apheage</p></li>
+<li><p>BillMa</p></li>
+<li><p>Brad Greenlee</p></li>
+<li><p>Brandon Gilmore</p></li>
+<li><p>Branko Vukelic</p></li>
+<li><p>Brian Sierakowski</p></li>
+<li><p>Brian Wickman</p></li>
+<li><p>Carl Scharenberg</p></li>
+<li><p>Damien Degois</p></li>
+<li><p>David Buxton</p></li>
+<li><p>Duane Johnson</p></li>
+<li><p>fcamel</p></li>
+<li><p>Frank Murphy</p></li>
+<li><p>Frederic Junod</p></li>
+<li><p>goldfaber3012</p></li>
+<li><p>Greg Milby</p></li>
+<li><p>gstein</p></li>
+<li><p>Ian Davis</p></li>
+<li><p>Itamar Nabriski</p></li>
+<li><p>Iuri de Silvio</p></li>
+<li><p>Jaimie Murdock</p></li>
+<li><p>Jeff Nichols</p></li>
+<li><p>Jeremy Kelley</p></li>
+<li><p>joegester</p></li>
+<li><p>Johannes Krampf</p></li>
+<li><p>Jonas Haag</p></li>
+<li><p>Joshua Roesslein</p></li>
+<li><p>Karl</p></li>
+<li><p>Kevin Zuber</p></li>
+<li><p>Kraken</p></li>
+<li><p>Kyle Fritz</p></li>
+<li><p>m35</p></li>
+<li><p>Marcos Neves</p></li>
+<li><p>masklinn</p></li>
+<li><p>Michael Labbe</p></li>
+<li><p>Michael Soulier</p></li>
+<li><p><a class="reference external" href="http://reddit.com/r/python">reddit</a></p></li>
+<li><p>Nicolas Vanhoren</p></li>
+<li><p>Robert Rollins</p></li>
+<li><p>rogererens</p></li>
+<li><p>rwxrwx</p></li>
+<li><p>Santiago Gala</p></li>
+<li><p>Sean M. Collins</p></li>
+<li><p>Sebastian Wollrath</p></li>
+<li><p>Seth</p></li>
+<li><p>Sigurd Høgsbro</p></li>
+<li><p>Stuart Rackham</p></li>
+<li><p>Sun Ning</p></li>
+<li><p>Tomás A. Schertel</p></li>
+<li><p>Tristan Zajonc</p></li>
+<li><p>voltron</p></li>
+<li><p>Wieland Hoffmann</p></li>
+<li><p>zombat</p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bottle</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">릴리스 노트와 변경 로그</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-12">Release 0.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-11">Release 0.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-10">Release 0.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-9">Release 0.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-0-8">Release 0.8</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">기여자</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">개발자를 위해</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="faq.html" title="previous chapter">자주 묻는 질문</a></li>
+      <li>Next: <a href="development.html" title="next chapter">개발자를 위해</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2020, Marcel Hellkamp.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/changelog.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

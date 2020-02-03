@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bottle-SQLite &#8212; Bottle 0.12.18 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bottle-Werkzeug" href="werkzeug.html" />
+    <link rel="prev" title="사용 가능한 플러그인 목록" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bottle-sqlite">
+<h1>Bottle-SQLite<a class="headerlink" href="#bottle-sqlite" title="Permalink to this headline">¶</a></h1>
+<p>SQLite is a self-contained SQL database engine that runs locally and does not
+require any additional server software or setup. The sqlite3 module is part of the
+Python standard library and already installed on most systems. It it very useful
+for prototyping database-driven applications that are later ported to larger
+databases such as PostgreSQL or MySQL.</p>
+<p>This plugin simplifies the use of sqlite databases in your Bottle applications.
+Once installed, all you have to do is to add a <code class="docutils literal notranslate"><span class="pre">db</span></code> keyword argument
+(configurable) to route callbacks that need a database connection.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install with one of the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install bottle-sqlite
+$ easy_install bottle-sqlite
+</pre></div>
+</div>
+<p>or download the latest version from github:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git://github.com/defnull/bottle.git
+$ cd bottle/plugins/sqlite
+$ python setup.py install
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Once installed to an application, the plugin passes an open
+<a class="reference external" href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlite3.Connection</span></code></a> instance to all routes that require a <code class="docutils literal notranslate"><span class="pre">db</span></code> keyword
+argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bottle</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">Bottle</span><span class="p">()</span>
+<span class="n">plugin</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">Plugin</span><span class="p">(</span><span class="n">dbfile</span><span class="o">=</span><span class="s1">&#39;/tmp/test.db&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">plugin</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/show/:item&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * from items where name=?&#39;</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">row</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">template</span><span class="p">(</span><span class="s1">&#39;showitem&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s2">&quot;Page not found&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Routes that do not expect a <code class="docutils literal notranslate"><span class="pre">db</span></code> keyword argument are not affected.</p>
+<p>The connection handle is configured so that <a class="reference external" href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Row" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlite3.Row</span></code></a> objects can be
+accessed both by index (like tuples) and case-insensitively by name. At the end of
+the request cycle, outstanding transactions are committed and the connection is
+closed automatically. If an error occurs, any changes to the database since the
+last commit are rolled back to keep the database in a consistent state.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The following configuration options exist for the plugin class:</p>
+<ul class="simple">
+<li><p><strong>dbfile</strong>: Database filename (default: in-memory database).</p></li>
+<li><p><strong>keyword</strong>: The keyword argument name that triggers the plugin (default: ‘db’).</p></li>
+<li><p><strong>autocommit</strong>: Whether or not to commit outstanding transactions at the end of the request cycle (default: True).</p></li>
+<li><p><strong>dictrows</strong>: Whether or not to support dict-like access to row objects (default: True).</p></li>
+</ul>
+<p>You can override each of these values on a per-route basis:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/cache/:item&#39;</span><span class="p">,</span> <span class="n">sqlite</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;dbfile&#39;</span><span class="p">:</span> <span class="s1">&#39;:memory:&#39;</span><span class="p">})</span>
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>or install two plugins with different <code class="docutils literal notranslate"><span class="pre">keyword</span></code> settings to the same application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">Bottle</span><span class="p">()</span>
+<span class="n">test_db</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">Plugin</span><span class="p">(</span><span class="n">dbfile</span><span class="o">=</span><span class="s1">&#39;/tmp/test.db&#39;</span><span class="p">)</span>
+<span class="n">cache_db</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">Plugin</span><span class="p">(</span><span class="n">dbfile</span><span class="o">=</span><span class="s1">&#39;:memory:&#39;</span><span class="p">,</span> <span class="n">keyword</span><span class="o">=</span><span class="s1">&#39;cache&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">test_db</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">cache_db</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/show/:item&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/cache/:item&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Bottle</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">따라하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">설정 (초안)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../routing.html">요청 라우팅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stpl.html">SimpleTemplate 엔진</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API 참조</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">사용 가능한 플러그인 목록</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bottle-SQLite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="werkzeug.html">Bottle-Werkzeug</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial_app.html">따라하기: 할 일 목록 응용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../async.html">비동기 응용 입문</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">자주 묻는 질문</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">릴리스 노트와 변경 로그</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html#id2">기여자</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">개발자를 위해</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugindev.html">플러그인 개발 안내서</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">사용 가능한 플러그인 목록</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bottle-SQLite</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="werkzeug.html">Bottle-Werkzeug</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">사용 가능한 플러그인 목록</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">사용 가능한 플러그인 목록</a></li>
+      <li>Next: <a href="werkzeug.html" title="next chapter">Bottle-Werkzeug</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2020, Marcel Hellkamp.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/plugins/sqlite.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

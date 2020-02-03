@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>자주 묻는 질문 &#8212; Bottle 0.12.18 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="릴리스 노트와 변경 로그" href="changelog.html" />
+    <link rel="prev" title="간단 해법" href="recipes.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <span class="target" id="module-bottle"></span><div class="section" id="id1">
+<h1>자주 묻는 질문<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>보틀에 대해<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>복잡한 응용에 보틀이 적합한가?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>보틀은 작은 웹 응용 및 서비스를 시험하고 만들기 위해 설계된 <em>마이크로</em> 프레임워크다. 걸리적거리지 않고 일을 빨리 끝낼 수 있게 해 주지만 다른 프레임워크엔 있는 일부 고급 기능과 준비된 솔루션들(MVC, ORM, 양식 검사, 스캐폴딩, XML-RPC)이 빠져 있다. 보틀에 그런 기능들을 덧붙여서 복잡한 응용을 만드는 게 분명 가능하긴 하지만 그보단 <a class="reference external" href="http://pylonshq.com/">pylons</a>나 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>처럼 모든 걸 갖춘 웹 프레임워크 사용을 고려하는 게 좋다.</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>흔한 문제와 함정<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mod-wsgi-mod-python-template-not-found">
+<h3>mod_wsgi/mod_python에서 “Template Not Found”<a class="headerlink" href="#mod-wsgi-mod-python-template-not-found" title="Permalink to this headline">¶</a></h3>
+<p>보틀은 <code class="docutils literal notranslate"><span class="pre">./</span></code>와 <code class="docutils literal notranslate"><span class="pre">./views/</span></code>에서 템플릿을 찾는다. <a class="reference external" href="http://www.modpython.org/">mod_python</a> 내지 <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a> 환경에서는 Apache 설정에 따라 현재 디렉터리(<code class="docutils literal notranslate"><span class="pre">./</span></code>)가 달라진다. 템플릿 탐색 경로에 절대 경로를 추가해서 보틀이 올바른 경로를 탐색하도록 하면 된다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bottle</span><span class="o">.</span><span class="n">TEMPLATE_PATH</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;/absolut/path/to/templates/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>동적 라우트와 슬래시<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="tutorial.html#tutorial-dynamic-routes"><span class="std std-ref">동적 라우트 문법</span></a>에서 위치 토큰(<code class="docutils literal notranslate"><span class="pre">:name</span></code>)은 다음 슬래시 전의 전부에 걸린다. 정규 표현식 문법으로는 <code class="docutils literal notranslate"><span class="pre">[^/]+</span></code>와 동등하다. 슬래시도 받으려면 위치 토큰에 따로 정규 표현식 패턴을 추가해 줘야 한다. 예: <code class="docutils literal notranslate"><span class="pre">/images/:filepath#.*#</span></code>에는 <code class="docutils literal notranslate"><span class="pre">/images/icons/error.png</span></code>가 걸리지만 <code class="docutils literal notranslate"><span class="pre">/images/:filename</span></code>에는 안 걸린다.</p>
+</div>
+<div class="section" id="id6">
+<h3>역방향 프록시 문제<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>보틀이 공개 주소와 응용 위치를 알고 있는 경우에만 재지향과 URL 만들기가 동작한다. 보틀을 역방향 프록시나 로드 밸런서 뒤에서 돌리면 도중에 일부 정보가 없어질 수 있다. 예를 들어 <code class="docutils literal notranslate"><span class="pre">wsgi.url_scheme</span></code> 값이나 <code class="docutils literal notranslate"><span class="pre">Host</span></code> 헤더가 클라이언트의 실제 요청이 아니라 프록시의 로컬 요청을 반영할 수가 있다. 다음은 그 값들을 정정하는 걸 도와 주는 작은 WSGI 미들웨어 코드다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fix_environ_middleware</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">fixed_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;https&#39;</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HTTP_X_FORWARDED_HOST&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;example.com&#39;</span>
+    <span class="k">return</span> <span class="n">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">https_app</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">default_app</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">wsgi</span> <span class="o">=</span> <span class="n">fix_environ_middleware</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bottle</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">자주 묻는 질문</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">보틀에 대해</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">흔한 문제와 함정</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">릴리스 노트와 변경 로그</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id2">기여자</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">개발자를 위해</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="recipes.html" title="previous chapter">간단 해법</a></li>
+      <li>Next: <a href="changelog.html" title="next chapter">릴리스 노트와 변경 로그</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2020, Marcel Hellkamp.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/faq.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

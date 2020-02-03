@@ -1,0 +1,1644 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>API 참조 &#8212; Bottle 0.12.18 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="사용 가능한 플러그인 목록" href="plugins/index.html" />
+    <link rel="prev" title="SimpleTemplate 엔진" href="stpl.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bottle">
+<span id="api"></span><h1>API 참조<a class="headerlink" href="#module-bottle" title="Permalink to this headline">¶</a></h1>
+<p>대부분 자동 생성된 API 문서다. 보틀이 처음이라면 서술식으로 된
+<a class="reference internal" href="tutorial.html"><span class="doc">따라하기</span></a>가 더 도움이 될 수 있다.</p>
+<div class="section" id="id1">
+<h2>모듈들<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>모듈에는 여러 함수, 상수, 예외가 정의돼 있다.</p>
+<dl class="function">
+<dt id="bottle.debug">
+<code class="sig-name descname">debug</code><span class="sig-paren">(</span><em class="sig-param">mode=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>디버그 수준 변경.
+현재 지원하는 디버그 수준은 한 가지뿐이다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">app=None</em>, <em class="sig-param">server='wsgiref'</em>, <em class="sig-param">host='127.0.0.1'</em>, <em class="sig-param">port=8080</em>, <em class="sig-param">interval=1</em>, <em class="sig-param">reloader=False</em>, <em class="sig-param">quiet=False</em>, <em class="sig-param">plugins=None</em>, <em class="sig-param">debug=None</em>, <em class="sig-param">**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>서버 인스턴스 시작. 서버가 종료할 때까지 이 메소드는 블록 된다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>app</strong> – WSGI 응용 또는 <a class="reference internal" href="#bottle.load_app" title="bottle.load_app"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_app()</span></code></a>에서 지원하는
+대상 문자열. (기본값: <a class="reference internal" href="#bottle.default_app" title="bottle.default_app"><code class="xref py py-func docutils literal notranslate"><span class="pre">default_app()</span></code></a>)</p></li>
+<li><p><strong>server</strong> – 사용할 서버 어댑터. 유효한 이름은
+<code class="xref py py-data docutils literal notranslate"><span class="pre">server_names</span></code>의 키 참고. <code class="xref py py-class docutils literal notranslate"><span class="pre">ServerAdapter</span></code>
+서브클래스 전달해도 됨. (기본값: <cite>wsgiref</cite>)</p></li>
+<li><p><strong>host</strong> – 바인드 할 서버 주소. 외부 인터페이스 포함 모든
+인터페이스에 리슨 하려면 <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>. (기본값: 127.0.0.1)</p></li>
+<li><p><strong>port</strong> – 바인드 할 서버 포트. 1024 아래 값에는 루트 권한
+필요. (기본값: 8080)</p></li>
+<li><p><strong>reloader</strong> – 자동 재적재 서버 시작? (기본값: False)</p></li>
+<li><p><strong>interval</strong> – 자동 재적재 확인 간격. 초 단위. (기본값: 1)</p></li>
+<li><p><strong>quiet</strong> – stdout 및 stderr 출력 끄기? (기본값: False)</p></li>
+<li><p><strong>options</strong> – 서버 어댑터로 전달할 옵션들.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">**namespace</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>모듈을 임포트 하거나 모듈에서 객체 가져오기.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">package.module</span></code>: <cite>module</cite>을 모듈 객체로 반환.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack.mod:name</span></code>: <cite>pack.mod</cite>의 모듈 변수 <cite>name</cite> 반환.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack.mod:func()</span></code>:<cite>pack.mod.func()</cite> 호출하고 결과 반환.</p></li>
+</ul>
+<p>마지막 형식은 함수 호출뿐 아니라 임의 타입의 식도 받는다.
+이 함수에 전달한 키워드 인자들이 지역 변수로 사용 가능해진다.
+예: <code class="docutils literal notranslate"><span class="pre">import_string('re:compile(x)',</span> <span class="pre">x='[a-z]')</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.load_app">
+<code class="sig-name descname">load_app</code><span class="sig-paren">(</span><em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#load_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.load_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>모듈에서 보틀 응용을 적재하면서 임포트가 현재 기본 응용에 영향을
+주지 않도록 하고, 별도의 응용 객체를 반환한다. target 매개변수에
+대해선 <a class="reference internal" href="#bottle.load" title="bottle.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> 참고.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="bottle.request">
+<code class="sig-name descname">request</code><em class="property"> = &lt;LocalRequest: GET http://127.0.0.1/&gt;</em><a class="headerlink" href="#bottle.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>스레드에 안전한 <a class="reference internal" href="#bottle.LocalRequest" title="bottle.LocalRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalRequest</span></code></a> 인스턴스. 요청 콜백 내에서
+접근 시 이 인스턴스는 (다중 스레드 서버에서도) 항상 <em>현재</em> 요청을
+가리킨다.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="bottle.response">
+<code class="sig-name descname">response</code><em class="property"> = Content-Type: text/html; charset=UTF-8 </em><a class="headerlink" href="#bottle.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>스레드에 안전한 <a class="reference internal" href="#bottle.LocalResponse" title="bottle.LocalResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalResponse</span></code></a> 인스턴스. <em>현재</em> 요청에 대한
+HTTP 응답을 바꾸는 데 쓴다.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="bottle.HTTP_CODES">
+<code class="sig-name descname">HTTP_CODES</code><em class="property"> = {&lt;HTTPStatus.CONTINUE: 100&gt;: 'Continue', &lt;HTTPStatus.SWITCHING_PROTOCOLS: 101&gt;: 'Switching Protocols', &lt;HTTPStatus.PROCESSING: 102&gt;: 'Processing', &lt;HTTPStatus.OK: 200&gt;: 'OK', &lt;HTTPStatus.CREATED: 201&gt;: 'Created', &lt;HTTPStatus.ACCEPTED: 202&gt;: 'Accepted', &lt;HTTPStatus.NON_AUTHORITATIVE_INFORMATION: 203&gt;: 'Non-Authoritative Information', &lt;HTTPStatus.NO_CONTENT: 204&gt;: 'No Content', &lt;HTTPStatus.RESET_CONTENT: 205&gt;: 'Reset Content', &lt;HTTPStatus.PARTIAL_CONTENT: 206&gt;: 'Partial Content', &lt;HTTPStatus.MULTI_STATUS: 207&gt;: 'Multi-Status', &lt;HTTPStatus.ALREADY_REPORTED: 208&gt;: 'Already Reported', &lt;HTTPStatus.IM_USED: 226&gt;: 'IM Used', &lt;HTTPStatus.MULTIPLE_CHOICES: 300&gt;: 'Multiple Choices', &lt;HTTPStatus.MOVED_PERMANENTLY: 301&gt;: 'Moved Permanently', &lt;HTTPStatus.FOUND: 302&gt;: 'Found', &lt;HTTPStatus.SEE_OTHER: 303&gt;: 'See Other', &lt;HTTPStatus.NOT_MODIFIED: 304&gt;: 'Not Modified', &lt;HTTPStatus.USE_PROXY: 305&gt;: 'Use Proxy', &lt;HTTPStatus.TEMPORARY_REDIRECT: 307&gt;: 'Temporary Redirect', &lt;HTTPStatus.PERMANENT_REDIRECT: 308&gt;: 'Permanent Redirect', &lt;HTTPStatus.BAD_REQUEST: 400&gt;: 'Bad Request', &lt;HTTPStatus.UNAUTHORIZED: 401&gt;: 'Unauthorized', &lt;HTTPStatus.PAYMENT_REQUIRED: 402&gt;: 'Payment Required', &lt;HTTPStatus.FORBIDDEN: 403&gt;: 'Forbidden', &lt;HTTPStatus.NOT_FOUND: 404&gt;: 'Not Found', &lt;HTTPStatus.METHOD_NOT_ALLOWED: 405&gt;: 'Method Not Allowed', &lt;HTTPStatus.NOT_ACCEPTABLE: 406&gt;: 'Not Acceptable', &lt;HTTPStatus.PROXY_AUTHENTICATION_REQUIRED: 407&gt;: 'Proxy Authentication Required', &lt;HTTPStatus.REQUEST_TIMEOUT: 408&gt;: 'Request Timeout', &lt;HTTPStatus.CONFLICT: 409&gt;: 'Conflict', &lt;HTTPStatus.GONE: 410&gt;: 'Gone', &lt;HTTPStatus.LENGTH_REQUIRED: 411&gt;: 'Length Required', &lt;HTTPStatus.PRECONDITION_FAILED: 412&gt;: 'Precondition Failed', &lt;HTTPStatus.REQUEST_ENTITY_TOO_LARGE: 413&gt;: 'Request Entity Too Large', &lt;HTTPStatus.REQUEST_URI_TOO_LONG: 414&gt;: 'Request-URI Too Long', &lt;HTTPStatus.UNSUPPORTED_MEDIA_TYPE: 415&gt;: 'Unsupported Media Type', &lt;HTTPStatus.REQUESTED_RANGE_NOT_SATISFIABLE: 416&gt;: 'Requested Range Not Satisfiable', &lt;HTTPStatus.EXPECTATION_FAILED: 417&gt;: 'Expectation Failed', 418: &quot;I'm a teapot&quot;, &lt;HTTPStatus.UNPROCESSABLE_ENTITY: 422&gt;: 'Unprocessable Entity', &lt;HTTPStatus.LOCKED: 423&gt;: 'Locked', &lt;HTTPStatus.FAILED_DEPENDENCY: 424&gt;: 'Failed Dependency', &lt;HTTPStatus.UPGRADE_REQUIRED: 426&gt;: 'Upgrade Required', &lt;HTTPStatus.PRECONDITION_REQUIRED: 428&gt;: 'Precondition Required', &lt;HTTPStatus.TOO_MANY_REQUESTS: 429&gt;: 'Too Many Requests', &lt;HTTPStatus.REQUEST_HEADER_FIELDS_TOO_LARGE: 431&gt;: 'Request Header Fields Too Large', &lt;HTTPStatus.INTERNAL_SERVER_ERROR: 500&gt;: 'Internal Server Error', &lt;HTTPStatus.NOT_IMPLEMENTED: 501&gt;: 'Not Implemented', &lt;HTTPStatus.BAD_GATEWAY: 502&gt;: 'Bad Gateway', &lt;HTTPStatus.SERVICE_UNAVAILABLE: 503&gt;: 'Service Unavailable', &lt;HTTPStatus.GATEWAY_TIMEOUT: 504&gt;: 'Gateway Timeout', &lt;HTTPStatus.HTTP_VERSION_NOT_SUPPORTED: 505&gt;: 'HTTP Version Not Supported', &lt;HTTPStatus.VARIANT_ALSO_NEGOTIATES: 506&gt;: 'Variant Also Negotiates', &lt;HTTPStatus.INSUFFICIENT_STORAGE: 507&gt;: 'Insufficient Storage', &lt;HTTPStatus.LOOP_DETECTED: 508&gt;: 'Loop Detected', &lt;HTTPStatus.NOT_EXTENDED: 510&gt;: 'Not Extended', &lt;HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED: 511&gt;: 'Network Authentication Required'}</em><a class="headerlink" href="#bottle.HTTP_CODES" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTTP 상태 코드(예: 404)를 문구(예: ‘Not Found’)로 매핑 하는 dict</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.app">
+<code class="sig-name descname">app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bottle.app" title="Permalink to this definition">¶</a></dt>
+<dt id="bottle.default_app">
+<code class="sig-name descname">default_app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bottle.default_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>현재 <a class="reference internal" href="tutorial.html#default-app"><span class="std std-ref">기본 응용</span></a>을 반환. 실제로 이는 호출 가능한 <a class="reference internal" href="#bottle.AppStack" title="bottle.AppStack"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppStack</span></code></a> 인스턴스이며 스택 같은 API를 구현하고 있다.</p>
+</dd></dl>
+
+<div class="section" id="id2">
+<h3>라우팅<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>보틀은 <a class="reference internal" href="#bottle.Bottle" title="bottle.Bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code></a> 인스턴스의 스택을 유지하며 (<a class="reference internal" href="#bottle.app" title="bottle.app"><code class="xref py py-func docutils literal notranslate"><span class="pre">app()</span></code></a> 및 <a class="reference internal" href="#bottle.AppStack" title="bottle.AppStack"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppStack</span></code></a> 참고) 스택 최상단 인스턴스를 일부 모듈 층위 함수와 데코레이터에서 <em>기본 응용</em>으로 쓴다.</p>
+<dl class="function">
+<dt id="bottle.route">
+<code class="sig-name descname">route</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">method='GET'</em>, <em class="sig-param">callback=None</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.route" title="Permalink to this definition">¶</a></dt>
+<dt id="bottle.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.get" title="Permalink to this definition">¶</a></dt>
+<dt id="bottle.post">
+<code class="sig-name descname">post</code><span class="sig-paren">(</span><em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.post" title="Permalink to this definition">¶</a></dt>
+<dt id="bottle.put">
+<code class="sig-name descname">put</code><span class="sig-paren">(</span><em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.put" title="Permalink to this definition">¶</a></dt>
+<dt id="bottle.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>현재 기본 응용에 라우트를 설치하는 데코레이터. 자세한 내용은 <a class="reference internal" href="#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> 참고.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>현재 기본 응용에 오류 핸들러를 설치하는 데코레이터. 자세한 내용은 <a class="reference internal" href="#bottle.Bottle.error" title="bottle.Bottle.error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.error()</span></code></a> 참고.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="wsgi-http">
+<h3>WSGI 및 HTTP 유틸리티<a class="headerlink" href="#wsgi-http" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="bottle.parse_date">
+<code class="sig-name descname">parse_date</code><span class="sig-paren">(</span><em class="sig-param">ims</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#parse_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.parse_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>rfc1123, rfc850, asctime 형식 타임스탬프 파싱 해서 UTC 에포크 시간 반환.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.parse_auth">
+<code class="sig-name descname">parse_auth</code><span class="sig-paren">(</span><em class="sig-param">header</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#parse_auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.parse_auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>rfc2617 HTTP 인증 헤더 문자열(basic) 파싱 해서 (user,pass) 튜플 또는 None 반환.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.cookie_encode">
+<code class="sig-name descname">cookie_encode</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#cookie_encode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.cookie_encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>pickle 가능 객체 인코딩 및 서명. (바이트)열 반환.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.cookie_decode">
+<code class="sig-name descname">cookie_decode</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#cookie_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.cookie_decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>인코딩 된 문자열 검사 및 디코딩. 객체 또는 None 반환.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.cookie_is_encoded">
+<code class="sig-name descname">cookie_is_encoded</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#cookie_is_encoded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.cookie_is_encoded" title="Permalink to this definition">¶</a></dt>
+<dd><p>인자가 인코딩 된 쿠키처럼 보이면 True 반환.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.yieldroutes">
+<code class="sig-name descname">yieldroutes</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#yieldroutes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.yieldroutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>func 매개변수의 시그너처(이름, 인자)에 맞는 라우트를 내놓는
+제너레이터 반환. 함수가 선택적 키워드 인자를 받는 경우 여러 라우트를
+내놓을 수도 있다. 예를 보면 출력을 이해하기 쉽다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">()</span>         <span class="o">-&gt;</span> <span class="s1">&#39;/a&#39;</span>
+<span class="n">b</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>     <span class="o">-&gt;</span> <span class="s1">&#39;/b/&lt;x&gt;/&lt;y&gt;&#39;</span>
+<span class="n">c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>   <span class="o">-&gt;</span> <span class="s1">&#39;/c/&lt;x&gt;&#39;</span> <span class="n">및</span> <span class="s1">&#39;/c/&lt;x&gt;/&lt;y&gt;&#39;</span>
+<span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;/d&#39;</span> <span class="n">및</span> <span class="s1">&#39;/d/&lt;x&gt;&#39;</span> <span class="n">및</span> <span class="s1">&#39;/d/&lt;x&gt;/&lt;y&gt;&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.path_shift">
+<code class="sig-name descname">path_shift</code><span class="sig-paren">(</span><em class="sig-param">script_name</em>, <em class="sig-param">path_info</em>, <em class="sig-param">shift=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#path_shift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.path_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>PATH_INFO에서 SCRIPT_NAME으로 또는 반대로 경로 조각들을 이동.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>수정된 경로들.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>script_name</strong> – SCRIPT_NAME 경로.</p></li>
+<li><p><strong>path_info</strong> – PATH_INFO 경로.</p></li>
+<li><p><strong>shift</strong> – 옮길 경로 조각 수. 음수로 해서 이동 방향을
+바꿀 수도 있다. (기본값: 1)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h3>자료 구조<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bottle.MultiDict">
+<em class="property">class </em><code class="sig-name descname">MultiDict</code><span class="sig-paren">(</span><em class="sig-param">*a</em>, <em class="sig-param">**k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 dict는 키별로 여러 값을 저장하되 그 외는 보통 dict와 정확히
+똑같이 동작한다. 키를 주면 최신 값만 반환한다. 전체 값 리스트에
+접근하는 데 쓸 수 있는 별도의 메소드들이 있다.</p>
+<dl class="method">
+<dt id="bottle.MultiDict.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's keys<a class="reference internal" href="_modules/bottle.html#MultiDict.keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.values">
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; an object providing a view on D's values<a class="reference internal" href="_modules/bottle.html#MultiDict.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.items">
+<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's items<a class="reference internal" href="_modules/bottle.html#MultiDict.items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.iterkeys">
+<code class="sig-name descname">iterkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.iterkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.keys() -&gt; a set-like object providing a view on D’s keys</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.itervalues">
+<code class="sig-name descname">itervalues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.itervalues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.values() -&gt; an object providing a view on D’s values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.iteritems">
+<code class="sig-name descname">iteritems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.iteritems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.items() -&gt; a set-like object providing a view on D’s items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em>, <em class="sig-param">index=-1</em>, <em class="sig-param">type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>키에 대한 최신 값을 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>default</strong> – 키가 없거나 타입 변환이 실패한 경우 반환할
+기본값.</p></li>
+<li><p><strong>index</strong> – 사용 가능 값 리스트에 대한 색인.</p></li>
+<li><p><strong>type</strong> – 지정돼 있으면 그 콜러블을 이용해 값을 특정 타입으로
+캐스트 한다. 예외 발생 시 숨기고 기본값을 반환한다.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 키에 대한 값 리스트에 새 값을 추가.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.replace">
+<code class="sig-name descname">replace</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>값 리스트를 값 하나로 교체.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.getall">
+<code class="sig-name descname">getall</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#MultiDict.getall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.MultiDict.getall" title="Permalink to this definition">¶</a></dt>
+<dd><p>키에 대한 (비어 있을 수 있는) 값 리스트 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.getone">
+<code class="sig-name descname">getone</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em>, <em class="sig-param">index=-1</em>, <em class="sig-param">type=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.MultiDict.getone" title="Permalink to this definition">¶</a></dt>
+<dd><p>다른 multi-dict API (Django)를 흉내내는 WTForms용 에일리어스.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.MultiDict.getlist">
+<code class="sig-name descname">getlist</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.MultiDict.getlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>키에 대한 (비어 있을 수 있는) 값 리스트 반환.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.HeaderDict">
+<em class="property">class </em><code class="sig-name descname">HeaderDict</code><span class="sig-paren">(</span><em class="sig-param">*a</em>, <em class="sig-param">**ka</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HeaderDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HeaderDict" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.MultiDict" title="bottle.MultiDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiDict</span></code></a>의 대소문자 구별 없는 버전이며 원래처럼
+값을 덧붙이지 않고 이전 값을 교체함.</p>
+<dl class="method">
+<dt id="bottle.HeaderDict.append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HeaderDict.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HeaderDict.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 키에 대한 값 리스트에 새 값을 추가.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.HeaderDict.replace">
+<code class="sig-name descname">replace</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HeaderDict.replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HeaderDict.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>값 리스트를 값 하나로 교체.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.HeaderDict.getall">
+<code class="sig-name descname">getall</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HeaderDict.getall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HeaderDict.getall" title="Permalink to this definition">¶</a></dt>
+<dd><p>키에 대한 (비어 있을 수 있는) 값 리스트 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.HeaderDict.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em>, <em class="sig-param">index=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HeaderDict.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HeaderDict.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>키에 대한 최신 값을 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>default</strong> – 키가 없거나 타입 변환이 실패한 경우 반환할
+기본값.</p></li>
+<li><p><strong>index</strong> – 사용 가능 값 리스트에 대한 색인.</p></li>
+<li><p><strong>type</strong> – 지정돼 있으면 그 콜러블을 이용해 값을 특정 타입으로
+캐스트 한다. 예외 발생 시 숨기고 기본값을 반환한다.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.FormsDict">
+<em class="property">class </em><code class="sig-name descname">FormsDict</code><span class="sig-paren">(</span><em class="sig-param">*a</em>, <em class="sig-param">**k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FormsDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FormsDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>요청 양식 데이터를 저장하는 데 쓰는 <a class="reference internal" href="#bottle.MultiDict" title="bottle.MultiDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiDict</span></code></a>의
+서브클래스. 일반 dict 같은 항목 접근 방법(데이터를 그대로
+네이티브 문자열로 반환)에 더해서 이 컨테이너는 속성처럼 값에
+접근하는 것도 지원한다. 속성은 <a class="reference internal" href="#bottle.FormsDict.input_encoding" title="bottle.FormsDict.input_encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">input_encoding</span></code></a>(기본값:
+‘utf8’)에 맞도록 자동으로 디코딩 또는 재코딩 된다. 없는 속성은
+기본으로 빈 문자열을 내놓는다.</p>
+<dl class="attribute">
+<dt id="bottle.FormsDict.input_encoding">
+<code class="sig-name descname">input_encoding</code><em class="property"> = 'utf8'</em><a class="headerlink" href="#bottle.FormsDict.input_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>속성 값에 쓰는 인코딩.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FormsDict.recode_unicode">
+<code class="sig-name descname">recode_unicode</code><em class="property"> = True</em><a class="headerlink" href="#bottle.FormsDict.recode_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>참(기본값)이면 유니코드열을 먼저 <cite>latin1</cite>으로 인코딩 한 다음
+<a class="reference internal" href="#bottle.FormsDict.input_encoding" title="bottle.FormsDict.input_encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">input_encoding</span></code></a>에 맞게 디코딩 한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.FormsDict.decode">
+<code class="sig-name descname">decode</code><span class="sig-paren">(</span><em class="sig-param">encoding=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FormsDict.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FormsDict.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.FormsDict.input_encoding" title="bottle.FormsDict.input_encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">input_encoding</span></code></a>에 맞게 디코딩 또는 재코딩 된 전체
+키와 값의 사본 반환. 어떤 라이브러리(예: WTForms)는
+유니코드 딕셔너리를 원한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.FormsDict.getunicode">
+<code class="sig-name descname">getunicode</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">default=None</em>, <em class="sig-param">encoding=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FormsDict.getunicode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FormsDict.getunicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>유니코드열로 된 값, 또는 default 반환.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.WSGIHeaderDict">
+<em class="property">class </em><code class="sig-name descname">WSGIHeaderDict</code><span class="sig-paren">(</span><em class="sig-param">environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#WSGIHeaderDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.WSGIHeaderDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>WSGI environ dict를 포장해서 HTTP_* 필드에 편리하게 접근할 수 있게
+하는 dict 같은 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,
+3.x는 unicode)이며 키는 대소문자 구별이 없다. WSGI 환경에 네이티브
+아닌 문자열 값이 들어 있으면 무손실 ‘latin1’ 문자셋을 이용해
+디코딩 또는 인코딩 한다.</p>
+<p>관련 PEP가 바뀌는 경우에도 API가 안정적으로 유지될 것이다.
+현재 PEP 333, 444, 3333을 지원한다. (PEP 444는 네이티브 아닌
+문자열을 쓰는 유일한 PEP다.)</p>
+<dl class="attribute">
+<dt id="bottle.WSGIHeaderDict.cgikeys">
+<code class="sig-name descname">cgikeys</code><em class="property"> = ('CONTENT_TYPE', 'CONTENT_LENGTH')</em><a class="headerlink" href="#bottle.WSGIHeaderDict.cgikeys" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">HTTP_</span></code>로 시작하지 않는 키들의 목록.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.WSGIHeaderDict.raw">
+<code class="sig-name descname">raw</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#WSGIHeaderDict.raw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.WSGIHeaderDict.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>헤더 값을 그대로 (bytes 또는 unicode) 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.WSGIHeaderDict.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's keys<a class="reference internal" href="_modules/bottle.html#WSGIHeaderDict.keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.WSGIHeaderDict.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.AppStack">
+<em class="property">class </em><code class="sig-name descname">AppStack</code><a class="reference internal" href="_modules/bottle.html#AppStack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.AppStack" title="Permalink to this definition">¶</a></dt>
+<dd><p>스택 같은 리스트. 호출하면 스택 상단 항목 반환.</p>
+<dl class="method">
+<dt id="bottle.AppStack.pop">
+<code class="sig-name descname">pop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bottle.AppStack.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>현재 기본 응용을 반환하고 스택에서 제거.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.AppStack.push">
+<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#AppStack.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.AppStack.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>스택에 새 <a class="reference internal" href="#bottle.Bottle" title="bottle.Bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code></a> 인스턴스 추가.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.ResourceManager">
+<em class="property">class </em><code class="sig-name descname">ResourceManager</code><span class="sig-paren">(</span><em class="sig-param">base='./'</em>, <em class="sig-param">opener=&lt;built-in function open&gt;</em>, <em class="sig-param">cachemode='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ResourceManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.ResourceManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>탐색 경로 목록을 관리하고 응용 관련 자원(파일)을 찾아서
+여는 걸 돕는 클래스.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base</strong> – <a class="reference internal" href="#bottle.ResourceManager.add_path" title="bottle.ResourceManager.add_path"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_path()</span></code></a> 호출을 위한 기본값.</p></li>
+<li><p><strong>opener</strong> – 자원 여는 데 쓰는 콜러블.</p></li>
+<li><p><strong>cachemode</strong> – 어떤 탐색 결과를 캐싱 할지 제어. ‘all’,
+‘found’, ‘none’ 중 하나.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="bottle.ResourceManager.path">
+<code class="sig-name descname">path</code><em class="property"> = None</em><a class="headerlink" href="#bottle.ResourceManager.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>탐색 경로 리스트. 자세한 건 <a class="reference internal" href="#bottle.ResourceManager.add_path" title="bottle.ResourceManager.add_path"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_path()</span></code></a> 참고.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.ResourceManager.cache">
+<code class="sig-name descname">cache</code><em class="property"> = None</em><a class="headerlink" href="#bottle.ResourceManager.cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>결정된 경로의 캐시. <code class="docutils literal notranslate"><span class="pre">res.cache.clear()</span></code>로 캐시 비울 수 있음.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.ResourceManager.add_path">
+<code class="sig-name descname">add_path</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">base=None</em>, <em class="sig-param">index=None</em>, <em class="sig-param">create=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ResourceManager.add_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.ResourceManager.add_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>탐색 경로 리스트에 새 경로 추가. 존재하지 않는 경로면
+False 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – 새 탐색 경로. 상대 경로는 정규화된 절대 경로로
+바꾼다. 경로가 파일처럼 생겼으면 (<cite>/</cite>로 끝나지 않으면)
+파일명 부분을 없앤다.</p></li>
+<li><p><strong>base</strong> – 상대 탐색 경로를 절대 경로로 바꾸는 데 쓰는 경로.
+기본은 <code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code> 값인데, 그 기본값은 <code class="docutils literal notranslate"><span class="pre">os.getcwd()</span></code>.</p></li>
+<li><p><strong>index</strong> – 탐색 경로 리스트 내 위치. 기본은 마지막 색인
+(리스트에 덧붙이기).</p></li>
+</ul>
+</dd>
+</dl>
+<p><cite>base</cite> 매개변수는 파이썬 모듈 내지 패키지와 함께 설치된
+파일을 쉽게 참조할 수 있게 해 준다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">add_path</span><span class="p">(</span><span class="s1">&#39;./resources/&#39;</span><span class="p">,</span> <span class="vm">__file__</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.ResourceManager.lookup">
+<code class="sig-name descname">lookup</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ResourceManager.lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.ResourceManager.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>자원을 탐색해서 파일 절대 경로를 반환. 없으면 <cite>None</cite> 반환.</p>
+<p><a class="reference internal" href="#bottle.ResourceManager.path" title="bottle.ResourceManager.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a> 목록을 차례로 탐색한다. 처음 걸린 걸 반환한다.
+심볼릭 링크를 따라간다. 결과를 캐싱 해서 이후 검색 속도를
+높인다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.ResourceManager.open">
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">mode='r'</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ResourceManager.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.ResourceManager.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>자원을 찾아서 파일 객체 반환, 또는 IOError 던짐.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.FileUpload">
+<em class="property">class </em><code class="sig-name descname">FileUpload</code><span class="sig-paren">(</span><em class="sig-param">fileobj</em>, <em class="sig-param">name</em>, <em class="sig-param">filename</em>, <em class="sig-param">headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FileUpload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FileUpload" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bottle.FileUpload.file">
+<code class="sig-name descname">file</code><em class="property"> = None</em><a class="headerlink" href="#bottle.FileUpload.file" title="Permalink to this definition">¶</a></dt>
+<dd><p>열린 파일 (같은) 객체 (BytesIO 버퍼나 임시 파일)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FileUpload.name">
+<code class="sig-name descname">name</code><em class="property"> = None</em><a class="headerlink" href="#bottle.FileUpload.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>업로드 양식 필드 이름</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FileUpload.raw_filename">
+<code class="sig-name descname">raw_filename</code><em class="property"> = None</em><a class="headerlink" href="#bottle.FileUpload.raw_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>클라이언트가 보낸 그대로의 파일 이름 (안전하지 않은 문자 있을 수 있음)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FileUpload.headers">
+<code class="sig-name descname">headers</code><em class="property"> = None</em><a class="headerlink" href="#bottle.FileUpload.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>추가 헤더들(예: content-type) 있는 <a class="reference internal" href="#bottle.HeaderDict" title="bottle.HeaderDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderDict</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FileUpload.content_type">
+<code class="sig-name descname">content_type</code><a class="headerlink" href="#bottle.FileUpload.content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Content-Type’ 헤더의 현재 값.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FileUpload.content_length">
+<code class="sig-name descname">content_length</code><a class="headerlink" href="#bottle.FileUpload.content_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Content-Length’ 헤더의 현재 값.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.FileUpload.get_header">
+<code class="sig-name descname">get_header</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FileUpload.get_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FileUpload.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>멀티파트 부분 안의 헤더 값 반환.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.FileUpload.filename">
+<code class="sig-name descname">filename</code><a class="reference internal" href="_modules/bottle.html#FileUpload.filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FileUpload.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>클라이언트 파일 시스템 상의 파일 이름. 단 파일 시스템 호환성이
+보장되도록 정규화 돼 있음. 빈 파일 이름은 ‘empty’로 반환.</p>
+<p>최종 파일 이름에서는 ASCII 문자, 숫자, 대시, 밑줄, 마침표만
+허용한다. 가능한 경우 강세 표시를 없앤다. 공백을 대시 한 개로
+바꾼다. 앞이나 뒤의 마침표 및 대시를 제거한다. 파일 이름
+길이를 255문자로 제한한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.FileUpload.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">destination</em>, <em class="sig-param">overwrite=False</em>, <em class="sig-param">chunk_size=65536</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FileUpload.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FileUpload.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>파일을 디스크에 저장하거나 내용물을 열린 파일 (같은) 객체로
+복사한다. <em>destination</em>이 디렉터리면 경로에 <a class="reference internal" href="#bottle.FileUpload.filename" title="bottle.FileUpload.filename"><code class="xref py py-attr docutils literal notranslate"><span class="pre">filename</span></code></a>을
+덧붙인다. 기본적으로 기존 파일을 덮어 쓰지 않는다 (IOError).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>destination</strong> – 파일 경로나 디렉터리, 파일 (같은) 객체.</p></li>
+<li><p><strong>overwrite</strong> – 참이면 기본 파일을 교체. (기본값: False)</p></li>
+<li><p><strong>chunk_size</strong> – 한 번에 읽을 바이트 수. (기본값: 64kb)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h3>예외<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<dl class="exception">
+<dt id="bottle.BottleException">
+<em class="property">exception </em><code class="sig-name descname">BottleException</code><a class="reference internal" href="_modules/bottle.html#BottleException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BottleException" title="Permalink to this definition">¶</a></dt>
+<dd><p>보틀에서 쓰는 예외들의 베이스 클래스.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="bottle">
+<h2><a class="reference internal" href="#bottle.Bottle" title="bottle.Bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code></a> 클래스<a class="headerlink" href="#bottle" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bottle.Bottle">
+<em class="property">class </em><code class="sig-name descname">Bottle</code><span class="sig-paren">(</span><em class="sig-param">catchall=True</em>, <em class="sig-param">autojson=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle" title="Permalink to this definition">¶</a></dt>
+<dd><p>각 Bottle 객체는 하나의 구별된 웹 응용을 나타내며, 라우트와 콜백,
+플러그인, 자원, 설정으로 구성된다. 인스턴스는 호출 가능한 WSGI
+응용이다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>catchall</strong> – 참(기본)이면 모든 예외를 처리한다. 디버깅용
+미들웨어가 예외를 처리하게 하려면 끄면 된다.</p>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="bottle.Bottle.config">
+<code class="sig-name descname">config</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Bottle.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>앱 설정을 위한 <a class="reference internal" href="configuration.html#bottle.ConfigDict" title="bottle.ConfigDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Bottle.resources">
+<code class="sig-name descname">resources</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Bottle.resources" title="Permalink to this definition">¶</a></dt>
+<dd><p>응용 파일들을 위한 <a class="reference internal" href="#bottle.ResourceManager" title="bottle.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Bottle.catchall">
+<code class="sig-name descname">catchall</code><a class="headerlink" href="#bottle.Bottle.catchall" title="Permalink to this definition">¶</a></dt>
+<dd><p>참이면 대부분의 예외를 잡아서 <a class="reference internal" href="#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a>로 반환한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.add_hook">
+<code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>훅에 콜백 붙이기. 현재 세 가지 훅이 구현돼 있다.</p>
+<dl class="simple">
+<dt>before_request</dt><dd><p>각 요청 전에 한 번 실행. 요청 문맥은 사용할 수 있지만
+아직 라우팅은 이뤄지지 않은 상태.</p>
+</dd>
+<dt>after_request</dt><dd><p>각 요청 후에 그 결과와 상관없이 한 번 실행.</p>
+</dd>
+<dt>app_reset</dt><dd><p><a class="reference internal" href="#bottle.Bottle.reset" title="bottle.Bottle.reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.reset()</span></code></a>이 호출될 때마다 호출.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.remove_hook">
+<code class="sig-name descname">remove_hook</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.remove_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.remove_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>훅에서 콜백 제거.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.trigger_hook">
+<code class="sig-name descname">trigger_hook</code><span class="sig-paren">(</span><em class="sig-param">_Bottle__name</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.trigger_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.trigger_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>훅을 실행하고 결과 리스트 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.hook">
+<code class="sig-name descname">hook</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>훅에 콜백을 붙이는 데코레이터 반환. 자세한 내용은
+<a class="reference internal" href="#bottle.Bottle.add_hook" title="bottle.Bottle.add_hook"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_hook()</span></code></a> 참고.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.mount">
+<code class="sig-name descname">mount</code><span class="sig-paren">(</span><em class="sig-param">prefix</em>, <em class="sig-param">app</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.mount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.mount" title="Permalink to this definition">¶</a></dt>
+<dd><p>응용(<a class="reference internal" href="#bottle.Bottle" title="bottle.Bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code></a> 또는 단순 WSGI)을 특정 URL 프리픽스에
+마운트. 예:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root_app</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/admin/&#39;</span><span class="p">,</span> <span class="n">admin_app</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> – 경로 프리픽스 내지 <cite>마운트 지점</cite>. 슬래시로
+끝나면 그 슬래시가 꼭 있어야 함.</p></li>
+<li><p><strong>app</strong> – <a class="reference internal" href="#bottle.Bottle" title="bottle.Bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code></a> 인스턴스 또는 WSGI 응용.</p></li>
+</ul>
+</dd>
+</dl>
+<p>다른 매개변수들이 모두 하위 <a class="reference internal" href="#bottle.route" title="bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">route()</span></code></a> 호출로 전달된다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.merge">
+<code class="sig-name descname">merge</code><span class="sig-paren">(</span><em class="sig-param">routes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>다른 <a class="reference internal" href="#bottle.Bottle" title="bottle.Bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code></a> 응용의 라우트나 <a class="reference internal" href="#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 객체 리스트를
+이 응용으로 병합. 라우트의 ‘소유자’가 그대로 유지된다. 즉
+<a class="reference internal" href="#bottle.Route.app" title="bottle.Route.app"><code class="xref py py-data docutils literal notranslate"><span class="pre">Route.app</span></code></a> 속성이 바뀌지 않는다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.install">
+<code class="sig-name descname">install</code><span class="sig-paren">(</span><em class="sig-param">plugin</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.install" title="Permalink to this definition">¶</a></dt>
+<dd><p>plugin을 플러그인 목록에 추가하고 이 응용의 모든 라우트에
+적용될 수 있게 준비. plugin은 단순 데코레이터일 수도 있고
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Plugin</span></code> API를 구현하는 객체일 수도 있다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.uninstall">
+<code class="sig-name descname">uninstall</code><span class="sig-paren">(</span><em class="sig-param">plugin</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.uninstall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.uninstall" title="Permalink to this definition">¶</a></dt>
+<dd><p>플러그인 제거. 특정 플러그인을 제거하려면 인스턴스를 주면 되고,
+어떤 타입의 모든 플러그인을 제거하려면 그 타입 객체를, <code class="docutils literal notranslate"><span class="pre">name</span></code>
+속성이 일치하는 모든 플러그인을 제거하려면 문자열을, 모든
+플러그인을 제거하려면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 주면 된다. 제거된 플러그인
+목록을 반환한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><em class="sig-param">route=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>모든 라우트를 재설정(플러그인들을 강제로 재적용)하고 캐시
+모두 비우기. ID나 라우트 객체를 주면 그 특정 라우트만
+영향받는다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>응용과 설치된 모든 플러그인 닫기.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>같은 매개변수로 <a class="reference internal" href="#bottle.run" title="bottle.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> 호출.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.match">
+<code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param">environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>걸리는 라우트를 검색해서 (<a class="reference internal" href="#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> , urlargs) 튜플을
+반환. 두 번째 값은 URL에서 추출한 매개변수들을 담은 딕셔너리다.
+불일치 시 <a class="reference internal" href="#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a> (404/405)를 던진다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.get_url">
+<code class="sig-name descname">get_url</code><span class="sig-paren">(</span><em class="sig-param">routename</em>, <em class="sig-param">**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.get_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.get_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>지정한 라우트에 걸리는 문자열을 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.add_route">
+<code class="sig-name descname">add_route</code><span class="sig-paren">(</span><em class="sig-param">route</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.add_route"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.add_route" title="Permalink to this definition">¶</a></dt>
+<dd><p>라우트 객체 추가. 단 <a class="reference internal" href="#bottle.Route.app" title="bottle.Route.app"><code class="xref py py-data docutils literal notranslate"><span class="pre">Route.app</span></code></a> 속성은 바꾸지 않음.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.route">
+<code class="sig-name descname">route</code><span class="sig-paren">(</span><em class="sig-param">path=None</em>, <em class="sig-param">method='GET'</em>, <em class="sig-param">callback=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">apply=None</em>, <em class="sig-param">skip=None</em>, <em class="sig-param">**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.route"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.route" title="Permalink to this definition">¶</a></dt>
+<dd><p>요청 URL에 함수를 결속시키는 데코레이터. 예:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/hello/:name&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;Hello </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">:name</span></code> 부분은 와일드카드다. 자세한 문법은 <code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code>
+참고.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – 받을 요청 경로 또는 경로들의 목록. 경로를
+지정하지 않으면 함수 시그너처를 가지고 자동으로 생성한다.</p></li>
+<li><p><strong>method</strong> – 받을 HTTP 메소드(<cite>GET</cite>, <cite>POST</cite>, <cite>PUT</cite>, …) 또는
+메소드들의 목록. (기본값: <cite>GET</cite>)</p></li>
+<li><p><strong>callback</strong> – 데코레이터 문법을 피하기 위한 선택적 지름길.
+<code class="docutils literal notranslate"><span class="pre">route(...,</span> <span class="pre">callback=func)</span></code>가 <code class="docutils literal notranslate"><span class="pre">route(...)(func)</span></code>와 같다.</p></li>
+<li><p><strong>name</strong> – 이 라우트의 이름. (기본값: None)</p></li>
+<li><p><strong>apply</strong> – 데코레이터 또는 플러그인 또는 플러그인들의 목록.
+설치돼 있는 플러그인들에 더해서 라우트 콜백에 적용된다.</p></li>
+<li><p><strong>skip</strong> – 플러그인들, 플러그인 클래스들, 이름들의 목록.
+걸리는 플러그인은 이 라우트에 설치하지 않는다. <code class="docutils literal notranslate"><span class="pre">True</span></code>면
+모두 건너뛴다.</p></li>
+</ul>
+</dd>
+</dl>
+<p>추가 키워드 인자가 있으면 라우트별 설정에 저장돼서 플러그인들로
+전달된다. (<code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.apply()</span></code> 참고.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">path=None</em>, <em class="sig-param">method='GET'</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.get" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.route" title="bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">route()</span></code></a>와 같음.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.post">
+<code class="sig-name descname">post</code><span class="sig-paren">(</span><em class="sig-param">path=None</em>, <em class="sig-param">method='POST'</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.post" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.route" title="bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">route()</span></code></a>와 같되 method 매개변수가 <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.put">
+<code class="sig-name descname">put</code><span class="sig-paren">(</span><em class="sig-param">path=None</em>, <em class="sig-param">method='PUT'</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.put" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.route" title="bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">route()</span></code></a>와 같되 method 매개변수가 <code class="docutils literal notranslate"><span class="pre">PUT</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">path=None</em>, <em class="sig-param">method='DELETE'</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.route" title="bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">route()</span></code></a>와 같되 method 매개변수가 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">code=500</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>데코레이터: HTTP 오류 코드에 대한 출력 핸들러 등록</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Bottle.wsgi">
+<code class="sig-name descname">wsgi</code><span class="sig-paren">(</span><em class="sig-param">environ</em>, <em class="sig-param">start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.wsgi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.wsgi" title="Permalink to this definition">¶</a></dt>
+<dd><p>보틀의 WSGI 인터페이스.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.Route">
+<em class="property">class </em><code class="sig-name descname">Route</code><span class="sig-paren">(</span><em class="sig-param">app</em>, <em class="sig-param">rule</em>, <em class="sig-param">method</em>, <em class="sig-param">callback</em>, <em class="sig-param">name=None</em>, <em class="sig-param">plugins=None</em>, <em class="sig-param">skiplist=None</em>, <em class="sig-param">**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 클래스는 라우트 콜백과 라우트별 메타데이터 및 설정을 감싸고
+있으면서 필요에 따라 플러그인들을 적용한다. 또한 URL 경로 규칙을
+Router에서 쓸 수 있는 정규 표현식으로 바꾸는 일도 맡는다.</p>
+<dl class="attribute">
+<dt id="bottle.Route.app">
+<code class="sig-name descname">app</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.app" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 라우트가 설치된 응용.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.rule">
+<code class="sig-name descname">rule</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>경로 규칙 문자열. (예: <code class="docutils literal notranslate"><span class="pre">/wiki/:page</span></code>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.method">
+<code class="sig-name descname">method</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.method" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTTP 메소드 문자열. (예: <code class="docutils literal notranslate"><span class="pre">GET</span></code>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.callback">
+<code class="sig-name descname">callback</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>어떤 플러그인도 적용되지 않은 원래 콜백. 인트로스펙션에 유용함.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.name">
+<code class="sig-name descname">name</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>라우트의 이름. 지정돼 있지 않으면 <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.plugins">
+<code class="sig-name descname">plugins</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>라우트별 플러그인 목록. (<a class="reference internal" href="#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> 참고.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.skiplist">
+<code class="sig-name descname">skiplist</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.skiplist" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 라우트에 적용하지 않을 플러그인 목록. (<a class="reference internal" href="#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> 참고.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.config">
+<code class="sig-name descname">config</code><em class="property"> = None</em><a class="headerlink" href="#bottle.Route.config" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> 데코레이터에 추가로 준 키워드 인자들이
+이 딕셔너리에 저장된다. 라우트별 플러그인 설정 및 메타데이터에
+쓰인다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.Route.call">
+<code class="sig-name descname">call</code><a class="reference internal" href="_modules/bottle.html#Route.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>모든 플러그인이 적용된 라우트 콜백. 이 프로퍼티는 필요에 따라
+생성되며 캐싱 해서 이후 요청 처리 속도를 높인다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Route.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>캐싱 된 값이 있으면 잊기. 다음 <a class="reference internal" href="#bottle.Route.call" title="bottle.Route.call"><code class="xref py py-attr docutils literal notranslate"><span class="pre">call</span></code></a> 접근 때 모든
+플러그인이 재적용된다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Route.prepare">
+<code class="sig-name descname">prepare</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>모든 온디맨드 작업을 즉시 하기. (디버깅에 유용)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Route.all_plugins">
+<code class="sig-name descname">all_plugins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route.all_plugins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.all_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 라우트에 영향 주는 모든 플러그인 내놓기.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Route.get_undecorated_callback">
+<code class="sig-name descname">get_undecorated_callback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route.get_undecorated_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.get_undecorated_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>콜백 반환. 콜백이 데코레이터로 꾸민 함수면 원래 함수를
+복원하려고 시도한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Route.get_callback_args">
+<code class="sig-name descname">get_callback_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route.get_callback_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.get_callback_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>콜백이 키워드 인자로 (아마도) 받는 인자 이름들의 목록 반환.
+콜백이 데코레이터로 꾸민 함수면 인트로스펙션 전에 원래 함수를
+복원하려고 시도한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.Route.get_config">
+<code class="sig-name descname">get_config</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Route.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Route.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>설정 필드를 검색해서 그 값을 반환. 먼저 route.config를
+확인하고 다음으로 route.app.config 확인.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="request">
+<h2><a class="reference internal" href="#bottle.Request" title="bottle.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> 객체<a class="headerlink" href="#request" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#bottle.Request" title="bottle.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> 클래스는 WSGI 환경을 포장한 것이며 양식 데이터, 쿠키, 파일 업로드, 기타 메타데이터를 파싱 하고 접근하는 유용한 메소드들을 제공한다. 대부분 속성이 읽기 전용이다.</p>
+<dl class="attribute">
+<dt id="bottle.Request">
+<code class="sig-name descname">Request</code><a class="headerlink" href="#bottle.Request" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#bottle.BaseRequest" title="bottle.BaseRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">bottle.BaseRequest</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.BaseRequest">
+<em class="property">class </em><code class="sig-name descname">BaseRequest</code><span class="sig-paren">(</span><em class="sig-param">environ=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>WSGI 환경 딕셔너리들의 래퍼에 여러 편리한 접근 메소드와 프로퍼티를
+더한 것. 대부분 읽기 전용이다.</p>
+<p>요청에 새 속성을 추가하면 실제로는 환경 딕셔너리에
+(‘bottle.request.ext.&lt;name&gt;’으로) 추가된다. 요청별 데이터를
+저장하고 접근하는 권장 방식이다.</p>
+<dl class="attribute">
+<dt id="bottle.BaseRequest.MEMFILE_MAX">
+<code class="sig-name descname">MEMFILE_MAX</code><em class="property"> = 102400</em><a class="headerlink" href="#bottle.BaseRequest.MEMFILE_MAX" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.body" title="bottle.BaseRequest.body"><code class="xref py py-attr docutils literal notranslate"><span class="pre">body</span></code></a>를 위한 메모리 버퍼의 바이트 단위 최대 크기.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.environ">
+<code class="sig-name descname">environ</code><a class="headerlink" href="#bottle.BaseRequest.environ" title="Permalink to this definition">¶</a></dt>
+<dd><p>포장된 WSGI environ 딕셔너리. 유일한 진짜 속성이다.
+다른 속성들은 사실 모두 읽기 전용 프로퍼티다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.app">
+<code class="sig-name descname">app</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.app" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 요청을 처리 중인 보틀 응용.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.route">
+<code class="sig-name descname">route</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.route"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.route" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 요청에 걸린 보틀 <a class="reference internal" href="#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 객체.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.url_args">
+<code class="sig-name descname">url_args</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.url_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.url_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL에서 추출한 인자들.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.path">
+<em class="property">property </em><code class="sig-name descname">path</code><a class="headerlink" href="#bottle.BaseRequest.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">PATH_INFO</span></code> 값 앞에 슬래시를 딱 한 개 붙인 것. (이상
+동작 클라이언트에 대처하고 “빈 경로” 경우를 피하기 위해.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.method">
+<em class="property">property </em><code class="sig-name descname">method</code><a class="headerlink" href="#bottle.BaseRequest.method" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">REQUEST_METHOD</span></code> 값을 대문자 문자열로.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.headers">
+<code class="sig-name descname">headers</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>대소문자 구별 없이 HTTP 요청 헤더에 접근할 수 있게 해 주는
+<a class="reference internal" href="#bottle.WSGIHeaderDict" title="bottle.WSGIHeaderDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">WSGIHeaderDict</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.get_header">
+<code class="sig-name descname">get_header</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseRequest.get_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>요청 헤더의 값을 반환. 없으면 주어진 기본값 반환.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.cookies">
+<code class="sig-name descname">cookies</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.cookies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.cookies" title="Permalink to this definition">¶</a></dt>
+<dd><p>쿠키들을 파싱 해서 담은 <a class="reference internal" href="#bottle.FormsDict" title="bottle.FormsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormsDict</span></code></a>. 서명된 쿠키가
+디코딩 돼 있지 않다. 서명된 쿠키에는 <a class="reference internal" href="#bottle.BaseRequest.get_cookie" title="bottle.BaseRequest.get_cookie"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_cookie()</span></code></a> 사용.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.get_cookie">
+<code class="sig-name descname">get_cookie</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em>, <em class="sig-param">secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseRequest.get_cookie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.get_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>쿠키 내용물 반환. <cite>서명된 쿠키</cite>를 읽으려면 <cite>secret</cite>이 쿠키
+생성 시 사용한 값과 일치해야 한다.
+(<a class="reference internal" href="#bottle.BaseResponse.set_cookie" title="bottle.BaseResponse.set_cookie"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseResponse.set_cookie()</span></code></a> 참고.) 뭔가 잘못되면 (쿠키가
+없거나 서명이 틀리면) 기본값을 반환한다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.query">
+<code class="sig-name descname">query</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.query" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.query_string" title="bottle.BaseRequest.query_string"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query_string</span></code></a>을 파싱 해서 담은 <a class="reference internal" href="#bottle.FormsDict" title="bottle.FormsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormsDict</span></code></a>.
+이 값들을 “URL 인자”나 “GET 매개변수”라고도 하는데,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code>에서 제공하는 “URL 와일드카드”와 혼동하지
+말아야 한다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.forms">
+<code class="sig-name descname">forms</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.forms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.forms" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>url-encoded</cite>나 <cite>multipart/form-data</cite>로 인코딩 된 POST 또는
+PUT 요청 바디의 양식 값들을 파싱 한 것. <a class="reference internal" href="#bottle.FormsDict" title="bottle.FormsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormsDict</span></code></a>로
+결과를 반환한다. 모든 키와 값이 문자열이다. 파일 업로드는
+<a class="reference internal" href="#bottle.BaseRequest.files" title="bottle.BaseRequest.files"><code class="xref py py-attr docutils literal notranslate"><span class="pre">files</span></code></a>에 따로 저장된다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.params">
+<code class="sig-name descname">params</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.params" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.query" title="bottle.BaseRequest.query"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query</span></code></a>와 <a class="reference internal" href="#bottle.BaseRequest.forms" title="bottle.BaseRequest.forms"><code class="xref py py-attr docutils literal notranslate"><span class="pre">forms</span></code></a>의 값을 합친 <a class="reference internal" href="#bottle.FormsDict" title="bottle.FormsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormsDict</span></code></a>.
+파일 업로드는 <a class="reference internal" href="#bottle.BaseRequest.files" title="bottle.BaseRequest.files"><code class="xref py py-attr docutils literal notranslate"><span class="pre">files</span></code></a>에 저장된다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.files">
+<code class="sig-name descname">files</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.files" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>multipart/form-data</cite>로 인코딩 된 POST 또는 PUT 요청 바디에서
+파싱 한 파일 업로드. 값들이 <a class="reference internal" href="#bottle.FileUpload" title="bottle.FileUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileUpload</span></code></a>의 인스턴스다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.json">
+<code class="sig-name descname">json</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.json" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> 헤더가 <code class="docutils literal notranslate"><span class="pre">application/json</span></code>인 경우 이
+프로퍼티는 파싱 된 요청 바디 내용물을 담는다. 메모리 고갈을
+피하기 위해 <a class="reference internal" href="#bottle.BaseRequest.MEMFILE_MAX" title="bottle.BaseRequest.MEMFILE_MAX"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MEMFILE_MAX</span></code></a>보다 작은 요청만 처리한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.body">
+<em class="property">property </em><code class="sig-name descname">body</code><a class="headerlink" href="#bottle.BaseRequest.body" title="Permalink to this definition">¶</a></dt>
+<dd><p>seek 가능한 파일 같은 객체로 된 HTTP 요청 바디.
+<a class="reference internal" href="#bottle.BaseRequest.MEMFILE_MAX" title="bottle.BaseRequest.MEMFILE_MAX"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MEMFILE_MAX</span></code></a>에 따라 임시 파일 또는 <a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BytesIO</span></code></a>
+인스턴스다. 이 프로퍼티에 처음 접근할 때 환경 변수
+<code class="docutils literal notranslate"><span class="pre">wsgi.input</span></code>을 읽어서 교체한다. 이후 접근 시에는 그 파일
+객체에 <cite>seek(0)</cite>만 한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.chunked">
+<em class="property">property </em><code class="sig-name descname">chunked</code><a class="headerlink" href="#bottle.BaseRequest.chunked" title="Permalink to this definition">¶</a></dt>
+<dd><p>chunked 전송 인코딩이었으면 True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.GET">
+<code class="sig-name descname">GET</code><a class="headerlink" href="#bottle.BaseRequest.GET" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.query" title="bottle.BaseRequest.query"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query</span></code></a>의 별칭.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.POST">
+<code class="sig-name descname">POST</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.POST" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.forms" title="bottle.BaseRequest.forms"><code class="xref py py-attr docutils literal notranslate"><span class="pre">forms</span></code></a>와 <a class="reference internal" href="#bottle.BaseRequest.files" title="bottle.BaseRequest.files"><code class="xref py py-attr docutils literal notranslate"><span class="pre">files</span></code></a>의 값을 하나로 합친
+<a class="reference internal" href="#bottle.FormsDict" title="bottle.FormsDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormsDict</span></code></a>. 값이 문자열(양식 값) 또는
+<code class="xref py py-class docutils literal notranslate"><span class="pre">cgi.FieldStorage</span></code> 인스턴스(파일 업로드)다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.url">
+<em class="property">property </em><code class="sig-name descname">url</code><a class="headerlink" href="#bottle.BaseRequest.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>호스트 이름과 스킴을 포함한 전체 요청 URI. 앱이 역방향 프록시나
+로드 밸런서 뒤에서 도는데 이상한 결과가 나온다면
+<code class="docutils literal notranslate"><span class="pre">X-Forwarded-Host</span></code> 헤더가 올바로 설정되는지 확인해 보자.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseRequest.urlparts">
+<code class="sig-name descname">urlparts</code><a class="reference internal" href="_modules/bottle.html#BaseRequest.urlparts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.urlparts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.url" title="bottle.BaseRequest.url"><code class="xref py py-attr docutils literal notranslate"><span class="pre">url</span></code></a> 문자열을 <code class="xref py py-class docutils literal notranslate"><span class="pre">urlparse.SplitResult</span></code> 튜플로 만든 것.
+그 튜플에 (scheme, host, path, query_string, fragment)가 들어있는데
+fragment는 서버에게 보이지 않으므로 항상 비어 있다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.fullpath">
+<em class="property">property </em><code class="sig-name descname">fullpath</code><a class="headerlink" href="#bottle.BaseRequest.fullpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>(존재 시) <a class="reference internal" href="#bottle.BaseRequest.script_name" title="bottle.BaseRequest.script_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">script_name</span></code></a>을 포함한 요청 경로.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.query_string">
+<em class="property">property </em><code class="sig-name descname">query_string</code><a class="headerlink" href="#bottle.BaseRequest.query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL의 <a class="reference internal" href="#bottle.BaseRequest.query" title="bottle.BaseRequest.query"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query</span></code></a> 부분(<code class="docutils literal notranslate"><span class="pre">?</span></code>와 <code class="docutils literal notranslate"><span class="pre">#</span></code> 사이 전부)을 그대로
+문자열로 만든 것.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.script_name">
+<em class="property">property </em><code class="sig-name descname">script_name</code><a class="headerlink" href="#bottle.BaseRequest.script_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>응용을 호출하기 전에 상위 단계(서버 또는 라우팅 미들웨어)에서
+제거한 URL <cite>path</cite>의 첫 부분. 그 스크립트 경로 앞과 뒤에
+슬래시를 붙여서 반환한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.path_shift">
+<code class="sig-name descname">path_shift</code><span class="sig-paren">(</span><em class="sig-param">shift=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseRequest.path_shift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.path_shift" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.path" title="bottle.BaseRequest.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a>에서 <a class="reference internal" href="#bottle.BaseRequest.script_name" title="bottle.BaseRequest.script_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">script_name</span></code></a>으로 또는 반대로 경로
+조각들을 이동.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>shift</strong> – 옮길 경로 조각 수. 음수로 해서 이동 방향을 바꿀
+수도 있다. (기본값: 1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.content_length">
+<em class="property">property </em><code class="sig-name descname">content_length</code><a class="headerlink" href="#bottle.BaseRequest.content_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>정수로 된 요청 바디 길이. 이 헤더를 설정할 책임이 클라이언트에게
+있다. 설정하지 않았으면 바디의 실제 길이를 알 수 없으므로 -1을
+반환한다. 그 경우 <a class="reference internal" href="#bottle.BaseRequest.body" title="bottle.BaseRequest.body"><code class="xref py py-attr docutils literal notranslate"><span class="pre">body</span></code></a>가 비어 있게 된다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.content_type">
+<em class="property">property </em><code class="sig-name descname">content_type</code><a class="headerlink" href="#bottle.BaseRequest.content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>소문자로 된 Content-Type 헤더. (기본값: 빈 문자열)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.is_xhr">
+<em class="property">property </em><code class="sig-name descname">is_xhr</code><a class="headerlink" href="#bottle.BaseRequest.is_xhr" title="Permalink to this definition">¶</a></dt>
+<dd><p>XMLHttpRequest로 시작된 요청이면 True. 자바스크립트 라이브러리에서
+<cite>X-Requested-With</cite> 헤더를 지원하는 경우에만 동작한다. (인기 있는
+라이브러리들은 대부분 지원한다.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.is_ajax">
+<em class="property">property </em><code class="sig-name descname">is_ajax</code><a class="headerlink" href="#bottle.BaseRequest.is_ajax" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.is_xhr" title="bottle.BaseRequest.is_xhr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_xhr</span></code></a>의 별칭. “Ajax”는 올바른 용어가 아니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.auth">
+<em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#bottle.BaseRequest.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>(user, password) 튜플로 된 HTTP 인증 데이터. 이 구현체에선
+현재 basic 인증만 지원한다. (digest는 지원하지 않는다.)
+상위 수준에서 (가령 프론트엔드 웹 서버나 미들웨어에서) 인증이
+이뤄지는 경우 password 필드가 None이지만 user 필드는
+환경 변수 <code class="docutils literal notranslate"><span class="pre">REMOTE_USER</span></code>에서 찾아 넣는다. 오류 발생 시
+None을 반환한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.remote_route">
+<em class="property">property </em><code class="sig-name descname">remote_route</code><a class="headerlink" href="#bottle.BaseRequest.remote_route" title="Permalink to this definition">¶</a></dt>
+<dd><p>이 요청에 관련된 모든 IP 주소 목록. 클라이언트 IP로 시작해서
+0개 이상의 프록시가 따라온다. 모든 프록시에서 <code class="docutils literal notranslate"><span class="pre">X-Forwarded-For</span></code>
+헤더를 지원하는 경우에만 동작한다. 악의적 클라이언트가 이 정보를
+위조할 수 있다는 점에 유의하자.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.remote_addr">
+<em class="property">property </em><code class="sig-name descname">remote_addr</code><a class="headerlink" href="#bottle.BaseRequest.remote_addr" title="Permalink to this definition">¶</a></dt>
+<dd><p>문자열로 된 클라이언트 IP. 악의적 클라이언트가 이 정보를
+위조할 수 있다는 점에 유의하자.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseRequest.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseRequest.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseRequest.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.BaseRequest.environ" title="bottle.BaseRequest.environ"><code class="xref py py-attr docutils literal notranslate"><span class="pre">environ</span></code></a>을 얕게 복사한 새 <a class="reference internal" href="#bottle.Request" title="bottle.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> 반환.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>모듈 층위의 <a class="reference internal" href="#bottle.request" title="bottle.request"><code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.request</span></code></a>는 프록시 객체(<a class="reference internal" href="#bottle.LocalRequest" title="bottle.LocalRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalRequest</span></code></a>에 구현)이며 항상 <cite>현재</cite> 요청, 즉 현재 스레드에서 현재 요청 핸들러가 처리 중인 요청을 가리킨다. 이 <cite>스레드 로컬</cite> 덕분에 다중 스레드 환경에서 전역 인스턴스를 안전하게 이용할 수 있다.</p>
+<dl class="class">
+<dt id="bottle.LocalRequest">
+<em class="property">class </em><code class="sig-name descname">LocalRequest</code><span class="sig-paren">(</span><em class="sig-param">environ=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#LocalRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.LocalRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>스레드마다 각기 다른 속성 집합이 있는 <a class="reference internal" href="#bottle.BaseRequest" title="bottle.BaseRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequest</span></code></a>의
+스레드 로컬 서브클래스. 일반적으로 이 클래스의 전역 인스턴스는
+하나만(<a class="reference internal" href="#bottle.request" title="bottle.request"><code class="xref py py-data docutils literal notranslate"><span class="pre">request</span></code></a>) 있다. 요청/응답 처리 사이클 중 접근 시
+그 인스턴스는 (다중 스레드 서버에서도) 항상 <em>현재</em> 요청을
+가리킨다.</p>
+<dl class="method">
+<dt id="bottle.LocalRequest.bind">
+<code class="sig-name descname">bind</code><span class="sig-paren">(</span><em class="sig-param">environ=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.LocalRequest.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>WSGI environ 딕셔너리 포장.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.LocalRequest.environ">
+<em class="property">property </em><code class="sig-name descname">environ</code><a class="headerlink" href="#bottle.LocalRequest.environ" title="Permalink to this definition">¶</a></dt>
+<dd><p>스레드 로컬 프로퍼티</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt>
+<code class="sig-name descname">request</code><em class="property"> = &lt;LocalRequest: GET http://127.0.0.1/&gt;</em></dt>
+<dd><p>스레드에 안전한 <a class="reference internal" href="#bottle.LocalRequest" title="bottle.LocalRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalRequest</span></code></a> 인스턴스. 요청 콜백 내에서
+접근 시 이 인스턴스는 (다중 스레드 서버에서도) 항상 <em>현재</em> 요청을
+가리킨다.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="response">
+<h2><a class="reference internal" href="#bottle.Response" title="bottle.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a> 객체<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#bottle.Response" title="bottle.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a> 클래스는 클라이언트에게 보낼 HTTP 상태 코드와 헤더 및 쿠키를 담는다. <a class="reference internal" href="#bottle.request" title="bottle.request"><code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.request</span></code></a>와 비슷하게 스레드 로컬인 <a class="reference internal" href="#bottle.response" title="bottle.response"><code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.response</span></code></a> 인스턴스가 있어서 <cite>현재</cite> 응답을 조정하는 데 쓸 수 있다. 더불어 요청 핸들러 안에서 <a class="reference internal" href="#bottle.Response" title="bottle.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a> 인스턴스를 만들어 반환할 수도 있다. 그 경우 전역 인스턴스 대신 새로 만든 인스턴스에 정의된 헤더와 쿠키가 쓰인다.</p>
+<dl class="attribute">
+<dt id="bottle.Response">
+<code class="sig-name descname">Response</code><a class="headerlink" href="#bottle.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#bottle.BaseResponse" title="bottle.BaseResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">bottle.BaseResponse</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.BaseResponse">
+<em class="property">class </em><code class="sig-name descname">BaseResponse</code><span class="sig-paren">(</span><em class="sig-param">body=''</em>, <em class="sig-param">status=None</em>, <em class="sig-param">headers=None</em>, <em class="sig-param">**more_headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>응답 바디, 헤더, 쿠키 저장 클래스.</p>
+<p>이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict 같은 항목
+접근을 지원하지만 dict가 아니다. 무엇보다 응답에 반복문을 돌리면
+헤더가 아니라 바디의 부분들을 내놓는다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> – 지원 타입들 중 하나로 된 응답 바디.</p></li>
+<li><p><strong>status</strong> – HTTP 상태 코드(예: 200) 또는 이유 문구를
+포함한 상태 행(예: ‘200 OK’).</p></li>
+<li><p><strong>headers</strong> – 이름-값 쌍의 딕셔너리 또는 리스트.</p></li>
+</ul>
+</dd>
+</dl>
+<p>추가로 준 키워드 인자들이 헤더 목록에 추가된다. 헤더 이름의
+밑줄이 대시로 바뀐다.</p>
+<dl class="method">
+<dt id="bottle.BaseResponse.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><em class="sig-param">cls=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>자기 사본을 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.status_line">
+<em class="property">property </em><code class="sig-name descname">status_line</code><a class="headerlink" href="#bottle.BaseResponse.status_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>문자열로 된 HTTP 상태 행. (예: <code class="docutils literal notranslate"><span class="pre">404</span> <span class="pre">Not</span> <span class="pre">Found</span></code>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.status_code">
+<em class="property">property </em><code class="sig-name descname">status_code</code><a class="headerlink" href="#bottle.BaseResponse.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>정수로 된 HTTP 상태 코드. (예: 404)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.status">
+<em class="property">property </em><code class="sig-name descname">status</code><a class="headerlink" href="#bottle.BaseResponse.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTTP 응답 상태를 바꾸기 위한 쓰기 가능 프로퍼티. 숫자 코드
+(100-999) 또는 자체 이유 문구(예: “404 Brain not found”)가 있는
+문자열을 받는다. 그에 따라 <a class="reference internal" href="#bottle.BaseResponse.status_line" title="bottle.BaseResponse.status_line"><code class="xref py py-data docutils literal notranslate"><span class="pre">status_line</span></code></a>과
+<a class="reference internal" href="#bottle.BaseResponse.status_code" title="bottle.BaseResponse.status_code"><code class="xref py py-data docutils literal notranslate"><span class="pre">status_code</span></code></a>가 모두 갱신된다. 반환 값은 항상 상태
+문자열이다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.headers">
+<em class="property">property </em><code class="sig-name descname">headers</code><a class="headerlink" href="#bottle.BaseResponse.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#bottle.HeaderDict" title="bottle.HeaderDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderDict</span></code></a> 인스턴스. 응답 헤더들에 대한 대소문자
+구별 없는 dict 같은 뷰.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.get_header">
+<code class="sig-name descname">get_header</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.get_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>앞서 지정했던 헤더 값을 반환. 그 이름의 헤더가 없으면
+기본값 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.set_header">
+<code class="sig-name descname">set_header</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.set_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.set_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>새 응답 헤더 만들기. 앞서 같은 이름으로 지정한 헤더
+있으면 교체.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.add_header">
+<code class="sig-name descname">add_header</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.add_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.add_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>응답 헤더 추가. 중복을 제거하지 않음.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.iter_headers">
+<code class="sig-name descname">iter_headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.iter_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.iter_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>(헤더, 값) 튜플을 내놓는다. 현재 응답 상태 코드에 허용되지
+않는 헤더들은 건너뛴다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.headerlist">
+<em class="property">property </em><code class="sig-name descname">headerlist</code><a class="headerlink" href="#bottle.BaseResponse.headerlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>WSGI에 부합하는 (헤더, 값) 튜플 리스트.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseResponse.content_type">
+<code class="sig-name descname">content_type</code><a class="headerlink" href="#bottle.BaseResponse.content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Content-Type’ 헤더의 현재 값.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseResponse.content_length">
+<code class="sig-name descname">content_length</code><a class="headerlink" href="#bottle.BaseResponse.content_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Content-Length’ 헤더의 현재 값.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.BaseResponse.expires">
+<code class="sig-name descname">expires</code><a class="headerlink" href="#bottle.BaseResponse.expires" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Expires’ 헤더의 현재 값.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.charset">
+<em class="property">property </em><code class="sig-name descname">charset</code><a class="headerlink" href="#bottle.BaseResponse.charset" title="Permalink to this definition">¶</a></dt>
+<dd><p>content-type 헤더에 지정되는 문자셋 반환. (기본값: utf8)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.set_cookie">
+<code class="sig-name descname">set_cookie</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em>, <em class="sig-param">secret=None</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.set_cookie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.set_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>새 쿠키를 만들거나 기존 쿠키를 교체. <cite>secret</cite> 매개변수가
+설정돼 있으면 <cite>서명된 쿠키</cite>(아래에서 설명)를 만든다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – 쿠키 이름.</p></li>
+<li><p><strong>value</strong> – 쿠키 값.</p></li>
+<li><p><strong>secret</strong> – 서명된 쿠키에 필요한 서명 키.</p></li>
+</ul>
+</dd>
+</dl>
+<p>더불어 이 메소드는 <code class="xref py py-class docutils literal notranslate"><span class="pre">cookie.Morsel</span></code>에서 지원하는 모든
+RFC 2109 속성을 받는다. 다음이 포함된다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_age</strong> – 초 단위 최대 수명. (기본값: None)</p></li>
+<li><p><strong>expires</strong> – datetime 객체 또는 유닉스 타임스탬프. (기본값: None)</p></li>
+<li><p><strong>domain</strong> – 쿠키 읽는 게 허용되는 도메인.
+(기본값: 현재 도메인)</p></li>
+<li><p><strong>path</strong> – 쿠키를 지정한 경로로 제한. (기본값: 현재 경로)</p></li>
+<li><p><strong>secure</strong> – 쿠키를 HTTPS 연결로 제한. (기본값: 꺼짐)</p></li>
+<li><p><strong>httponly</strong> – 클라이언트 측 자바스크립트에서 이 쿠키를 읽지
+못하게 하기. (기본값: 꺼짐. 파이썬 2.6 이상 필요.)</p></li>
+</ul>
+</dd>
+</dl>
+<p><cite>expires</cite>와 <cite>max_age</cite> 어느 쪽도 설정하지 않으면 (기본값) 브라우저
+세션이 끝날 때 (브라우저 창이 닫히자마자) 쿠키가 만료된다.</p>
+<p>서명된 쿠키에는 pickle 가능한 어떤 객체든 저장할 수 있으며
+암호학적 서명을 해서 변조를 막는다. 대부분 브라우저에서 쿠키가
+4kb로 제한돼 있다는 걸 잊지 말자.</p>
+<p>경고: 서명된 쿠키가 암호화되는 건 아니다. (클라이언트가 여전히
+내용물을 볼 수 있다.) 그리고 복사 방지가 되는 것도 아니다.
+(클라이언트가 이전 쿠키를 재사용할 수 있다.) 주된 의도는
+pickle 처리를 안전하게 만드는 것이지, 클라이언트 쪽에 비밀 정보를
+저장하는 게 아니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseResponse.delete_cookie">
+<code class="sig-name descname">delete_cookie</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse.delete_cookie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse.delete_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>쿠키 삭제. 쿠키를 만들 때와 같은 <cite>domain</cite> 및 <cite>path</cite> 설정을
+쓰도록 하자.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bottle.LocalResponse">
+<em class="property">class </em><code class="sig-name descname">LocalResponse</code><span class="sig-paren">(</span><em class="sig-param">body=''</em>, <em class="sig-param">status=None</em>, <em class="sig-param">headers=None</em>, <em class="sig-param">**more_headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#LocalResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.LocalResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>스레드마다 각기 다른 속성 집합이 있는 <a class="reference internal" href="#bottle.BaseResponse" title="bottle.BaseResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseResponse</span></code></a>의
+스레드 로컬 서브클래스. 일반적으로 이 클래스의 전역 인스턴스는
+하나만(<a class="reference internal" href="#bottle.response" title="bottle.response"><code class="xref py py-data docutils literal notranslate"><span class="pre">response</span></code></a>) 있다. 요청/응답 처리 사이클 마지막에
+그 속성들을 사용해 HTTP 응답을 만든다.</p>
+<dl class="method">
+<dt id="bottle.LocalResponse.bind">
+<code class="sig-name descname">bind</code><span class="sig-paren">(</span><em class="sig-param">body=''</em>, <em class="sig-param">status=None</em>, <em class="sig-param">headers=None</em>, <em class="sig-param">**more_headers</em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.LocalResponse.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.LocalResponse.body">
+<em class="property">property </em><code class="sig-name descname">body</code><a class="headerlink" href="#bottle.LocalResponse.body" title="Permalink to this definition">¶</a></dt>
+<dd><p>스레드 로컬 프로퍼티</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>다음 두 클래스를 예외로 던질 수 있다. 둘의 중요한 차이는 <a class="reference internal" href="#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-class docutils literal notranslate"><span class="pre">HTTPError</span></code></a>에 대해선 보틀이 오류 핸들러를 호출하지만 <a class="reference internal" href="#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a>나 다른 응답 타입에 대해선 하지 않는다는 것이다.</p>
+<dl class="exception">
+<dt id="bottle.HTTPResponse">
+<em class="property">exception </em><code class="sig-name descname">HTTPResponse</code><span class="sig-paren">(</span><em class="sig-param">body=''</em>, <em class="sig-param">status=None</em>, <em class="sig-param">headers=None</em>, <em class="sig-param">**more_headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HTTPResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HTTPResponse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="bottle.HTTPError">
+<em class="property">exception </em><code class="sig-name descname">HTTPError</code><span class="sig-paren">(</span><em class="sig-param">status=None</em>, <em class="sig-param">body=None</em>, <em class="sig-param">exception=None</em>, <em class="sig-param">traceback=None</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#HTTPError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.HTTPError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>템플릿<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="plugins/index.html#module-bottle" title="bottle"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bottle</span></code></a>에서 지원하는 모든 템플릿 엔진은 <a class="reference internal" href="#bottle.BaseTemplate" title="bottle.BaseTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTemplate</span></code></a> API를 구현하고 있다. 그래서 응용 코드를 전혀 바꾸지 않고도 템플릿 엔진을 바꾸거나 혼용하는 게 가능하다.</p>
+<dl class="class">
+<dt id="bottle.BaseTemplate">
+<em class="property">class </em><code class="sig-name descname">BaseTemplate</code><span class="sig-paren">(</span><em class="sig-param">source=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">lookup=[]</em>, <em class="sig-param">encoding='utf8'</em>, <em class="sig-param">**settings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>템플릿 어댑터 기반 클래스이자 최소 API</p>
+<dl class="method">
+<dt id="bottle.BaseTemplate.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">source=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">lookup=[]</em>, <em class="sig-param">encoding='utf8'</em>, <em class="sig-param">**settings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>새 템플릿 만들기.
+source 매개변수(str 또는 buffer)가 없으면 name 인자를 이용해 템플릿
+파일 이름을 추측한다. 서브클래스에선 self.source 및/또는 self.filename이
+설정돼 있다고 상정할 수 있다. 둘 모두 문자열이다.
+lookup, encoding, settings 매개변수는 인스턴스 변수로 저장된다.
+lookup 매개변수는 디렉터리 경로들을 담은 리스트다.
+encoding 매개변수는 바이트열이나 파일을 디코딩 하는 데 쓰게 된다.
+settings 매개변수는 엔진별 설정들의 딕셔너리다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseTemplate.search">
+<em class="property">classmethod </em><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">lookup=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>lookup에 지정된 모든 디렉터리에서 이름을 탐색.
+일단 확장자 없이, 다음엔 많이 쓰는 확장자들로. 처음 걸린 것 반환.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseTemplate.global_config">
+<em class="property">classmethod </em><code class="sig-name descname">global_config</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate.global_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate.global_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>class.settings에 저장된 전역 설정을 읽거나 설정한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseTemplate.prepare">
+<code class="sig-name descname">prepare</code><span class="sig-paren">(</span><em class="sig-param">**options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>준비 동작(파싱, 캐싱, …) 수행.
+템플릿을 갱신하거나 설정을 바꾸기 위해 다시 호출하는 게
+가능해야 한다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.BaseTemplate.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>지정한 지역 변수들로 템플릿을 렌더링 해서 바이트열 또는
+유니코드열을 하나 반환한다. 바이트열인 경우 인코딩이
+self.encoding과 일치해야 한다. 이 메소드는 스레드에 안전해야
+한다. 지역 변수들이 딕셔너리로(args) 제공될 수도 있고 바로
+키워드로(kwargs) 제공될 수도 있다.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.view">
+<code class="sig-name descname">view</code><span class="sig-paren">(</span><em class="sig-param">tpl_name</em>, <em class="sig-param">**defaults</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>데코레이터: 핸들러 대신 템플릿을 렌더링.
+핸들러에서 다음처럼 동작을 제어할 수 있다.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>템플릿 변수들의 dict를 반환하면 그걸로 템플릿을 채운다.</p></li>
+<li><p>dict 아닌 뭔가를 반환하면 view 데코레이터가 템플릿을 처리하지
+않고 핸들러 결과를 그대로 반환한다. 예를 들어
+HTTPResponse(dict)를 반환해서 autojson이나 기타 castfilter로
+JSON을 얻을 수 있다.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="bottle.template">
+<code class="sig-name descname">template</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.template" title="Permalink to this definition">¶</a></dt>
+<dd><p>렌더링 된 템플릿을 문자열 이터레이터로 얻기.
+첫 번째 매개변수에 이름, 파일 이름, 템플릿 문자열을 쓸 수 있다.
+템플릿 렌더링 인자를 딕셔너리로 또는 (키워드 인자로) 직접
+줄 수 있다.</p>
+</dd></dl>
+
+<p>좋아하는 템플릿 엔진을 위한 어댑터를 작성하거나 기존 어댑터를 이용할 수 있다. 제대로 지원하는 템플릿 엔진이 현재 네 가지 있다.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 31%" />
+<col style="width: 20%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>클래스</p></th>
+<th class="head"><p>URL</p></th>
+<th class="head"><p>데코레이터</p></th>
+<th class="head"><p>렌더링 함수</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="stpl.html#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleTemplate</span></code></a></p></td>
+<td><p><a class="reference internal" href="stpl.html"><span class="doc">SimpleTemplate 엔진</span></a></p></td>
+<td><p><a class="reference internal" href="#bottle.view" title="bottle.view"><code class="xref py py-func docutils literal notranslate"><span class="pre">view()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#bottle.template" title="bottle.template"><code class="xref py py-func docutils literal notranslate"><span class="pre">template()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MakoTemplate</span></code></p></td>
+<td><p><a class="reference external" href="http://www.makotemplates.org">http://www.makotemplates.org</a></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">mako_view()</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">mako_template()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CheetahTemplate</span></code></p></td>
+<td><p><a class="reference external" href="http://www.cheetahtemplate.org/">http://www.cheetahtemplate.org/</a></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">cheetah_view()</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">cheetah_template()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Jinja2Template</span></code></p></td>
+<td><p><a class="reference external" href="http://jinja.pocoo.org/">http://jinja.pocoo.org/</a></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">jinja2_view()</span></code></p></td>
+<td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">jinja2_template()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">MakoTemplate</span></code>을 기본 템플릿 엔진으로 쓰려면 특수 데코레이터와 렌더링 함수를 임포트 하기만 하면 된다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">mako_view</span> <span class="k">as</span> <span class="n">view</span><span class="p">,</span> <span class="n">mako_template</span> <span class="k">as</span> <span class="n">template</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bottle</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API 참조</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">모듈들</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bottle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottle</span></code> 클래스</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code> 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">템플릿</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">릴리스 노트와 변경 로그</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id2">기여자</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">개발자를 위해</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="stpl.html" title="previous chapter">SimpleTemplate 엔진</a></li>
+      <li>Next: <a href="plugins/index.html" title="next chapter">사용 가능한 플러그인 목록</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2020, Marcel Hellkamp.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
