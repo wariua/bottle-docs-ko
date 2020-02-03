@@ -1,53 +1,53 @@
 ================================================================================
-Request Routing
+요청 라우팅
 ================================================================================
 
-Bottle uses a powerful routing engine to find the right callback for each request. The :ref:`tutorial <tutorial-routing>` shows you the basics. This document covers advanced techniques and rule mechanics in detail.
+보틀에선 강력한 라우팅 엔진을 이용해 각 요청에 맞는 콜백을 찾는다. :ref:`따라하기 <tutorial-routing>`\에서 기본 사용법을 볼 수 있다. 이 문서에선 고급 기법과 규칙 동작 방식을 자세히 다룬다.
 
-Rule Syntax
+규칙 문법
 --------------------------------------------------------------------------------
 
-The :class:`Router` distinguishes between two basic types of routes: **static routes** (e.g. ``/contact``) and **dynamic routes** (e.g. ``/hello/<name>``). A route that contains one or more *wildcards* it is considered dynamic. All other routes are static.
+:class:`Router`\에서는 두 가지 기본 라우트 종류, 즉 **정적 라우트**\(예: ``/contact``)와 **동적 라우트**\(예: ``/hello/<name>``)를 구별한다. 와일드카드를 하나 이상 가지고 있는 라우트를 동적이라고 한다. 나머지 라우트는 모두 정적이다.
 
 .. versionchanged:: 0.10
 
-The simplest form of a wildcard consists of a name enclosed in angle brackets (e.g. ``<name>``). The name should be unique for a given route and form a valid python identifier (alphanumeric, starting with a letter). This is because wildcards are used as keyword arguments for the request callback later.
+가장 간단한 형태의 와일드카드는 꺾쇠괄호 안에 이름이 있는 것(예: ``<name>``)이다. 이름은 해당 라우트에서 유일해야 하며 유효한 파이썬 식별자(알파벳 또는 숫자로만, 시작은 알파벳)여야 한다. 와일드카드가 이후 요청 콜백에서 키워드 인자로 쓰이기 때문이다.
 
-Each wildcard matches one or more characters, but stops at the first slash (``/``). This equals a regular expression of ``[^/]+`` and ensures that only one path segment is matched and routes with more than one wildcard stay unambiguous.
+각 와일드카드는 한 개 이상 문자에 일치하되 첫 번째 슬래시(``/``)에서 멈춘다. 정규 표현식 ``[^/]+``\와 동등한데, 경로 요소 하나에만 걸리고 와일드카드가 여럿인 라우트에서 모호함이 없게 된다.
 
-The rule ``/<action>/<item>`` matches as follows:
+``/<action>/<item>``\이라는 규칙은 다음처럼 걸린다.
 
 ============ =========================================
-Path         Result
+경로         결과
 ============ =========================================
 /save/123    ``{'action': 'save', 'item': '123'}``
-/save/123/   `No Match`
-/save/       `No Match`
-//123        `No Match`
+/save/123/   `불일치`
+/save/       `불일치`
+//123        `불일치`
 ============ =========================================
 
-You can change the exact behaviour in many ways using filters. This is described in the next section.
+필터를 쓰면 세밀한 동작 방식을 다양하게 바꿀 수 있다. 다음 절에서 설명한다.
 
-Wildcard Filters
+와일드카드 필터
 --------------------------------------------------------------------------------
 
 .. versionadded:: 0.10
 
-Filters are used to define more specific wildcards, and/or transform the matched part of the URL before it is passed to the callback. A filtered wildcard is declared as ``<name:filter>`` or ``<name:filter:config>``. The syntax for the optional config part depends on the filter used.
+필터를 사용해 와일드카드를 더 구체적으로 정의하고 URL의 걸린 부분이 콜백으로 전달되기 전에 변환을 할 수 있다. 필터 와일드카드는 ``<name:filter>`` 또는 ``<name:filter:config>`` 형식으로 선언한다. 선택적인 config 부분의 문법은 사용 필터에 따라 다르다.
 
-The following standard filters are implemented:
+다음 표준 필터들이 구현돼 있다.
 
-* **:int** matches (signed) digits and converts the value to integer.
-* **:float** similar to :int but for decimal numbers.
-* **:path** matches all characters including the slash character in a non-greedy way and may be used to match more than one path segment.
-* **:re[:exp]** allows you to specify a custom regular expression in the config field. The matched value is not modified.
+* **:int** (부호 있는) 숫자에만 걸리고 값을 정수로 변환한다.
+* **:float** :int와 비슷하되 부동소수점수다.
+* **:path** 슬래시 문자를 포함한 모든 문자들에 비탐욕 방식으로 걸리며 하나 이상의 경로 조각이 걸리게 하는 데 쓸 수 있다.
+* **:re[:exp]** config 필드에 원하는 정규 표현식을 지정할 수 있다. 걸린 값이 바뀌지 않는다.
 
-You can add your own filters to the router. All you need is a function that returns three elements: A regular expression string, a callable to convert the URL fragment to a python value, and a callable that does the opposite. The filter function is called with the configuration string as the only parameter and may parse it as needed::
+새로운 필터를 만들어서 라우터에 추가할 수도 있다. 세 가지를 반환하는 함수를 작성하면 되는데, 정규 표현식 문자열, URL 조각을 파이썬 값으로 변환하는 콜러블, 그리고 그 반대 동작을 하는 콜러블이다. 설정 문자열을 유일한 매개변수로 해서 필터 함수가 호출되며 필요한 대로 설정을 파싱 하면 된다. ::
 
     app = Bottle()
 
     def list_filter(config):
-        ''' Matches a comma separated list of numbers. '''
+        ''' 쉼표로 구분한 수 목록이 걸림. '''
         delimiter = config or ','
         regexp = r'\d+(%s\d)*' % re.escape(delimiter)
 
@@ -67,15 +67,15 @@ You can add your own filters to the router. All you need is a function that retu
             ...
 
 
-Legacy Syntax
+구식 문법
 --------------------------------------------------------------------------------
 
 .. versionchanged:: 0.10
 
-The new rule syntax was introduce in **Bottle 0.10** to simplify some common use cases, but the old syntax still works and you can find lot code examples still using it. The differences are best described by example:
+흔한 사용 방식들을 단순화하기 위해 **보틀 0.10**\에서 새로운 규칙 문법이 도입됐다. 하지만 이전 문법도 여전히 동작하며 많은 코드 예시에서 이전 문법을 쓰고 있는 걸 볼 수 있다. 예시를 보면 차이를 잘 알 수 있다.
 
 =================== ====================
-Old Syntax          New Syntax
+이전 문법           새 문법
 =================== ====================
 ``:name``           ``<name>``
 ``:name#regexp#``   ``<name:re:regexp>``
@@ -83,22 +83,22 @@ Old Syntax          New Syntax
 ``:##``             ``<:re>``
 =================== ====================
 
-Try to avoid the old syntax in future projects if you can. It is not currently deprecated, but will be eventually.
+향후 프로젝트에선 되도록 이전 문법을 피하자. 현재는 폐기 예정이 아니지만 언젠간 폐기될 것이다.
 
 
 
-Explicit routing configuration
+명시적 라우팅 설정
 --------------------------------------------------------------------------------
 
-Route decorator can also be directly called as method. This way provides flexibility in complex setups, allowing you to directly control, when and how routing configuration done.
+라우터 데코레이터를 직접 메소드로 호출할 수도 있다. 이렇게 하면 복잡한 구성을 위한 유연한 처리가 가능하며, 라우팅 설정이 이뤄지는 시점과 방법을 완전히 제어할 수 있다.
 
-Here is a basic example of explicit routing configuration for default bottle application::
+다음은 기본 보틀 응용에 대한 명시적인 라우팅 설정 예시다. ::
 
     def setup_routing():
         bottle.route('/', 'GET', index)
         bottle.route('/edit', ['GET', 'POST'], edit)
 
-In fact, any :class:`Bottle` instance routing can be configured same way::
+그리고 :class:`Bottle` 인스턴스의 라우팅도 같은 식으로 설정할 수 있다. ::
 
     def setup_routing(app):
         app.route('/new', ['GET', 'POST'], form_new)
