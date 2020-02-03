@@ -12,15 +12,15 @@
 .. _cherrypy: http://www.cherrypy.org
 .. _heroku: http://heroku.com
 
-Recipes
+간단 해법
 =============
 
-This is a collection of code snippets and examples for common use cases. 
+다음은 흔한 사용 방식을 위한 코드 조각과 예시 모음이다.
 
-Keeping track of Sessions
+세션 추적하기
 ----------------------------
 
-There is no built-in support for sessions because there is no *right* way to do it (in a micro framework). Depending on requirements and environment you could use beaker_ middleware with a fitting backend or implement it yourself. Here is an example for beaker sessions with a file-based backend::
+세션 내장 지원이 없다. (마이크로 프레임워크에선) 그걸 *제대로* 할 수 있는 방법이 없기 때문이다. 요구 사항과 환경에 따라서 beaker_ 미들웨어를 적당한 백엔드로 사용할 수도 있고 직접 구현할 수도 있다. 다음은 파일 기반 백엔드의 beaker 세션 예시다. ::
 
     import bottle
     from beaker.middleware import SessionMiddleware
@@ -42,28 +42,28 @@ There is no built-in support for sessions because there is no *right* way to do 
 
     bottle.run(app=app)
 
-Debugging with Style: Debugging Middleware
+폼나게 디버깅 하기: 디버깅용 미들웨어
 --------------------------------------------------------------------------------
 
-Bottle catches all Exceptions raised in your app code to prevent your WSGI server from crashing. If the built-in :func:`debug` mode is not enough and you need exceptions to propagate to a debugging middleware, you can turn off this behaviour::
+보틀에선 WSGI 서버가 죽는 걸 방지하기 위해 앱 코드에서 던진 모든 예외를 잡는다. 내장 :func:`debug` 모드로는 충분치 않아서 예외가 디버깅용 미들웨어로 전파되기를 바란다면 그 동작을 끌 수 있다. ::
 
     import bottle
     app = bottle.app() 
-    app.catchall = False #Now most exceptions are re-raised within bottle.
-    myapp = DebuggingMiddleware(app) #Replace this with a middleware of your choice (see below)
+    app.catchall = False # 이제 대부분의 예외를 보틀이 다시 던진다.
+    myapp = DebuggingMiddleware(app) # 원하는 미들웨어를 여기에 (아래 참고)
     bottle.run(app=myapp)
 
-Now, bottle only catches its own exceptions (:exc:`HTTPError`, :exc:`HTTPResponse` and :exc:`BottleException`) and your middleware can handle the rest.
+그러면 보틀은 자체 예외(:exc:`HTTPError`, :exc:`HTTPResponse`, :exc:`BottleException`)만 잡고 미들웨어에서 나머지를 처리할 수 있다.
 
-The werkzeug_ and paste_ libraries both ship with very powerful debugging WSGI middleware. Look at :class:`werkzeug.debug.DebuggedApplication` for werkzeug_ and :class:`paste.evalexception.middleware.EvalException` for paste_. They both allow you do inspect the stack and even execute python code within the stack context, so **do not use them in production**.
+werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. werkzeug_\에선 :class:`werkzeug.debug.DebuggedApplication`\를, paste_\에선 :class:`paste.evalexception.middleware.EvalException`\를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 **운용 환경에서 사용해선 안 된다**.
 
 
-Unit-Testing Bottle Applications
+보틀 응용 유닛 테스트
 --------------------------------------------------------------------------------
 
-Unit-testing is usually performed against methods defined in your web application without running a WSGI environment.
+일반적으로 WSGI 환경을 돌리지 않고 웹 응용에 정의된 메소드에 대해 유닛 테스트를 수행한다.
 
-A simple example using `Nose <http://readthedocs.org/docs/nose>`_::
+`Nose <http://readthedocs.org/docs/nose>`_\를 쓰는 간단한 예::
 
     import bottle
     
@@ -74,22 +74,22 @@ A simple example using `Nose <http://readthedocs.org/docs/nose>`_::
     if __name__ == '__main__':
         bottle.run()
 
-Test script::
+테스트 스크립트::
 
     import mywebapp
     
     def test_webapp_index():
         assert mywebapp.index() == 'Hi!'
 
-In the example the Bottle route() method is never executed - only index() is tested.
+이 예에서 보틀 route() 메소드는 절대 실행되지 않는다. index()만 테스트 한다.
 
 
-Functional Testing Bottle Applications
+보틀 응용 기능 테스트
 --------------------------------------------------------------------------------
 
-Any HTTP-based testing system can be used with a running WSGI server, but some testing frameworks work more intimately with WSGI, and provide the ability the call WSGI applications in a controlled environment, with tracebacks and full use of debugging tools. `Testing tools for WSGI <http://www.wsgi.org/en/latest/testing.html>`_ is a good starting point.
+동작 중인 WSGI 서버가 있으면 어떤 HTTP 기반 테스트 시스템이든 함께 사용 가능하지만 어떤 테스팅 프레임워크는 WSGI와 더 밀접하게 동작해서 통제된 환경에서 WSGI 응용을 호출할 수 있고, 트레이스백도 있고, 디버깅 도구들을 완전히 이용 가능하다. `WSGI 테스팅 도구들 <http://www.wsgi.org/en/latest/testing.html>`_\이 좋은 출발점이다.
 
-Example using `WebTest <http://webtest.pythonpaste.org/>`_ and `Nose <http://readthedocs.org/docs/nose>`_::
+`WebTest <http://webtest.pythonpaste.org/>`_\와 `Nose <http://readthedocs.org/docs/nose>`_\를 쓰는 예::
 
     from webtest import TestApp
     import mywebapp
@@ -97,21 +97,21 @@ Example using `WebTest <http://webtest.pythonpaste.org/>`_ and `Nose <http://rea
     def test_functional_login_logout():
         app = TestApp(mywebapp.app)
         
-        app.post('/login', {'user': 'foo', 'pass': 'bar'}) # log in and get a cookie
+        app.post('/login', {'user': 'foo', 'pass': 'bar'}) # 로그인 하고 쿠키 얻기
 
-        assert app.get('/admin').status == '200 OK'        # fetch a page successfully
+        assert app.get('/admin').status == '200 OK'        # 페이지 성공적으로 가져옴
 
-        app.get('/logout')                                 # log out
-        app.reset()                                        # drop the cookie
+        app.get('/logout')                                 # 로그아웃
+        app.reset()                                        # 쿠키 버리기
 
-        # fetch the same page, unsuccessfully
+        # 같은 페이지 가져오기, 이번엔 실패
         assert app.get('/admin').status == '401 Unauthorized'
 
 
-Embedding other WSGI Apps
+다른 WSGI 앱 내장하기
 --------------------------------------------------------------------------------
 
-This is not the recommend way (you should use a middleware in front of bottle to do this) but you can call other WSGI applications from within your bottle app and let bottle act as a pseudo-middleware. Here is an example::
+권장하는 방식은 아니지만 (보틀 앞에 미들웨어를 쓰는 게 맞다.) 보틀 앱 안에서 다른 WSGI 응용을 호출해서 보틀이 유사 미들웨어가 되게 할 수 있다. 다음이 예이다. ::
 
     from bottle import request, response, route
     subproject = SomeWSGIApplication()
@@ -127,19 +127,19 @@ This is not the recommend way (you should use a middleware in front of bottle to
                 response.add_header(key, value)
         return app(new_environ, start_response)
 
-Again, this is not the recommend way to implement subprojects. It is only here because many people asked for this and to show how bottle maps to WSGI.
+다시 말하지만 하위 프로젝트를 구현하기 위한 권장 방식이 아니다. 여러 사람들이 요청해서, 그리고 보틀이 어떻게 WSGI로 연결되는지 보여 주기 위해 있는 예시일 뿐이다.
 
 
-Ignore trailing slashes
+마지막 슬래시 무시하기
 --------------------------------------------------------------------------------
 
-For Bottle, ``/example`` and ``/example/`` are two different routes [1]_. To treat both URLs the same you can add two ``@route`` decorators::
+보틀에서 ``/example``\과 ``/example/``\은 서로 다른 라우트다. [1]_. 두 URL을 같은 걸로 취급하려면 ``@route`` 데코레이터를 두 개 붙여 주면 된다. ::
 
     @route('/test')
     @route('/test/')
     def test(): return 'Slash? no?'
 
-or add a WSGI middleware that strips trailing slashes from all URLs::
+아니면 모든 URL에서 끝의 슬래시를 없애 주는 WSGI 미들웨어를 추가할 수 있다. ::
 
     class StripPathMiddleware(object):
       def __init__(self, app):
@@ -152,19 +152,19 @@ or add a WSGI middleware that strips trailing slashes from all URLs::
     myapp = StripPathMiddleware(app)
     bottle.run(app=myapp)
 
-.. rubric:: Footnotes
+.. rubric:: 각주
 
-.. [1] Because they are. See <http://www.ietf.org/rfc/rfc3986.txt>
+.. [1] 왜냐면 다르기 때문이다. <http://www.ietf.org/rfc/rfc3986.txt> 참고.
 
 
-Keep-alive requests
--------------------
+킵얼라이브 요청
+---------------
 
 .. note::
 
-    For a more detailed explanation, see :doc:`async`.
+    자세한 설명은 :doc:`async` 참고.
 
-Several "push" mechanisms like XHR multipart need the ability to write response data without closing the connection in conjunction with the response header "Connection: keep-alive". WSGI does not easily lend itself to this behavior, but it is still possible to do so in Bottle by using the gevent_ async framework. Here is a sample that works with either the gevent_ HTTP server or the paste_ HTTP server (it may work with others, but I have not tried). Just change ``server='gevent'`` to ``server='paste'`` to use the paste_ server::
+XHR multipart 같은 여러 "푸시" 메커니즘을 위해선 응답 헤더 "Connection: keep-alive"를 써서 연결을 닫지 않고 응답 데이터를 써 보내는 게 가능해야 한다. WSGI가 그런 동작에 잘 들어맞지는 않지만 보틀에서 gevent_ 비동기 프레임워크를 써서 그렇게 하는 게 가능하긴 하다. 다음은 gevent_ HTTP 서버나 paste_ HTTP 서버에서 동작하는 예시다. (다른 서버에서도 동작할 수 있겠지만 시도해 보진 않았다.) paste_ 서버를 쓰려면 ``server='gevent'``\를 ``server='paste'``\로 바꿔 주기만 하면 된다. ::
 
     from gevent import monkey; monkey.patch_all()
 
@@ -181,37 +181,37 @@ Several "push" mechanisms like XHR multipart need the ability to write response 
     
     run(host='0.0.0.0', port=8080, server='gevent')
 
-If you browse to ``http://localhost:8080/stream``, you should see 'START', 'MIDDLE', and 'END' show up one at a time (rather than waiting 8 seconds to see them all at once).
+브라우저로 ``http://localhost:8080/stream``\을 열면 'START', 'MIDDLE', 'END'가 (8초 후에 한번에 다 나오는 게 아니라) 하나씩 나오는 걸 볼 수 있다.
 
-Gzip Compression in Bottle
---------------------------
-
-.. note::
-   For a detailed discussion, see compression_
-
-A common feature request is for Bottle to support Gzip compression, which speeds up sites by compressing static resources (like CSS and JS files) during a request.
-
-Supporting Gzip compression is not a straightforward proposition, due to a number of corner cases that crop up frequently. A proper Gzip implementation must:
-
-* Compress on the fly and be fast doing so.
-* Do not compress for browsers that don't support it.
-* Do not compress files that are compressed already (images, videos).
-* Do not compress dynamic files.
-* Support two differed compression algorithms (gzip and deflate).
-* Cache compressed files that don't change often.
-* De-validate the cache if one of the files changed anyway.
-* Make sure the cache does not get to big.
-* Do not cache small files because a disk seek would take longer than on-the-fly compression.
-
-Because of these requirements, it is the recommendation of the Bottle project that Gzip compression is best handled by the WSGI server Bottle runs on top of. WSGI servers such as cherrypy_ provide a GzipFilter_ middleware that can be used to accomplish this.
-
-
-Using the hooks plugin
+보틀에서 Gzip 압축하기
 ----------------------
 
-For example, if you want to allow Cross-Origin Resource Sharing for
-the content returned by all of your URL, you can use the hook
-decorator and setup a callback function::
+.. note::
+   자세한 논의는 compression_ 참고.
+
+보틀에 자주 요청되는 기능 하나가 Gzip 압축 지원이다. 요청 처리 시 (CSS나 JS 파일 같은) 정적 자원을 압축해서 사이트 속도를 높여 준다.
+
+Gzip 압축 지원은 여기 저기서 나오는 여러 예외 상황들 때문에 단순한 작업이 아니다. 제대로 된 Gzip 구현은
+
+* 실시간으로 압축해야 하고 그것도 빠르게 해야 한다.
+* 브라우저가 지원하지 않으면 압축하지 않아야 한다.
+* 이미 압축된 파일(그림, 영상)은 압축하지 않아야 한다.
+* 동적 파일을 압축하지 않아야 한다.
+* 두 가지 다른 압축 알고리즘(gzip, deflate)을 지원해야 한다.
+* 변화가 드문 파일의 압축 결과를 캐싱 해야 한다.
+* 한쪽 파일이 어떻게든 바뀌면 캐시를 무효화해야 한다.
+* 캐시가 너무 커지지 않도록 해야 한다.
+* 실시간으로 압축하는 것보다 디스크 탐색 시간이 더 길 수 있으므로 작은 파일은 캐싱 하지 않아야 한다.
+
+이런 요건들 때문에 보틀 프로젝트에서 권하는 건 보틀이 도는 WSGI 서버에서 Gzip 압축을 다루는 게 가장 좋다는 것이다. cherrypy_ 같은 WSGI 서버에서 이를 위해 쓸 수 있는 GzipFilter_ 미들웨어를 제공한다.
+
+
+훅 플러그인 쓰기
+----------------
+
+예를 들어 모든 URL에서 반환하는 컨텐츠에 대해 교차 출처 리소스
+공유(CORS)를 허용하고 싶다면 훅 데코레이터를 써서 콜백 함수를
+설치할 수 있다. ::
 
     from bottle import hook, response, route
 
@@ -227,22 +227,22 @@ decorator and setup a callback function::
     def say_bar():
         return {'type': 'friendly', 'content': 'Hi!'}
 
-You can also use the ``before_request`` to take an action before
-every function gets called.
+``before_request``\를 써서 함수가 호출되기 전에 어떤 동작을
+취할 수도 있다.
 
 
-Using Bottle with Heroku
-------------------------
+Heroku에서 보틀 쓰기
+--------------------
 
-Heroku_, a popular cloud application platform now provides support
-for running Python applications on their infastructure. 
+인기 있는 클라우드 응용 플랫폼인 Heroku_\에선 이제 그 인프라
+위에서 파이썬 응용을 돌리는 걸 지원한다.
 
-This recipe is based upon the `Heroku Quickstart 
-<http://devcenter.heroku.com/articles/quickstart>`_, 
-with Bottle specific code replacing the 
-`Write Your App <http://devcenter.heroku.com/articles/python#write_your_app>`_ 
-section of the `Getting Started with Python on Heroku/Cedar 
-<http://devcenter.heroku.com/articles/python>`_ guide::
+이 방법은 `Heroku Quickstart
+<http://devcenter.heroku.com/articles/quickstart>`_\를 바탕으로
+해서 `Getting Started with Python on Heroku/Cedar
+<http://devcenter.heroku.com/articles/python>`_ 안내서의
+`Write Your App <http://devcenter.heroku.com/articles/python#write_your_app>`_
+내용을 보틀에 맞는 코드로 바꾼 것이다. ::
 
     import os
     from bottle import route, run
@@ -253,5 +253,5 @@ section of the `Getting Started with Python on Heroku/Cedar
 
     run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
-Heroku's app stack passes the port that the application needs to
-listen on for requests, using the `os.environ` dictionary.
+Heroku의 앱 스택에선 `os.environ` 딕셔너리를 이용해서 응용에서
+요청을 받아야 하는 포트를 전달한다.
