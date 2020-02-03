@@ -1,9 +1,9 @@
 ﻿.. highlight:: python
 .. currentmodule:: bottle
 
-===========================
-Release Notes and Changelog
-===========================
+=======================
+릴리스 노트와 변경 로그
+=======================
 
 
 
@@ -147,8 +147,8 @@ This is an incomplete list of new features and improved functionality.
 
 
 
-============
-Contributors
-============
+======
+기여자
+======
 
 .. include:: ../AUTHORS
