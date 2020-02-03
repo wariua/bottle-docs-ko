@@ -10,24 +10,24 @@
 .. _flup: http://trac.saddi.com/flup
 .. _cherrypy: http://www.cherrypy.org/
 .. _WSGI: http://www.wsgi.org/
-.. _Python: http://python.org/
+.. _파이썬: http://python.org/
 .. _testing: https://github.com/defnull/bottle/raw/master/bottle.py
 .. _issue_tracker: https://github.com/defnull/bottle/issues
 .. _PyPI: http://pypi.python.org/pypi/bottle
 
-============================
-Bottle: Python Web Framework
-============================
+==========================
+보틀: 파이썬 웹 프레임워크
+==========================
 
-Bottle is a fast, simple and lightweight WSGI_ micro web-framework for Python_. It is distributed as a single file module and has no dependencies other than the `Python Standard Library <http://docs.python.org/library/>`_.
+보틀(Bottle)은 파이썬_\을 위한 빠르고 단순하며 경량인 WSGI_ 마이크로 웹 프레임워크다. 한 파일로 된 모듈로 배포되며 `파이썬 표준 라이브러리 <http://docs.python.org/library/>`_ 외에 다른 의존성이 없다.
 
 
-* **Routing:** Requests to function-call mapping with support for clean and  dynamic URLs.
-* **Templates:** Fast and pythonic :ref:`built-in template engine <tutorial-templates>` and support for mako_, jinja2_ and cheetah_ templates.
-* **Utilities:** Convenient access to form data, file uploads, cookies, headers and other HTTP-related metadata.
-* **Server:** Built-in HTTP development server and support for paste_, fapws3_, bjoern_, `Google App Engine <http://code.google.com/intl/en-US/appengine/>`_, cherrypy_ or any other WSGI_ capable HTTP server.
+* **라우팅:** 요청을 함수 호출로 연결해 준다. 깔끔한 동적 URL을 지원한다.
+* **템플릿:** 빠르고 파이썬스러운 :ref:`내장 템플릿 엔진 <tutorial-templates>`\이 있으며 mako_, jinja2_, cheetah_ 템플릿을 지원한다.
+* **유틸리티:** 폼 데이터, 파일 업로드, 쿠키, 헤더, 기타 HTTP 관련 메타데이터에 편리하게 접근할 수 있다.
+* **서버:** 개발용 HTTP 서버가 내장돼 있으며 paste_, fapws3_, bjoern_, `구글 앱 엔진 <http://code.google.com/intl/en-US/appengine/>`_, cherrypy_, 기타 WSGI_ 가능 HTTP 서버를 지원한다.
 
-.. rubric:: Example: "Hello World" in a bottle
+.. rubric:: 예시: 보틀에서 "Hello World"
 
 ::
 
@@ -39,19 +39,19 @@ Bottle is a fast, simple and lightweight WSGI_ micro web-framework for Python_. 
 
   run(host='localhost', port=8080)
 
-Run this script or paste it into a Python console, then point your browser to `<http://localhost:8080/hello/world>`_. That's it.
+이 스크립트를 실행하거나 파이썬 콘솔에 붙여 넣은 다음 브라우저로 `<http://localhost:8080/hello/world>`_\를 열어 보자. 다 됐다.
 
-.. rubric:: Download and Install
+.. rubric:: 내려받기 및 실행
 
 .. _download:
 
 .. __: https://github.com/defnull/bottle/raw/master/bottle.py
 
-Install the latest stable release via PyPI_ (``easy_install -U bottle``) or download `bottle.py`__ (unstable) into your project directory. There are no hard [1]_ dependencies other than the Python standard library. Bottle runs with **Python 2.5+ and 3.x**.
+PyPI_\를 통해 (``easy_install -U bottle``) 최신 안정 버전을 설치하거나 `bottle.py`__\(불안정 버전)을 프로젝트 디렉터리로 내려받으면 된다. 파이썬 표준 라이브러리 외 모듈에 대한 필수 의존성은 전혀 없다 [1]_. 보틀은 **파이썬 2.5+ 및 3.x**\에서 돈다.
 
-User's Guide
-===============
-Start here if you want to learn how to use the bottle framework for web development. If you have any questions not answered here, feel free to ask the `mailing list <mailto:bottlepy@googlegroups.com>`_.
+사용자 안내서
+=============
+웹 개발에 보틀 프레임워크를 이용하는 방법을 배우고 싶다면 여기서 시작하면 된다. 여기서 답을 얻지 못한 질문이 있으면 자유롭게 `메일링 리스트 <mailto:bottlepy@googlegroups.com>`_\에 물어 보면 된다.
 
 .. toctree::
    :maxdepth: 2
@@ -64,9 +64,9 @@ Start here if you want to learn how to use the bottle framework for web developm
    plugins/index
 
 
-Knowledge Base
-==============
-A collection of articles, guides and HOWTOs.
+지식 베이스
+===========
+글, 지침, 하우투 모음.
 
 .. toctree::
    :maxdepth: 2
@@ -77,10 +77,10 @@ A collection of articles, guides and HOWTOs.
    faq
 
 
-Development and Contribution
-============================
+개발 및 기여
+============
 
-These chapters are intended for developers interested in the bottle development and release workflow.
+보틀 개발 및 릴리스 절차에 관심 있는 개발자들을 위한 장이다.
 
 .. toctree::
    :maxdepth: 2
@@ -95,19 +95,19 @@ These chapters are intended for developers interested in the bottle development 
 
    plugins/index
 
-License
-==================
+라이선스
+========
 
-Code and documentation are available according to the MIT License:
+MIT 라이선스에 따라 코드와 문서를 사용할 수 있다.
 
 .. include:: ../LICENSE
   :literal:
 
-The Bottle logo however is *NOT* covered by that license. It is allowed to
-use the logo as a link to the bottle homepage or in direct context with
-the unmodified library. In all other cases please ask first.
+하지만 보틀 로고는 그 라이선스에 포함되지 *않는다*. 보틀 홈페이지에
+대한 링크로, 또는 변경 안 된 라이브러리에서 직접 사용하는 건 허용된다.
+그 외 경우에는 먼저 확인을 구하자.
 
-.. rubric:: Footnotes
+.. rubric:: 각주
 
-.. [1] Usage of the template or server adapter classes of course requires the corresponding template or server modules.
+.. [1] 템플릿이나 서버 어댑터 클래스 사용을 위해선 당연히 해당 템플릿이나 서버 모듈이 필요하다.
 
