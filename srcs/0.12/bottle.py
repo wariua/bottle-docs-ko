@@ -218,7 +218,7 @@ class lazy_attribute(object):
 
 
 class BottleException(Exception):
-    """ A base class for exceptions used by bottle. """
+    """ 보틀에서 쓰는 예외들의 베이스 클래스. """
     pass
 
 
@@ -459,30 +459,30 @@ class Router(object):
 
 
 class Route(object):
-    ''' This class wraps a route callback along with route specific metadata and
-        configuration and applies Plugins on demand. It is also responsible for
-        turing an URL path rule into a regular expression usable by the Router.
+    ''' 이 클래스는 라우트 콜백과 라우트별 메타데이터 및 설정을 감싸고
+        있으면서 필요에 따라 플러그인들을 적용한다. 또한 URL 경로 규칙을
+        Router에서 쓸 수 있는 정규 표현식으로 바꾸는 일도 맡는다.
     '''
 
     def __init__(self, app, rule, method, callback, name=None,
                  plugins=None, skiplist=None, **config):
-        #: The application this route is installed to.
+        #: 이 라우트가 설치된 응용.
         self.app = app
-        #: The path-rule string (e.g. ``/wiki/:page``).
+        #: 경로 규칙 문자열. (예: ``/wiki/:page``)
         self.rule = rule
-        #: The HTTP method as a string (e.g. ``GET``).
+        #: HTTP 메소드 문자열. (예: ``GET``)
         self.method = method
-        #: The original callback with no plugins applied. Useful for introspection.
+        #: 어떤 플러그인도 적용되지 않은 원래 콜백. 인트로스펙션에 유용함.
         self.callback = callback
-        #: The name of the route (if specified) or ``None``.
+        #: 라우트의 이름. 지정돼 있지 않으면 ``None``.
         self.name = name or None
-        #: A list of route-specific plugins (see :meth:`Bottle.route`).
+        #: 라우트별 플러그인 목록. (:meth:`Bottle.route` 참고.)
         self.plugins = plugins or []
-        #: A list of plugins to not apply to this route (see :meth:`Bottle.route`).
+        #: 이 라우트에 적용하지 않을 플러그인 목록. (:meth:`Bottle.route` 참고.)
         self.skiplist = skiplist or []
-        #: Additional keyword arguments passed to the :meth:`Bottle.route`
-        #: decorator are stored in this dictionary. Used for route-specific
-        #: plugin configuration and meta-data.
+        #: :meth:`Bottle.route` 데코레이터에 추가로 준 키워드 인자들이
+        #: 이 딕셔너리에 저장된다. 라우트별 플러그인 설정 및 메타데이터에
+        #: 쓰인다.
         self.config = ConfigDict().load_dict(config, make_namespaces=True)
 
     def __call__(self, *a, **ka):
@@ -493,17 +493,17 @@ class Route(object):
 
     @cached_property
     def call(self):
-        ''' The route callback with all plugins applied. This property is
-            created on demand and then cached to speed up subsequent requests.'''
+        ''' 모든 플러그인이 적용된 라우트 콜백. 이 프로퍼티는 필요에 따라
+            생성되며 캐싱 해서 이후 요청 처리 속도를 높인다.'''
         return self._make_callback()
 
     def reset(self):
-        ''' Forget any cached values. The next time :attr:`call` is accessed,
-            all plugins are re-applied. '''
+        ''' 캐싱 된 값이 있으면 잊기. 다음 :attr:`call` 접근 때 모든
+            플러그인이 재적용된다. '''
         self.__dict__.pop('call', None)
 
     def prepare(self):
-        ''' Do all on-demand work immediately (useful for debugging).'''
+        ''' 모든 온디맨드 작업을 즉시 하기. (디버깅에 유용)'''
         self.call
 
     @property
@@ -514,7 +514,7 @@ class Route(object):
                     apply=self.plugins, skip=self.skiplist)
 
     def all_plugins(self):
-        ''' Yield all Plugins affecting this route. '''
+        ''' 이 라우트에 영향 주는 모든 플러그인 내놓기. '''
         unique = set()
         for p in reversed(self.app.plugins + self.plugins):
             if True in self.skiplist: break
@@ -541,8 +541,8 @@ class Route(object):
         return callback
 
     def get_undecorated_callback(self):
-        ''' Return the callback. If the callback is a decorated function, try to
-            recover the original function. '''
+        ''' 콜백 반환. 콜백이 데코레이터로 꾸민 함수면 원래 함수를
+            복원하려고 시도한다. '''
         func = self.callback
         func = getattr(func, '__func__' if py3k else 'im_func', func)
         closure_attr = '__closure__' if py3k else 'func_closure'
@@ -551,14 +551,14 @@ class Route(object):
         return func
 
     def get_callback_args(self):
-        ''' Return a list of argument names the callback (most likely) accepts
-            as keyword arguments. If the callback is a decorated function, try
-            to recover the original function before inspection. '''
+        ''' 콜백이 키워드 인자로 (아마도) 받는 인자 이름들의 목록 반환.
+            콜백이 데코레이터로 꾸민 함수면 인트로스펙션 전에 원래 함수를
+            복원하려고 시도한다. '''
         return getargspec(self.get_undecorated_callback())[0]
 
     def get_config(self, key, default=None):
-        ''' Lookup a config field and return its value, first checking the
-            route.config, then route.app.config.'''
+        ''' 설정 필드를 검색해서 그 값을 반환. 먼저 route.config를
+            확인하고 다음으로 route.app.config 확인.'''
         for conf in (self.config, self.app.conifg):
             if key in conf: return conf[key]
         return default
@@ -578,17 +578,17 @@ class Route(object):
 
 
 class Bottle(object):
-    """ Each Bottle object represents a single, distinct web application and
-        consists of routes, callbacks, plugins, resources and configuration.
-        Instances are callable WSGI applications.
+    """ 각 Bottle 객체는 하나의 구별된 웹 응용을 나타내며, 라우트와 콜백,
+        플러그인, 자원, 설정으로 구성된다. 인스턴스는 호출 가능한 WSGI
+        응용이다.
 
-        :param catchall: If true (default), handle all exceptions. Turn off to
-                         let debugging middleware handle exceptions.
+        :param catchall: 참(기본)이면 모든 예외를 처리한다. 디버깅용
+                         미들웨어가 예외를 처리하게 하려면 끄면 된다.
     """
 
     def __init__(self, catchall=True, autojson=True):
 
-        #: A :class:`ConfigDict` for app specific configuration.
+        #: 앱 설정을 위한 :class:`ConfigDict`.
         self.config = ConfigDict()
         self.config._on_change = functools.partial(self.trigger_hook, 'config')
         self.config.meta_set('autojson', 'validate', bool)
@@ -596,7 +596,7 @@ class Bottle(object):
         self.config['catchall'] = catchall
         self.config['autojson'] = autojson
 
-        #: A :class:`ResourceManager` for application files
+        #: 응용 파일들을 위한 :class:`ResourceManager`.
         self.resources = ResourceManager()
 
         self.routes = [] # List of installed :class:`Route` instances.
@@ -609,7 +609,7 @@ class Bottle(object):
             self.install(JSONPlugin())
         self.install(TemplatePlugin())
 
-    #: If true, most exceptions are caught and returned as :exc:`HTTPError`
+    #: 참이면 대부분의 예외를 잡아서 :exc:`HTTPError`\로 반환한다.
     catchall = DictProperty('config', 'catchall')
 
     __hook_names = 'before_request', 'after_request', 'app_reset', 'config'
@@ -620,15 +620,15 @@ class Bottle(object):
         return dict((name, []) for name in self.__hook_names)
 
     def add_hook(self, name, func):
-        ''' Attach a callback to a hook. Three hooks are currently implemented:
+        ''' 훅에 콜백 붙이기. 현재 세 가지 훅이 구현돼 있다.
 
             before_request
-                Executed once before each request. The request context is
-                available, but no routing has happened yet.
+                각 요청 전에 한 번 실행. 요청 문맥은 사용할 수 있지만
+                아직 라우팅은 이뤄지지 않은 상태.
             after_request
-                Executed once after each request regardless of its outcome.
+                각 요청 후에 그 결과와 상관없이 한 번 실행.
             app_reset
-                Called whenever :meth:`Bottle.reset` is called.
+                :meth:`Bottle.reset`\이 호출될 때마다 호출.
         '''
         if name in self.__hook_reversed:
             self._hooks[name].insert(0, func)
@@ -636,34 +636,34 @@ class Bottle(object):
             self._hooks[name].append(func)
 
     def remove_hook(self, name, func):
-        ''' Remove a callback from a hook. '''
+        ''' 훅에서 콜백 제거. '''
         if name in self._hooks and func in self._hooks[name]:
             self._hooks[name].remove(func)
             return True
 
     def trigger_hook(self, __name, *args, **kwargs):
-        ''' Trigger a hook and return a list of results. '''
+        ''' 훅을 실행하고 결과 리스트 반환. '''
         return [hook(*args, **kwargs) for hook in self._hooks[__name][:]]
 
     def hook(self, name):
-        """ Return a decorator that attaches a callback to a hook. See
-            :meth:`add_hook` for details."""
+        """ 훅에 콜백을 붙이는 데코레이터 반환. 자세한 내용은
+            :meth:`add_hook` 참고."""
         def decorator(func):
             self.add_hook(name, func)
             return func
         return decorator
 
     def mount(self, prefix, app, **options):
-        ''' Mount an application (:class:`Bottle` or plain WSGI) to a specific
-            URL prefix. Example::
+        ''' 응용(:class:`Bottle` 또는 단순 WSGI)을 특정 URL 프리픽스에
+            마운트. 예::
 
                 root_app.mount('/admin/', admin_app)
 
-            :param prefix: path prefix or `mount-point`. If it ends in a slash,
-                that slash is mandatory.
-            :param app: an instance of :class:`Bottle` or a WSGI application.
+            :param prefix: 경로 프리픽스 내지 `마운트 지점`. 슬래시로
+                끝나면 그 슬래시가 꼭 있어야 함.
+            :param app: :class:`Bottle` 인스턴스 또는 WSGI 응용.
 
-            All other parameters are passed to the underlying :meth:`route` call.
+            다른 매개변수들이 모두 하위 :meth:`route` 호출로 전달된다.
         '''
         if isinstance(app, basestring):
             depr('Parameter order of Bottle.mount() changed.', True) # 0.10
@@ -702,19 +702,18 @@ class Bottle(object):
             self.route('/' + '/'.join(segments), **options)
 
     def merge(self, routes):
-        ''' Merge the routes of another :class:`Bottle` application or a list of
-            :class:`Route` objects into this application. The routes keep their
-            'owner', meaning that the :data:`Route.app` attribute is not
-            changed. '''
+        ''' 다른 :class:`Bottle` 응용의 라우트나 :class:`Route` 객체 리스트를
+            이 응용으로 병합. 라우트의 '소유자'가 그대로 유지된다. 즉
+            :data:`Route.app` 속성이 바뀌지 않는다. '''
         if isinstance(routes, Bottle):
             routes = routes.routes
         for route in routes:
             self.add_route(route)
 
     def install(self, plugin):
-        ''' Add a plugin to the list of plugins and prepare it for being
-            applied to all routes of this application. A plugin may be a simple
-            decorator or an object that implements the :class:`Plugin` API.
+        ''' plugin을 플러그인 목록에 추가하고 이 응용의 모든 라우트에
+            적용될 수 있게 준비. plugin은 단순 데코레이터일 수도 있고
+            :class:`Plugin` API를 구현하는 객체일 수도 있다.
         '''
         if hasattr(plugin, 'setup'): plugin.setup(self)
         if not callable(plugin) and not hasattr(plugin, 'apply'):
@@ -724,10 +723,11 @@ class Bottle(object):
         return plugin
 
     def uninstall(self, plugin):
-        ''' Uninstall plugins. Pass an instance to remove a specific plugin, a type
-            object to remove all plugins that match that type, a string to remove
-            all plugins with a matching ``name`` attribute or ``True`` to remove all
-            plugins. Return the list of removed plugins. '''
+        ''' 플러그인 제거. 특정 플러그인을 제거하려면 인스턴스를 주면 되고,
+            어떤 타입의 모든 플러그인을 제거하려면 그 타입 객체를, ``name``
+            속성이 일치하는 모든 플러그인을 제거하려면 문자열을, 모든
+            플러그인을 제거하려면 ``True``\를 주면 된다. 제거된 플러그인
+            목록을 반환한다. '''
         removed, remove = [], plugin
         for i, plugin in list(enumerate(self.plugins))[::-1]:
             if remove is True or remove is plugin or remove is type(plugin) \
@@ -739,9 +739,9 @@ class Bottle(object):
         return removed
 
     def reset(self, route=None):
-        ''' Reset all routes (force plugins to be re-applied) and clear all
-            caches. If an ID or route object is given, only that specific route
-            is affected. '''
+        ''' 모든 라우트를 재설정(플러그인들을 강제로 재적용)하고 캐시
+            모두 비우기. ID나 라우트 객체를 주면 그 특정 라우트만
+            영향받는다. '''
         if route is None: routes = self.routes
         elif isinstance(route, Route): routes = [route]
         else: routes = [self.routes[route]]
@@ -751,60 +751,59 @@ class Bottle(object):
         self.trigger_hook('app_reset')
 
     def close(self):
-        ''' Close the application and all installed plugins. '''
+        ''' 응용과 설치된 모든 플러그인 닫기. '''
         for plugin in self.plugins:
             if hasattr(plugin, 'close'): plugin.close()
         self.stopped = True
 
     def run(self, **kwargs):
-        ''' Calls :func:`run` with the same parameters. '''
+        ''' 같은 매개변수로 :func:`run` 호출. '''
         run(self, **kwargs)
 
     def match(self, environ):
-        """ Search for a matching route and return a (:class:`Route` , urlargs)
-            tuple. The second value is a dictionary with parameters extracted
-            from the URL. Raise :exc:`HTTPError` (404/405) on a non-match."""
+        """ 걸리는 라우트를 검색해서 (:class:`Route` , urlargs) 튜플을
+            반환. 두 번째 값은 URL에서 추출한 매개변수들을 담은 딕셔너리다.
+            불일치 시 :exc:`HTTPError` (404/405)를 던진다."""
         return self.router.match(environ)
 
     def get_url(self, routename, **kargs):
-        """ Return a string that matches a named route """
+        """ 지정한 라우트에 걸리는 문자열을 반환. """
         scriptname = request.environ.get('SCRIPT_NAME', '').strip('/') + '/'
         location = self.router.build(routename, **kargs).lstrip('/')
         return urljoin(urljoin('/', scriptname), location)
 
     def add_route(self, route):
-        ''' Add a route object, but do not change the :data:`Route.app`
-            attribute.'''
+        ''' 라우트 객체 추가. 단 :data:`Route.app` 속성은 바꾸지 않음. '''
         self.routes.append(route)
         self.router.add(route.rule, route.method, route, name=route.name)
         if DEBUG: route.prepare()
 
     def route(self, path=None, method='GET', callback=None, name=None,
               apply=None, skip=None, **config):
-        """ A decorator to bind a function to a request URL. Example::
+        """ 요청 URL에 함수를 결속시키는 데코레이터. 예::
 
                 @app.route('/hello/:name')
                 def hello(name):
                     return 'Hello %s' % name
 
-            The ``:name`` part is a wildcard. See :class:`Router` for syntax
-            details.
+            ``:name`` 부분은 와일드카드다. 자세한 문법은 :class:`Router`
+            참고.
 
-            :param path: Request path or a list of paths to listen to. If no
-              path is specified, it is automatically generated from the
-              signature of the function.
-            :param method: HTTP method (`GET`, `POST`, `PUT`, ...) or a list of
-              methods to listen to. (default: `GET`)
-            :param callback: An optional shortcut to avoid the decorator
-              syntax. ``route(..., callback=func)`` equals ``route(...)(func)``
-            :param name: The name for this route. (default: None)
-            :param apply: A decorator or plugin or a list of plugins. These are
-              applied to the route callback in addition to installed plugins.
-            :param skip: A list of plugins, plugin classes or names. Matching
-              plugins are not installed to this route. ``True`` skips all.
+            :param path: 받을 요청 경로 또는 경로들의 목록. 경로를
+              지정하지 않으면 함수 시그너처를 가지고 자동으로 생성한다.
+            :param method: 받을 HTTP 메소드(`GET`, `POST`, `PUT`, ...) 또는
+              메소드들의 목록. (기본값: `GET`)
+            :param callback: 데코레이터 문법을 피하기 위한 선택적 지름길.
+              ``route(..., callback=func)``\가 ``route(...)(func)``\와 같다.
+            :param name: 이 라우트의 이름. (기본값: None)
+            :param apply: 데코레이터 또는 플러그인 또는 플러그인들의 목록.
+               설치돼 있는 플러그인들에 더해서 라우트 콜백에 적용된다.
+            :param skip: 플러그인들, 플러그인 클래스들, 이름들의 목록.
+              걸리는 플러그인은 이 라우트에 설치하지 않는다. ``True``\면
+              모두 건너뛴다.
 
-            Any additional keyword arguments are stored as route-specific
-            configuration and passed to plugins (see :meth:`Plugin.apply`).
+            추가 키워드 인자가 있으면 라우트별 설정에 저장돼서 플러그인들로
+            전달된다. (:meth:`Plugin.apply` 참고.)
         """
         if callable(path): path, callback = None, path
         plugins = makelist(apply)
@@ -822,23 +821,23 @@ class Bottle(object):
         return decorator(callback) if callback else decorator
 
     def get(self, path=None, method='GET', **options):
-        """ Equals :meth:`route`. """
+        """ :meth:`route`\와 같음. """
         return self.route(path, method, **options)
 
     def post(self, path=None, method='POST', **options):
-        """ Equals :meth:`route` with a ``POST`` method parameter. """
+        """ :meth:`route`\와 같되 method 매개변수가 ``POST``. """
         return self.route(path, method, **options)
 
     def put(self, path=None, method='PUT', **options):
-        """ Equals :meth:`route` with a ``PUT`` method parameter. """
+        """ :meth:`route`\와 같되 method 매개변수가 ``PUT``. """
         return self.route(path, method, **options)
 
     def delete(self, path=None, method='DELETE', **options):
-        """ Equals :meth:`route` with a ``DELETE`` method parameter. """
+        """ :meth:`route`\와 같되 method 매개변수가 ``DELETE``. """
         return self.route(path, method, **options)
 
     def error(self, code=500):
-        """ Decorator: Register an output handler for a HTTP error code"""
+        """ 데코레이터: HTTP 오류 코드에 대한 출력 핸들러 등록"""
         def wrapper(handler):
             self.error_handler[int(code)] = handler
             return handler
@@ -955,7 +954,7 @@ class Bottle(object):
         return new_iter
 
     def wsgi(self, environ, start_response):
-        """ The bottle WSGI-interface. """
+        """ 보틀의 WSGI 인터페이스. """
         try:
             out = self._cast(self._handle(environ))
             # rfc2616 section 4.3
@@ -994,74 +993,74 @@ class Bottle(object):
 ###############################################################################
 
 class BaseRequest(object):
-    """ A wrapper for WSGI environment dictionaries that adds a lot of
-        convenient access methods and properties. Most of them are read-only.
+    """ WSGI 환경 딕셔너리들의 래퍼에 여러 편리한 접근 메소드와 프로퍼티를
+        더한 것. 대부분 읽기 전용이다.
 
-        Adding new attributes to a request actually adds them to the environ
-        dictionary (as 'bottle.request.ext.<name>'). This is the recommended
-        way to store and access request-specific data.
+        요청에 새 속성을 추가하면 실제로는 환경 딕셔너리에
+        ('bottle.request.ext.<name>'으로) 추가된다. 요청별 데이터를
+        저장하고 접근하는 권장 방식이다.
     """
 
     __slots__ = ('environ')
 
-    #: Maximum size of memory buffer for :attr:`body` in bytes.
+    #: :attr:`body`\를 위한 메모리 버퍼의 바이트 단위 최대 크기.
     MEMFILE_MAX = 102400
 
     def __init__(self, environ=None):
-        """ Wrap a WSGI environ dictionary. """
-        #: The wrapped WSGI environ dictionary. This is the only real attribute.
-        #: All other attributes actually are read-only properties.
+        """ WSGI environ 딕셔너리 포장. """
+        #: 포장된 WSGI environ 딕셔너리. 유일한 진짜 속성이다.
+        #: 다른 속성들은 사실 모두 읽기 전용 프로퍼티다.
         self.environ = {} if environ is None else environ
         self.environ['bottle.request'] = self
 
     @DictProperty('environ', 'bottle.app', read_only=True)
     def app(self):
-        ''' Bottle application handling this request. '''
+        ''' 이 요청을 처리 중인 보틀 응용. '''
         raise RuntimeError('This request is not connected to an application.')
 
     @DictProperty('environ', 'bottle.route', read_only=True)
     def route(self):
-        """ The bottle :class:`Route` object that matches this request. """
+        """ 이 요청에 걸린 보틀 :class:`Route` 객체. """
         raise RuntimeError('This request is not connected to a route.')
 
     @DictProperty('environ', 'route.url_args', read_only=True)
     def url_args(self):
-        """ The arguments extracted from the URL. """
+        """ URL에서 추출한 인자들. """
         raise RuntimeError('This request is not connected to a route.')
 
     @property
     def path(self):
-        ''' The value of ``PATH_INFO`` with exactly one prefixed slash (to fix
-            broken clients and avoid the "empty path" edge case). '''
+        ''' ``PATH_INFO`` 값 앞에 슬래시를 딱 한 개 붙인 것. (이상
+            동작 클라이언트에 대처하고 "빈 경로" 경우를 피하기 위해.) '''
         return '/' + self.environ.get('PATH_INFO','').lstrip('/')
 
     @property
     def method(self):
-        ''' The ``REQUEST_METHOD`` value as an uppercase string. '''
+        ''' ``REQUEST_METHOD`` 값을 대문자 문자열로. '''
         return self.environ.get('REQUEST_METHOD', 'GET').upper()
 
     @DictProperty('environ', 'bottle.request.headers', read_only=True)
     def headers(self):
-        ''' A :class:`WSGIHeaderDict` that provides case-insensitive access to
-            HTTP request headers. '''
+        ''' 대소문자 구별 없이 HTTP 요청 헤더에 접근할 수 있게 해 주는
+            :class:`WSGIHeaderDict`. '''
         return WSGIHeaderDict(self.environ)
 
     def get_header(self, name, default=None):
-        ''' Return the value of a request header, or a given default value. '''
+        ''' 요청 헤더의 값을 반환. 없으면 주어진 기본값 반환. '''
         return self.headers.get(name, default)
 
     @DictProperty('environ', 'bottle.request.cookies', read_only=True)
     def cookies(self):
-        """ Cookies parsed into a :class:`FormsDict`. Signed cookies are NOT
-            decoded. Use :meth:`get_cookie` if you expect signed cookies. """
+        """ 쿠키들을 파싱 해서 담은 :class:`FormsDict`. 서명된 쿠키가
+            디코딩 돼 있지 않다. 서명된 쿠키에는 :meth:`get_cookie` 사용. """
         cookies = SimpleCookie(self.environ.get('HTTP_COOKIE','')).values()
         return FormsDict((c.key, c.value) for c in cookies)
 
     def get_cookie(self, key, default=None, secret=None):
-        """ Return the content of a cookie. To read a `Signed Cookie`, the
-            `secret` must match the one used to create the cookie (see
-            :meth:`BaseResponse.set_cookie`). If anything goes wrong (missing
-            cookie or wrong signature), return a default value. """
+        """ 쿠키 내용물 반환. `서명된 쿠키`\를 읽으려면 `secret`\이 쿠키
+            생성 시 사용한 값과 일치해야 한다.
+            (:meth:`BaseResponse.set_cookie` 참고.) 뭔가 잘못되면 (쿠키가
+            없거나 서명이 틀리면) 기본값을 반환한다. """
         value = self.cookies.get(key)
         if secret and value:
             dec = cookie_decode(value, secret) # (key, value) tuple or None
@@ -1070,10 +1069,10 @@ class BaseRequest(object):
 
     @DictProperty('environ', 'bottle.request.query', read_only=True)
     def query(self):
-        ''' The :attr:`query_string` parsed into a :class:`FormsDict`. These
-            values are sometimes called "URL arguments" or "GET parameters", but
-            not to be confused with "URL wildcards" as they are provided by the
-            :class:`Router`. '''
+        ''' :attr:`query_string`\을 파싱 해서 담은 :class:`FormsDict`.
+            이 값들을 "URL 인자"나 "GET 매개변수"라고도 하는데,
+            :class:`Router`\에서 제공하는 "URL 와일드카드"와 혼동하지
+            말아야 한다. '''
         get = self.environ['bottle.get'] = FormsDict()
         pairs = _parse_qsl(self.environ.get('QUERY_STRING', ''))
         for key, value in pairs:
@@ -1082,10 +1081,10 @@ class BaseRequest(object):
 
     @DictProperty('environ', 'bottle.request.forms', read_only=True)
     def forms(self):
-        """ Form values parsed from an `url-encoded` or `multipart/form-data`
-            encoded POST or PUT request body. The result is returned as a
-            :class:`FormsDict`. All keys and values are strings. File uploads
-            are stored separately in :attr:`files`. """
+        """ `url-encoded`\나 `multipart/form-data`\로 인코딩 된 POST 또는
+            PUT 요청 바디의 양식 값들을 파싱 한 것. :class:`FormsDict`\로
+            결과를 반환한다. 모든 키와 값이 문자열이다. 파일 업로드는
+            :attr:`files`\에 따로 저장된다. """
         forms = FormsDict()
         for name, item in self.POST.allitems():
             if not isinstance(item, FileUpload):
@@ -1094,8 +1093,8 @@ class BaseRequest(object):
 
     @DictProperty('environ', 'bottle.request.params', read_only=True)
     def params(self):
-        """ A :class:`FormsDict` with the combined values of :attr:`query` and
-            :attr:`forms`. File uploads are stored in :attr:`files`. """
+        """ :attr:`query`\와 :attr:`forms`\의 값을 합친 :class:`FormsDict`.
+            파일 업로드는 :attr:`files`\에 저장된다. """
         params = FormsDict()
         for key, value in self.query.allitems():
             params[key] = value
@@ -1105,8 +1104,8 @@ class BaseRequest(object):
 
     @DictProperty('environ', 'bottle.request.files', read_only=True)
     def files(self):
-        """ File uploads parsed from `multipart/form-data` encoded POST or PUT
-            request body. The values are instances of :class:`FileUpload`.
+        """ `multipart/form-data`\로 인코딩 된 POST 또는 PUT 요청 바디에서
+            파싱 한 파일 업로드. 값들이 :class:`FileUpload`\의 인스턴스다.
 
         """
         files = FormsDict()
@@ -1117,10 +1116,9 @@ class BaseRequest(object):
 
     @DictProperty('environ', 'bottle.request.json', read_only=True)
     def json(self):
-        ''' If the ``Content-Type`` header is ``application/json``, this
-            property holds the parsed content of the request body. Only requests
-            smaller than :attr:`MEMFILE_MAX` are processed to avoid memory
-            exhaustion. '''
+        ''' ``Content-Type`` 헤더가 ``application/json``\인 경우 이
+            프로퍼티는 파싱 된 요청 바디 내용물을 담는다. 메모리 고갈을
+            피하기 위해 :attr:`MEMFILE_MAX`\보다 작은 요청만 처리한다. '''
         ctype = self.environ.get('CONTENT_TYPE', '').lower().split(';')[0]
         if ctype == 'application/json':
             b = self._get_body_string()
@@ -1195,27 +1193,27 @@ class BaseRequest(object):
 
     @property
     def body(self):
-        """ The HTTP request body as a seek-able file-like object. Depending on
-            :attr:`MEMFILE_MAX`, this is either a temporary file or a
-            :class:`io.BytesIO` instance. Accessing this property for the first
-            time reads and replaces the ``wsgi.input`` environ variable.
-            Subsequent accesses just do a `seek(0)` on the file object. """
+        """ seek 가능한 파일 같은 객체로 된 HTTP 요청 바디.
+            :attr:`MEMFILE_MAX`\에 따라 임시 파일 또는 :class:`io.BytesIO`
+            인스턴스다. 이 프로퍼티에 처음 접근할 때 환경 변수
+            ``wsgi.input``\을 읽어서 교체한다. 이후 접근 시에는 그 파일
+            객체에 `seek(0)`\만 한다. """
         self._body.seek(0)
         return self._body
 
     @property
     def chunked(self):
-        ''' True if Chunked transfer encoding was. '''
+        ''' chunked 전송 인코딩이었으면 True. '''
         return 'chunked' in self.environ.get('HTTP_TRANSFER_ENCODING', '').lower()
 
-    #: An alias for :attr:`query`.
+    #: :attr:`query`\의 별칭.
     GET = query
 
     @DictProperty('environ', 'bottle.request.post', read_only=True)
     def POST(self):
-        """ The values of :attr:`forms` and :attr:`files` combined into a single
-            :class:`FormsDict`. Values are either strings (form values) or
-            instances of :class:`cgi.FieldStorage` (file uploads).
+        """ :attr:`forms`\와 :attr:`files`\의 값을 하나로 합친
+            :class:`FormsDict`. 값이 문자열(양식 값) 또는
+            :class:`cgi.FieldStorage` 인스턴스(파일 업로드)다.
         """
         post = FormsDict()
         # We default to application/x-www-form-urlencoded for everything that
@@ -1248,18 +1246,16 @@ class BaseRequest(object):
 
     @property
     def url(self):
-        """ The full request URI including hostname and scheme. If your app
-            lives behind a reverse proxy or load balancer and you get confusing
-            results, make sure that the ``X-Forwarded-Host`` header is set
-            correctly. """
+        """ 호스트 이름과 스킴을 포함한 전체 요청 URI. 앱이 역방향 프록시나
+            로드 밸런서 뒤에서 도는데 이상한 결과가 나온다면
+            ``X-Forwarded-Host`` 헤더가 올바로 설정되는지 확인해 보자. """
         return self.urlparts.geturl()
 
     @DictProperty('environ', 'bottle.request.urlparts', read_only=True)
     def urlparts(self):
-        ''' The :attr:`url` string as an :class:`urlparse.SplitResult` tuple.
-            The tuple contains (scheme, host, path, query_string and fragment),
-            but the fragment is always empty because it is not visible to the
-            server. '''
+        ''' :attr:`url` 문자열을 :class:`urlparse.SplitResult` 튜플로 만든 것.
+            그 튜플에 (scheme, host, path, query_string, fragment)가 들어있는데
+            fragment는 서버에게 보이지 않으므로 항상 비어 있다. '''
         env = self.environ
         http = env.get('HTTP_X_FORWARDED_PROTO') or env.get('wsgi.url_scheme', 'http')
         host = env.get('HTTP_X_FORWARDED_HOST') or env.get('HTTP_HOST')
@@ -1274,67 +1270,66 @@ class BaseRequest(object):
 
     @property
     def fullpath(self):
-        """ Request path including :attr:`script_name` (if present). """
+        """ (존재 시) :attr:`script_name`\을 포함한 요청 경로. """
         return urljoin(self.script_name, self.path.lstrip('/'))
 
     @property
     def query_string(self):
-        """ The raw :attr:`query` part of the URL (everything in between ``?``
-            and ``#``) as a string. """
+        """ URL의 :attr:`query` 부분(``?``\와 ``#`` 사이 전부)을 그대로
+            문자열로 만든 것. """
         return self.environ.get('QUERY_STRING', '')
 
     @property
     def script_name(self):
-        ''' The initial portion of the URL's `path` that was removed by a higher
-            level (server or routing middleware) before the application was
-            called. This script path is returned with leading and tailing
-            slashes. '''
+        ''' 응용을 호출하기 전에 상위 단계(서버 또는 라우팅 미들웨어)에서
+            제거한 URL `path`\의 첫 부분. 그 스크립트 경로 앞과 뒤에
+            슬래시를 붙여서 반환한다. '''
         script_name = self.environ.get('SCRIPT_NAME', '').strip('/')
         return '/' + script_name + '/' if script_name else '/'
 
     def path_shift(self, shift=1):
-        ''' Shift path segments from :attr:`path` to :attr:`script_name` and
-            vice versa.
+        ''' :attr:`path`\에서 :attr:`script_name`\으로 또는 반대로 경로
+            조각들을 이동.
 
-           :param shift: The number of path segments to shift. May be negative
-                         to change the shift direction. (default: 1)
+            :param shift: 옮길 경로 조각 수. 음수로 해서 이동 방향을 바꿀
+                         수도 있다. (기본값: 1)
         '''
         script = self.environ.get('SCRIPT_NAME','/')
         self['SCRIPT_NAME'], self['PATH_INFO'] = path_shift(script, self.path, shift)
 
     @property
     def content_length(self):
-        ''' The request body length as an integer. The client is responsible to
-            set this header. Otherwise, the real length of the body is unknown
-            and -1 is returned. In this case, :attr:`body` will be empty. '''
+        ''' 정수로 된 요청 바디 길이. 이 헤더를 설정할 책임이 클라이언트에게
+            있다. 설정하지 않았으면 바디의 실제 길이를 알 수 없으므로 -1을
+            반환한다. 그 경우 :attr:`body`\가 비어 있게 된다. '''
         return int(self.environ.get('CONTENT_LENGTH') or -1)
 
     @property
     def content_type(self):
-        ''' The Content-Type header as a lowercase-string (default: empty). '''
+        ''' 소문자로 된 Content-Type 헤더. (기본값: 빈 문자열) '''
         return self.environ.get('CONTENT_TYPE', '').lower()
 
     @property
     def is_xhr(self):
-        ''' True if the request was triggered by a XMLHttpRequest. This only
-            works with JavaScript libraries that support the `X-Requested-With`
-            header (most of the popular libraries do). '''
+        ''' XMLHttpRequest로 시작된 요청이면 True. 자바스크립트 라이브러리에서
+            `X-Requested-With` 헤더를 지원하는 경우에만 동작한다. (인기 있는
+            라이브러리들은 대부분 지원한다.) '''
         requested_with = self.environ.get('HTTP_X_REQUESTED_WITH','')
         return requested_with.lower() == 'xmlhttprequest'
 
     @property
     def is_ajax(self):
-        ''' Alias for :attr:`is_xhr`. "Ajax" is not the right term. '''
+        ''' :attr:`is_xhr`\의 별칭. "Ajax"는 올바른 용어가 아니다. '''
         return self.is_xhr
 
     @property
     def auth(self):
-        """ HTTP authentication data as a (user, password) tuple. This
-            implementation currently supports basic (not digest) authentication
-            only. If the authentication happened at a higher level (e.g. in the
-            front web-server or a middleware), the password field is None, but
-            the user field is looked up from the ``REMOTE_USER`` environ
-            variable. On any errors, None is returned. """
+        """ (user, password) 튜플로 된 HTTP 인증 데이터. 이 구현체에선
+            현재 basic 인증만 지원한다. (digest는 지원하지 않는다.)
+            상위 수준에서 (가령 프론트엔드 웹 서버나 미들웨어에서) 인증이
+            이뤄지는 경우 password 필드가 None이지만 user 필드는
+            환경 변수 ``REMOTE_USER``\에서 찾아 넣는다. 오류 발생 시
+            None을 반환한다. """
         basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION',''))
         if basic: return basic
         ruser = self.environ.get('REMOTE_USER')
@@ -1343,10 +1338,10 @@ class BaseRequest(object):
 
     @property
     def remote_route(self):
-        """ A list of all IPs that were involved in this request, starting with
-            the client IP and followed by zero or more proxies. This does only
-            work if all proxies support the ```X-Forwarded-For`` header. Note
-            that this information can be forged by malicious clients. """
+        """ 이 요청에 관련된 모든 IP 주소 목록. 클라이언트 IP로 시작해서
+            0개 이상의 프록시가 따라온다. 모든 프록시에서 ``X-Forwarded-For``
+            헤더를 지원하는 경우에만 동작한다. 악의적 클라이언트가 이 정보를
+            위조할 수 있다는 점에 유의하자. """
         proxy = self.environ.get('HTTP_X_FORWARDED_FOR')
         if proxy: return [ip.strip() for ip in proxy.split(',')]
         remote = self.environ.get('REMOTE_ADDR')
@@ -1354,13 +1349,13 @@ class BaseRequest(object):
 
     @property
     def remote_addr(self):
-        """ The client IP as a string. Note that this information can be forged
-            by malicious clients. """
+        """ 문자열로 된 클라이언트 IP. 악의적 클라이언트가 이 정보를
+            위조할 수 있다는 점에 유의하자. """
         route = self.remote_route
         return route[0] if route else None
 
     def copy(self):
-        """ Return a new :class:`Request` with a shallow :attr:`environ` copy. """
+        """ :attr:`environ`\을 얕게 복사한 새 :class:`Request` 반환. """
         return Request(self.environ.copy())
 
     def get(self, value, default=None): return self.environ.get(value, default)
@@ -1422,7 +1417,7 @@ class HeaderProperty(object):
     def __init__(self, name, reader=None, writer=None, default=''):
         self.name, self.default = name, default
         self.reader, self.writer = reader, writer
-        self.__doc__ = 'Current value of the %r header.' % name.title()
+        self.__doc__ = '%r 헤더의 현재 값.' % name.title()
 
     def __get__(self, obj, cls):
         if obj is None: return self
@@ -1437,19 +1432,19 @@ class HeaderProperty(object):
 
 
 class BaseResponse(object):
-    """ Storage class for a response body as well as headers and cookies.
+    """ 응답 바디, 헤더, 쿠키 저장 클래스.
 
-        This class does support dict-like case-insensitive item-access to
-        headers, but is NOT a dict. Most notably, iterating over a response
-        yields parts of the body and not the headers.
+        이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict 같은 항목
+        접근을 지원하지만 dict가 아니다. 무엇보다 응답에 반복문을 돌리면
+        헤더가 아니라 바디의 부분들을 내놓는다.
 
-        :param body: The response body as one of the supported types.
-        :param status: Either an HTTP status code (e.g. 200) or a status line
-                       including the reason phrase (e.g. '200 OK').
-        :param headers: A dictionary or a list of name-value pairs.
+        :param body: 지원 타입들 중 하나로 된 응답 바디.
+        :param status: HTTP 상태 코드(예: 200) 또는 이유 문구를
+                       포함한 상태 행(예: '200 OK').
+        :param headers: 이름-값 쌍의 딕셔너리 또는 리스트.
 
-        Additional keyword arguments are added to the list of headers.
-        Underscores in the header name are replaced with dashes.
+        추가로 준 키워드 인자들이 헤더 목록에 추가된다. 헤더 이름의
+        밑줄이 대시로 바뀐다.
     """
 
     default_status = 200
@@ -1478,7 +1473,7 @@ class BaseResponse(object):
                 self.add_header(name, value)
 
     def copy(self, cls=None):
-        ''' Returns a copy of self. '''
+        ''' 자기 사본을 반환. '''
         cls = cls or BaseResponse
         assert issubclass(cls, BaseResponse)
         copy = cls()
@@ -1498,12 +1493,12 @@ class BaseResponse(object):
 
     @property
     def status_line(self):
-        ''' The HTTP status line as a string (e.g. ``404 Not Found``).'''
+        ''' 문자열로 된 HTTP 상태 행. (예: ``404 Not Found``)'''
         return self._status_line
 
     @property
     def status_code(self):
-        ''' The HTTP status code as an integer (e.g. 404).'''
+        ''' 정수로 된 HTTP 상태 코드. (예: 404)'''
         return self._status_code
 
     def _set_status(self, status):
@@ -1522,17 +1517,17 @@ class BaseResponse(object):
         return self._status_line
 
     status = property(_get_status, _set_status, None,
-        ''' A writeable property to change the HTTP response status. It accepts
-            either a numeric code (100-999) or a string with a custom reason
-            phrase (e.g. "404 Brain not found"). Both :data:`status_line` and
-            :data:`status_code` are updated accordingly. The return value is
-            always a status string. ''')
+        ''' HTTP 응답 상태를 바꾸기 위한 쓰기 가능 프로퍼티. 숫자 코드
+            (100-999) 또는 자체 이유 문구(예: "404 Brain not found")가 있는
+            문자열을 받는다. 그에 따라 :data:`status_line`\과
+            :data:`status_code`\가 모두 갱신된다. 반환 값은 항상 상태
+            문자열이다. ''')
     del _get_status, _set_status
 
     @property
     def headers(self):
-        ''' An instance of :class:`HeaderDict`, a case-insensitive dict-like
-            view on the response headers. '''
+        ''' :class:`HeaderDict` 인스턴스. 응답 헤더들에 대한 대소문자
+            구별 없는 dict 같은 뷰. '''
         hdict = HeaderDict()
         hdict.dict = self._headers
         return hdict
@@ -1543,27 +1538,27 @@ class BaseResponse(object):
     def __setitem__(self, name, value): self._headers[_hkey(name)] = [_hval(value)]
 
     def get_header(self, name, default=None):
-        ''' Return the value of a previously defined header. If there is no
-            header with that name, return a default value. '''
+        ''' 앞서 지정했던 헤더 값을 반환. 그 이름의 헤더가 없으면
+            기본값 반환. '''
         return self._headers.get(_hkey(name), [default])[-1]
 
     def set_header(self, name, value):
-        ''' Create a new response header, replacing any previously defined
-            headers with the same name. '''
+        ''' 새 응답 헤더 만들기. 앞서 같은 이름으로 지정한 헤더
+            있으면 교체. '''
         self._headers[_hkey(name)] = [_hval(value)]
 
     def add_header(self, name, value):
-        ''' Add an additional response header, not removing duplicates. '''
+        ''' 응답 헤더 추가. 중복을 제거하지 않음. '''
         self._headers.setdefault(_hkey(name), []).append(_hval(value))
 
     def iter_headers(self):
-        ''' Yield (header, value) tuples, skipping headers that are not
-            allowed with the current response status code. '''
+        ''' (헤더, 값) 튜플을 내놓는다. 현재 응답 상태 코드에 허용되지
+            않는 헤더들은 건너뛴다. '''
         return self.headerlist
 
     @property
     def headerlist(self):
-        """ WSGI conform list of (header, value) tuples. """
+        """ WSGI에 부합하는 (헤더, 값) 튜플 리스트. """
         out = []
         headers = list(self._headers.items())
         if 'Content-Type' not in self._headers:
@@ -1587,43 +1582,43 @@ class BaseResponse(object):
 
     @property
     def charset(self, default='UTF-8'):
-        """ Return the charset specified in the content-type header (default: utf8). """
+        """ content-type 헤더에 지정되는 문자셋 반환. (기본값: utf8) """
         if 'charset=' in self.content_type:
             return self.content_type.split('charset=')[-1].split(';')[0].strip()
         return default
 
     def set_cookie(self, name, value, secret=None, **options):
-        ''' Create a new cookie or replace an old one. If the `secret` parameter is
-            set, create a `Signed Cookie` (described below).
+        ''' 새 쿠키를 만들거나 기존 쿠키를 교체. `secret` 매개변수가
+            설정돼 있으면 `서명된 쿠키`\(아래에서 설명)를 만든다.
 
-            :param name: the name of the cookie.
-            :param value: the value of the cookie.
-            :param secret: a signature key required for signed cookies.
+            :param name: 쿠키 이름.
+            :param value: 쿠키 값.
+            :param secret: 서명된 쿠키에 필요한 서명 키.
 
-            Additionally, this method accepts all RFC 2109 attributes that are
-            supported by :class:`cookie.Morsel`, including:
+            더불어 이 메소드는 :class:`cookie.Morsel`\에서 지원하는 모든
+            RFC 2109 속성을 받는다. 다음이 포함된다.
 
-            :param max_age: maximum age in seconds. (default: None)
-            :param expires: a datetime object or UNIX timestamp. (default: None)
-            :param domain: the domain that is allowed to read the cookie.
-              (default: current domain)
-            :param path: limits the cookie to a given path (default: current path)
-            :param secure: limit the cookie to HTTPS connections (default: off).
-            :param httponly: prevents client-side javascript to read this cookie
-              (default: off, requires Python 2.6 or newer).
+            :param max_age: 초 단위 최대 수명. (기본값: None)
+            :param expires: datetime 객체 또는 유닉스 타임스탬프. (기본값: None)
+            :param domain: 쿠키 읽는 게 허용되는 도메인.
+              (기본값: 현재 도메인)
+            :param path: 쿠키를 지정한 경로로 제한. (기본값: 현재 경로)
+            :param secure: 쿠키를 HTTPS 연결로 제한. (기본값: 꺼짐)
+            :param httponly: 클라이언트 측 자바스크립트에서 이 쿠키를 읽지
+              못하게 하기. (기본값: 꺼짐. 파이썬 2.6 이상 필요.)
 
-            If neither `expires` nor `max_age` is set (default), the cookie will
-            expire at the end of the browser session (as soon as the browser
-            window is closed).
+            `expires`\와 `max_age` 어느 쪽도 설정하지 않으면 (기본값) 브라우저
+            세션이 끝날 때 (브라우저 창이 닫히자마자) 쿠키가 만료된다.
 
-            Signed cookies may store any pickle-able object and are
-            cryptographically signed to prevent manipulation. Keep in mind that
-            cookies are limited to 4kb in most browsers.
+            서명된 쿠키에는 pickle 가능한 어떤 객체든 저장할 수 있으며
+            암호학적 서명을 해서 변조를 막는다. 대부분 브라우저에서 쿠키가
+            4kb로 제한돼 있다는 걸 잊지 말자.
 
-            Warning: Signed cookies are not encrypted (the client can still see
-            the content) and not copy-protected (the client can restore an old
-            cookie). The main intention is to make pickling and unpickling
-            save, not to store secret information at client side.
+            경고: 서명된 쿠키가 암호화되는 건 아니다. (클라이언트가 여전히
+            내용물을 볼 수 있다.) 그리고 복사 방지가 되는 것도 아니다.
+            (클라이언트가 이전 쿠키를 재사용할 수 있다.) 주된 의도는
+            pickle 처리를 안전하게 만드는 것이지, 클라이언트 쪽에 비밀 정보를
+            저장하는 게 아니다.
         '''
         if not self._cookies:
             self._cookies = SimpleCookie()
@@ -1649,8 +1644,8 @@ class BaseResponse(object):
             self._cookies[name][key.replace('_', '-')] = value
 
     def delete_cookie(self, key, **kwargs):
-        ''' Delete a cookie. Be sure to use the same `domain` and `path`
-            settings as used to create the cookie. '''
+        ''' 쿠키 삭제. 쿠키를 만들 때와 같은 `domain` 및 `path` 설정을
+            쓰도록 하자. '''
         kwargs['max_age'] = -1
         kwargs['expires'] = 0
         self.set_cookie(key, '', **kwargs)
@@ -1671,24 +1666,24 @@ def local_property(name=None):
             raise RuntimeError("Request context not initialized.")
     def fset(self, value): ls.var = value
     def fdel(self): del ls.var
-    return property(fget, fset, fdel, 'Thread-local property')
+    return property(fget, fset, fdel, '스레드 로컬 프로퍼티')
 
 
 class LocalRequest(BaseRequest):
-    ''' A thread-local subclass of :class:`BaseRequest` with a different
-        set of attributes for each thread. There is usually only one global
-        instance of this class (:data:`request`). If accessed during a
-        request/response cycle, this instance always refers to the *current*
-        request (even on a multithreaded server). '''
+    ''' 스레드마다 각기 다른 속성 집합이 있는 :class:`BaseRequest`\의
+        스레드 로컬 서브클래스. 일반적으로 이 클래스의 전역 인스턴스는
+        하나만(:data:`request`) 있다. 요청/응답 처리 사이클 중 접근 시
+        그 인스턴스는 (다중 스레드 서버에서도) 항상 *현재* 요청을
+        가리킨다. '''
     bind = BaseRequest.__init__
     environ = local_property()
 
 
 class LocalResponse(BaseResponse):
-    ''' A thread-local subclass of :class:`BaseResponse` with a different
-        set of attributes for each thread. There is usually only one global
-        instance of this class (:data:`response`). Its attributes are used
-        to build the HTTP response at the end of the request/response cycle.
+    ''' 스레드마다 각기 다른 속성 집합이 있는 :class:`BaseResponse`\의
+        스레드 로컬 서브클래스. 일반적으로 이 클래스의 전역 인스턴스는
+        하나만(:data:`response`) 있다. 요청/응답 처리 사이클 마지막에
+        그 속성들을 사용해 HTTP 응답을 만든다.
     '''
     bind = BaseResponse.__init__
     _status_line = local_property()
@@ -1819,9 +1814,9 @@ class _ImportRedirect(object):
 
 
 class MultiDict(DictMixin):
-    """ This dict stores multiple values per key, but behaves exactly like a
-        normal dict in that it returns only the newest value for any given key.
-        There are special methods available to access the full list of values.
+    """ 이 dict는 키별로 여러 값을 저장하되 그 외는 보통 dict와 정확히
+        똑같이 동작한다. 키를 주면 최신 값만 반환한다. 전체 값 리스트에
+        접근하는 데 쓸 수 있는 별도의 메소드들이 있다.
     """
 
     def __init__(self, *a, **k):
@@ -1858,14 +1853,13 @@ class MultiDict(DictMixin):
             return [(k, v) for k, vl in self.dict.iteritems() for v in vl]
 
     def get(self, key, default=None, index=-1, type=None):
-        ''' Return the most recent value for a key.
+        ''' 키에 대한 최신 값을 반환.
 
-            :param default: The default value to be returned if the key is not
-                   present or the type conversion fails.
-            :param index: An index for the list of available values.
-            :param type: If defined, this callable is used to cast the value
-                    into a specific type. Exception are suppressed and result in
-                    the default value to be returned.
+            :param default: 키가 없거나 타입 변환이 실패한 경우 반환할
+                   기본값.
+            :param index: 사용 가능 값 리스트에 대한 색인.
+            :param type: 지정돼 있으면 그 콜러블을 이용해 값을 특정 타입으로
+                    캐스트 한다. 예외 발생 시 숨기고 기본값을 반환한다.
         '''
         try:
             val = self.dict[key][index]
@@ -1875,34 +1869,34 @@ class MultiDict(DictMixin):
         return default
 
     def append(self, key, value):
-        ''' Add a new value to the list of values for this key. '''
+        ''' 이 키에 대한 값 리스트에 새 값을 추가. '''
         self.dict.setdefault(key, []).append(value)
 
     def replace(self, key, value):
-        ''' Replace the list of values with a single value. '''
+        ''' 값 리스트를 값 하나로 교체. '''
         self.dict[key] = [value]
 
     def getall(self, key):
-        ''' Return a (possibly empty) list of values for a key. '''
+        ''' 키에 대한 (비어 있을 수 있는) 값 리스트 반환. '''
         return self.dict.get(key) or []
 
-    #: Aliases for WTForms to mimic other multi-dict APIs (Django)
+    #: 다른 multi-dict API (Django)를 흉내내는 WTForms용 에일리어스.
     getone = get
     getlist = getall
 
 
 class FormsDict(MultiDict):
-    ''' This :class:`MultiDict` subclass is used to store request form data.
-        Additionally to the normal dict-like item access methods (which return
-        unmodified data as native strings), this container also supports
-        attribute-like access to its values. Attributes are automatically de-
-        or recoded to match :attr:`input_encoding` (default: 'utf8'). Missing
-        attributes default to an empty string. '''
+    ''' 요청 양식 데이터를 저장하는 데 쓰는 :class:`MultiDict`\의
+        서브클래스. 일반 dict 같은 항목 접근 방법(데이터를 그대로
+        네이티브 문자열로 반환)에 더해서 이 컨테이너는 속성처럼 값에
+        접근하는 것도 지원한다. 속성은 :attr:`input_encoding`\(기본값:
+        'utf8')에 맞도록 자동으로 디코딩 또는 재코딩 된다. 없는 속성은
+        기본으로 빈 문자열을 내놓는다. '''
 
-    #: Encoding used for attribute values.
+    #: 속성 값에 쓰는 인코딩.
     input_encoding = 'utf8'
-    #: If true (default), unicode strings are first encoded with `latin1`
-    #: and then decoded to match :attr:`input_encoding`.
+    #: 참(기본값)이면 유니코드열을 먼저 `latin1`\으로 인코딩 한 다음
+    #: :attr:`input_encoding`\에 맞게 디코딩 한다.
     recode_unicode = True
 
     def _fix(self, s, encoding=None):
@@ -1914,9 +1908,9 @@ class FormsDict(MultiDict):
             return s
 
     def decode(self, encoding=None):
-        ''' Returns a copy with all keys and values de- or recoded to match
-            :attr:`input_encoding`. Some libraries (e.g. WTForms) want a
-            unicode dictionary. '''
+        ''' :attr:`input_encoding`\에 맞게 디코딩 또는 재코딩 된 전체
+            키와 값의 사본 반환. 어떤 라이브러리(예: WTForms)는
+            유니코드 딕셔너리를 원한다. '''
         copy = FormsDict()
         enc = copy.input_encoding = encoding or self.input_encoding
         copy.recode_unicode = False
@@ -1925,7 +1919,7 @@ class FormsDict(MultiDict):
         return copy
 
     def getunicode(self, name, default=None, encoding=None):
-        ''' Return the value as a unicode string, or the default. '''
+        ''' 유니코드열로 된 값, 또는 default 반환. '''
         try:
             return self._fix(self[name], encoding)
         except (UnicodeError, KeyError):
@@ -1938,8 +1932,8 @@ class FormsDict(MultiDict):
         return self.getunicode(name, default=default)
 
 class HeaderDict(MultiDict):
-    """ A case-insensitive version of :class:`MultiDict` that defaults to
-        replace the old value instead of appending it. """
+    """ :class:`MultiDict`\의 대소문자 구별 없는 버전이며 원래처럼
+        값을 덧붙이지 않고 이전 값을 교체함. """
 
     def __init__(self, *a, **ka):
         self.dict = {}
@@ -1961,17 +1955,17 @@ class HeaderDict(MultiDict):
 
 
 class WSGIHeaderDict(DictMixin):
-    ''' This dict-like class wraps a WSGI environ dict and provides convenient
-        access to HTTP_* fields. Keys and values are native strings
-        (2.x bytes or 3.x unicode) and keys are case-insensitive. If the WSGI
-        environment contains non-native string values, these are de- or encoded
-        using a lossless 'latin1' character set.
+    ''' WSGI environ dict를 포장해서 HTTP_* 필드에 편리하게 접근할 수 있게
+        하는 dict 같은 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,
+        3.x는 unicode)이며 키는 대소문자 구별이 없다. WSGI 환경에 네이티브
+        아닌 문자열 값이 들어 있으면 무손실 'latin1' 문자셋을 이용해
+        디코딩 또는 인코딩 한다.
 
-        The API will remain stable even on changes to the relevant PEPs.
-        Currently PEP 333, 444 and 3333 are supported. (PEP 444 is the only one
-        that uses non-native strings.)
+        관련 PEP가 바뀌는 경우에도 API가 안정적으로 유지될 것이다.
+        현재 PEP 333, 444, 3333을 지원한다. (PEP 444는 네이티브 아닌
+        문자열을 쓰는 유일한 PEP다.)
     '''
-    #: List of keys that do not have a ``HTTP_`` prefix.
+    #: ``HTTP_``\로 시작하지 않는 키들의 목록.
     cgikeys = ('CONTENT_TYPE', 'CONTENT_LENGTH')
 
     def __init__(self, environ):
@@ -1985,7 +1979,7 @@ class WSGIHeaderDict(DictMixin):
         return 'HTTP_' + key
 
     def raw(self, key, default=None):
-        ''' Return the header value as is (may be bytes or unicode). '''
+        ''' 헤더 값을 그대로 (bytes 또는 unicode) 반환. '''
         return self.environ.get(self._ekey(key), default)
 
     def __getitem__(self, key):
@@ -2011,12 +2005,12 @@ class WSGIHeaderDict(DictMixin):
 
 
 class ConfigDict(dict):
-    ''' A dict-like configuration storage with additional support for
-        namespaces, validators, meta-data, on_change listeners and more.
+    ''' dict 같은 설정 저장소. 네임스페이스, 값 검사, 메타데이터,
+        변경 주시 등을 추가로 지원.
 
-        This storage is optimized for fast read access. Retrieving a key
-        or using non-altering dict methods (e.g. `dict.get()`) has no overhead
-        compared to a native dict.
+        이 저장소는 빠른 읽기 접근이 가능하게 최적화돼 있다. 키를
+        가져오거나 변경 없는 dict 메소드(예: `dict.get()`) 사용 시
+        원래 dict 대비 오버헤드가 전혀 없다.
     '''
     __slots__ = ('_meta', '_on_change')
 
@@ -2093,11 +2087,11 @@ class ConfigDict(dict):
             self.update(*a, **ka)
 
     def load_config(self, filename):
-        ''' Load values from an *.ini style config file.
+        ''' *.ini 방식 설정 파일에서 값 읽어 들이기.
 
-            If the config file contains sections, their names are used as
-            namespaces for the values within. The two special sections
-            ``DEFAULT`` and ``bottle`` refer to the root namespace (no prefix).
+            설정 파일에 섹션이 있으면 그 이름을 네임스페이스로 해서
+            값을 넣는다. 두 가지 특수 섹션 ``DEFAULT``\와 ``bottle``\은
+            루트 네임스페이스(프리픽스 없음)를 가리킨다.
         '''
         conf = ConfigParser()
         conf.read(filename)
@@ -2109,8 +2103,8 @@ class ConfigDict(dict):
         return self
 
     def load_dict(self, source, namespace='', make_namespaces=False):
-        ''' Import values from a dictionary structure. Nesting can be used to
-            represent namespaces.
+        ''' 딕셔너리 구조에서 값 가져오기. 중첩 구조를 써서 네임스페이스를
+            나타낼 수 있다.
 
             >>> ConfigDict().load_dict({'name': {'space': {'key': 'value'}}})
             {'name.space.key': 'value'}
@@ -2133,9 +2127,9 @@ class ConfigDict(dict):
         return self
 
     def update(self, *a, **ka):
-        ''' If the first parameter is a string, all keys are prefixed with this
-            namespace. Apart from that it works just as the usual dict.update().
-            Example: ``update('some.namespace', key='value')`` '''
+        ''' 첫 번째 매개변수가 문자열이면 모든 키 이름 앞에 그 네임스페이스를
+            붙인다. 그 경우 외에는 일반 dict.update()처럼 동작한다.
+            예: ``update('some.namespace', key='value')`` '''
         prefix = ''
         if a and isinstance(a[0], basestring):
             prefix = a[0].strip('.') + '.'
@@ -2166,18 +2160,18 @@ class ConfigDict(dict):
             del self[key]
 
     def meta_get(self, key, metafield, default=None):
-        ''' Return the value of a meta field for a key. '''
+        ''' 키에 대한 메타 필드 값을 반환. '''
         return self._meta.get(key, {}).get(metafield, default)
 
     def meta_set(self, key, metafield, value):
-        ''' Set the meta field for a key to a new value. This triggers the
-            on-change handler for existing keys. '''
+        ''' 키에 대한 메타 필드에 새 값 설정. 기존 키에 대한 변경
+            핸들러 실행을 일으킨다. '''
         self._meta.setdefault(key, {})[metafield] = value
         if key in self:
             self[key] = self[key]
 
     def meta_list(self, key):
-        ''' Return an iterable of meta field names defined for a key. '''
+        ''' 키에 대해 정의된 메타 필드 이름들의 이터러블 반환. '''
         return self._meta.get(key, {}).keys()
 
     # Deprecated ConfigDict features
@@ -2216,14 +2210,14 @@ class ConfigDict(dict):
 
 
 class AppStack(list):
-    """ A stack-like list. Calling it returns the head of the stack. """
+    """ 스택 같은 리스트. 호출하면 스택 상단 항목 반환. """
 
     def __call__(self):
         """ Return the current default application. """
         return self[-1]
 
     def push(self, value=None):
-        """ Add a new :class:`Bottle` instance to the stack """
+        """ 스택에 새 :class:`Bottle` 인스턴스 추가. """
         if not isinstance(value, Bottle):
             value = Bottle()
         self.append(value)
@@ -2262,13 +2256,13 @@ class _closeiter(object):
 
 
 class ResourceManager(object):
-    ''' This class manages a list of search paths and helps to find and open
-        application-bound resources (files).
+    ''' 탐색 경로 목록을 관리하고 응용 관련 자원(파일)을 찾아서
+        여는 걸 돕는 클래스.
 
-        :param base: default value for :meth:`add_path` calls.
-        :param opener: callable used to open resources.
-        :param cachemode: controls which lookups are cached. One of 'all',
-                         'found' or 'none'.
+        :param base: :meth:`add_path` 호출을 위한 기본값.
+        :param opener: 자원 여는 데 쓰는 콜러블.
+        :param cachemode: 어떤 탐색 결과를 캐싱 할지 제어. 'all',
+                         'found', 'none' 중 하나.
     '''
 
     def __init__(self, base='./', opener=open, cachemode='all'):
@@ -2276,25 +2270,25 @@ class ResourceManager(object):
         self.base = base
         self.cachemode = cachemode
 
-        #: A list of search paths. See :meth:`add_path` for details.
+        #: 탐색 경로 리스트. 자세한 건 :meth:`add_path` 참고.
         self.path = []
-        #: A cache for resolved paths. ``res.cache.clear()`` clears the cache.
+        #: 결정된 경로의 캐시. ``res.cache.clear()``\로 캐시 비울 수 있음.
         self.cache = {}
 
     def add_path(self, path, base=None, index=None, create=False):
-        ''' Add a new path to the list of search paths. Return False if the
-            path does not exist.
+        ''' 탐색 경로 리스트에 새 경로 추가. 존재하지 않는 경로면
+            False 반환.
 
-            :param path: The new search path. Relative paths are turned into
-                an absolute and normalized form. If the path looks like a file
-                (not ending in `/`), the filename is stripped off.
-            :param base: Path used to absolutize relative search paths.
-                Defaults to :attr:`base` which defaults to ``os.getcwd()``.
-            :param index: Position within the list of search paths. Defaults
-                to last index (appends to the list).
+            :param path: 새 탐색 경로. 상대 경로는 정규화된 절대 경로로
+                바꾼다. 경로가 파일처럼 생겼으면 (`/`\로 끝나지 않으면)
+                파일명 부분을 없앤다.
+            :param base: 상대 탐색 경로를 절대 경로로 바꾸는 데 쓰는 경로.
+                기본은 :attr:`base` 값인데, 그 기본값은 ``os.getcwd()``.
+            :param index: 탐색 경로 리스트 내 위치. 기본은 마지막 색인
+                (리스트에 덧붙이기).
 
-            The `base` parameter makes it easy to reference files installed
-            along with a python module or package::
+            `base` 매개변수는 파이썬 모듈 내지 패키지와 함께 설치된
+            파일을 쉽게 참조할 수 있게 해 준다. ::
 
                 res.add_path('./resources/', __file__)
         '''
@@ -2324,11 +2318,11 @@ class ResourceManager(object):
                 else: yield full
 
     def lookup(self, name):
-        ''' Search for a resource and return an absolute file path, or `None`.
+        ''' 자원을 탐색해서 파일 절대 경로를 반환. 없으면 `None` 반환.
 
-            The :attr:`path` list is searched in order. The first match is
-            returend. Symlinks are followed. The result is cached to speed up
-            future lookups. '''
+            :attr:`path` 목록을 차례로 탐색한다. 처음 걸린 걸 반환한다.
+            심볼릭 링크를 따라간다. 결과를 캐싱 해서 이후 검색 속도를
+            높인다. '''
         if name not in self.cache or DEBUG:
             for path in self.path:
                 fpath = os.path.join(path, name)
@@ -2341,7 +2335,7 @@ class ResourceManager(object):
         return self.cache[name]
 
     def open(self, name, mode='r', *args, **kwargs):
-        ''' Find a resource and return a file object, or raise IOError. '''
+        ''' 자원을 찾아서 파일 객체 반환, 또는 IOError 던짐. '''
         fname = self.lookup(name)
         if not fname: raise IOError("Resource %r not found." % name)
         return self.opener(fname, mode=mode, *args, **kwargs)
@@ -2351,31 +2345,31 @@ class FileUpload(object):
 
     def __init__(self, fileobj, name, filename, headers=None):
         ''' Wrapper for file uploads. '''
-        #: Open file(-like) object (BytesIO buffer or temporary file)
+        #: 열린 파일 (같은) 객체 (BytesIO 버퍼나 임시 파일)
         self.file = fileobj
-        #: Name of the upload form field
+        #: 업로드 양식 필드 이름
         self.name = name
-        #: Raw filename as sent by the client (may contain unsafe characters)
+        #: 클라이언트가 보낸 그대로의 파일 이름 (안전하지 않은 문자 있을 수 있음)
         self.raw_filename = filename
-        #: A :class:`HeaderDict` with additional headers (e.g. content-type)
+        #: 추가 헤더들(예: content-type) 있는 :class:`HeaderDict`
         self.headers = HeaderDict(headers) if headers else HeaderDict()
 
     content_type = HeaderProperty('Content-Type')
     content_length = HeaderProperty('Content-Length', reader=int, default=-1)
 
     def get_header(self, name, default=None):
-        """ Return the value of a header within the mulripart part. """
+        """ 멀티파트 부분 안의 헤더 값 반환. """
         return self.headers.get(name, default)
 
     @cached_property
     def filename(self):
-        ''' Name of the file on the client file system, but normalized to ensure
-            file system compatibility. An empty filename is returned as 'empty'.
+        ''' 클라이언트 파일 시스템 상의 파일 이름. 단 파일 시스템 호환성이
+            보장되도록 정규화 돼 있음. 빈 파일 이름은 'empty'로 반환.
 
-            Only ASCII letters, digits, dashes, underscores and dots are
-            allowed in the final filename. Accents are removed, if possible.
-            Whitespace is replaced by a single dash. Leading or tailing dots
-            or dashes are removed. The filename is limited to 255 characters.
+            최종 파일 이름에서는 ASCII 문자, 숫자, 대시, 밑줄, 마침표만
+            허용한다. 가능한 경우 강세 표시를 없앤다. 공백을 대시 한 개로
+            바꾼다. 앞이나 뒤의 마침표 및 대시를 제거한다. 파일 이름
+            길이를 255문자로 제한한다.
         '''
         fname = self.raw_filename
         if not isinstance(fname, unicode):
@@ -2395,13 +2389,13 @@ class FileUpload(object):
         self.file.seek(offset)
 
     def save(self, destination, overwrite=False, chunk_size=2**16):
-        ''' Save file to disk or copy its content to an open file(-like) object.
-            If *destination* is a directory, :attr:`filename` is added to the
-            path. Existing files are not overwritten by default (IOError).
+        ''' 파일을 디스크에 저장하거나 내용물을 열린 파일 (같은) 객체로
+            복사한다. *destination*\이 디렉터리면 경로에 :attr:`filename`\을
+            덧붙인다. 기본적으로 기존 파일을 덮어 쓰지 않는다 (IOError).
 
-            :param destination: File path, directory or file(-like) object.
-            :param overwrite: If True, replace existing files. (default: False)
-            :param chunk_size: Bytes to read at a time. (default: 64kb)
+            :param destination: 파일 경로나 디렉터리, 파일 (같은) 객체.
+            :param overwrite: 참이면 기본 파일을 교체. (기본값: False)
+            :param chunk_size: 한 번에 읽을 바이트 수. (기본값: 64kb)
         '''
         if isinstance(destination, basestring): # Except file-likes here
             if os.path.isdir(destination):
@@ -2532,8 +2526,8 @@ def static_file(filename, root, mimetype='auto', download=False, charset='UTF-8'
 
 
 def debug(mode=True):
-    """ Change the debug level.
-    There is only one debug level supported at the moment."""
+    """ 디버그 수준 변경.
+    현재 지원하는 디버그 수준은 한 가지뿐이다."""
     global DEBUG
     if mode: warnings.simplefilter('default')
     DEBUG = bool(mode)
@@ -2548,7 +2542,7 @@ def http_date(value):
     return value
 
 def parse_date(ims):
-    """ Parse rfc1123, rfc850 and asctime timestamps and return UTC epoch. """
+    """ rfc1123, rfc850, asctime 형식 타임스탬프 파싱 해서 UTC 에포크 시간 반환. """
     try:
         ts = email.utils.parsedate_tz(ims)
         return time.mktime(ts[:8] + (0,)) - (ts[9] or 0) - time.timezone
@@ -2556,7 +2550,7 @@ def parse_date(ims):
         return None
 
 def parse_auth(header):
-    """ Parse rfc2617 HTTP authentication header string (basic) and return (user,pass) tuple or None"""
+    """ rfc2617 HTTP 인증 헤더 문자열(basic) 파싱 해서 (user,pass) 튜플 또는 None 반환."""
     try:
         method, data = header.split(None, 1)
         if method.lower() == 'basic':
@@ -2601,14 +2595,14 @@ def _lscmp(a, b):
 
 
 def cookie_encode(data, key):
-    ''' Encode and sign a pickle-able object. Return a (byte) string '''
+    ''' pickle 가능 객체 인코딩 및 서명. (바이트)열 반환. '''
     msg = base64.b64encode(pickle.dumps(data, -1))
     sig = base64.b64encode(hmac.new(tob(key), msg, digestmod=hashlib.md5).digest())
     return tob('!') + sig + tob('?') + msg
 
 
 def cookie_decode(data, key):
-    ''' Verify and decode an encoded string. Return an object or None.'''
+    ''' 인코딩 된 문자열 검사 및 디코딩. 객체 또는 None 반환.'''
     data = tob(data)
     if cookie_is_encoded(data):
         sig, msg = data.split(tob('?'), 1)
@@ -2618,7 +2612,7 @@ def cookie_decode(data, key):
 
 
 def cookie_is_encoded(data):
-    ''' Return True if the argument looks like a encoded cookie.'''
+    ''' 인자가 인코딩 된 쿠키처럼 보이면 True 반환.'''
     return bool(data.startswith(tob('!')) and tob('?') in data)
 
 
@@ -2635,14 +2629,14 @@ def html_quote(string):
 
 
 def yieldroutes(func):
-    """ Return a generator for routes that match the signature (name, args)
-    of the func parameter. This may yield more than one route if the function
-    takes optional keyword arguments. The output is best described by example::
+    """ func 매개변수의 시그너처(이름, 인자)에 맞는 라우트를 내놓는
+    제너레이터 반환. 함수가 선택적 키워드 인자를 받는 경우 여러 라우트를
+    내놓을 수도 있다. 예를 보면 출력을 이해하기 쉽다. ::
 
         a()         -> '/a'
         b(x, y)     -> '/b/<x>/<y>'
-        c(x, y=5)   -> '/c/<x>' and '/c/<x>/<y>'
-        d(x=5, y=6) -> '/d' and '/d/<x>' and '/d/<x>/<y>'
+        c(x, y=5)   -> '/c/<x>' 및 '/c/<x>/<y>'
+        d(x=5, y=6) -> '/d' 및 '/d/<x>' 및 '/d/<x>/<y>'
     """
     path = '/' + func.__name__.replace('__','/').lstrip('/')
     spec = getargspec(func)
@@ -2655,13 +2649,13 @@ def yieldroutes(func):
 
 
 def path_shift(script_name, path_info, shift=1):
-    ''' Shift path fragments from PATH_INFO to SCRIPT_NAME and vice versa.
+    ''' PATH_INFO에서 SCRIPT_NAME으로 또는 반대로 경로 조각들을 이동.
 
-        :return: The modified paths.
-        :param script_name: The SCRIPT_NAME path.
-        :param script_name: The PATH_INFO path.
-        :param shift: The number of path fragments to shift. May be negative to
-          change the shift direction. (default: 1)
+        :return: 수정된 경로들.
+        :param script_name: SCRIPT_NAME 경로.
+        :param path_info: PATH_INFO 경로.
+        :param shift: 옮길 경로 조각 수. 음수로 해서 이동 방향을
+          바꿀 수도 있다. (기본값: 1)
     '''
     if shift == 0: return script_name, path_info
     pathlist = path_info.strip('/').split('/')
@@ -3023,15 +3017,15 @@ server_names = {
 
 
 def load(target, **namespace):
-    """ Import a module or fetch an object from a module.
+    """ 모듈을 임포트 하거나 모듈에서 객체 가져오기.
 
-        * ``package.module`` returns `module` as a module object.
-        * ``pack.mod:name`` returns the module variable `name` from `pack.mod`.
-        * ``pack.mod:func()`` calls `pack.mod.func()` and returns the result.
+        * ``package.module``: `module`\을 모듈 객체로 반환.
+        * ``pack.mod:name``: `pack.mod`\의 모듈 변수 `name` 반환.
+        * ``pack.mod:func()``:`pack.mod.func()` 호출하고 결과 반환.
 
-        The last form accepts not only function calls, but any type of
-        expression. Keyword arguments passed to this function are available as
-        local variables. Example: ``import_string('re:compile(x)', x='[a-z]')``
+        마지막 형식은 함수 호출뿐 아니라 임의 타입의 식도 받는다.
+        이 함수에 전달한 키워드 인자들이 지역 변수로 사용 가능해진다.
+        예: ``import_string('re:compile(x)', x='[a-z]')``
     """
     module, target = target.split(":", 1) if ':' in target else (target, None)
     if module not in sys.modules: __import__(module)
@@ -3043,9 +3037,9 @@ def load(target, **namespace):
 
 
 def load_app(target):
-    """ Load a bottle application from a module and make sure that the import
-        does not affect the current default application, but returns a separate
-        application object. See :func:`load` for the target parameter. """
+    """ 모듈에서 보틀 응용을 적재하면서 임포트가 현재 기본 응용에 영향을
+        주지 않도록 하고, 별도의 응용 객체를 반환한다. target 매개변수에
+        대해선 :func:`load` 참고. """
     global NORUN; NORUN, nr_old = True, NORUN
     try:
         tmp = default_app.push() # Create a new "default application"
@@ -3059,21 +3053,21 @@ _debug = debug
 def run(app=None, server='wsgiref', host='127.0.0.1', port=8080,
         interval=1, reloader=False, quiet=False, plugins=None,
         debug=None, **kargs):
-    """ Start a server instance. This method blocks until the server terminates.
+    """ 서버 인스턴스 시작. 서버가 종료할 때까지 이 메소드는 블록 된다.
 
-        :param app: WSGI application or target string supported by
-               :func:`load_app`. (default: :func:`default_app`)
-        :param server: Server adapter to use. See :data:`server_names` keys
-               for valid names or pass a :class:`ServerAdapter` subclass.
-               (default: `wsgiref`)
-        :param host: Server address to bind to. Pass ``0.0.0.0`` to listens on
-               all interfaces including the external one. (default: 127.0.0.1)
-        :param port: Server port to bind to. Values below 1024 require root
-               privileges. (default: 8080)
-        :param reloader: Start auto-reloading server? (default: False)
-        :param interval: Auto-reloader interval in seconds (default: 1)
-        :param quiet: Suppress output to stdout and stderr? (default: False)
-        :param options: Options passed to the server adapter.
+        :param app: WSGI 응용 또는 :func:`load_app`\에서 지원하는
+               대상 문자열. (기본값: :func:`default_app`)
+        :param server: 사용할 서버 어댑터. 유효한 이름은
+               :data:`server_names`\의 키 참고. :class:`ServerAdapter`
+               서브클래스 전달해도 됨. (기본값: `wsgiref`)
+        :param host: 바인드 할 서버 주소. 외부 인터페이스 포함 모든
+               인터페이스에 리슨 하려면 ``0.0.0.0``. (기본값: 127.0.0.1)
+        :param port: 바인드 할 서버 포트. 1024 아래 값에는 루트 권한
+               필요. (기본값: 8080)
+        :param reloader: 자동 재적재 서버 시작? (기본값: False)
+        :param interval: 자동 재적재 확인 간격. 초 단위. (기본값: 1)
+        :param quiet: stdout 및 stderr 출력 끄기? (기본값: False)
+        :param options: 서버 어댑터로 전달할 옵션들.
      """
     if NORUN: return
     if reloader and not os.environ.get('BOTTLE_CHILD'):
@@ -3203,21 +3197,20 @@ class TemplateError(HTTPError):
 
 
 class BaseTemplate(object):
-    """ Base class and minimal API for template adapters """
+    """ 템플릿 어댑터 기반 클래스이자 최소 API """
     extensions = ['tpl','html','thtml','stpl']
     settings = {} #used in prepare()
     defaults = {} #used in render()
 
     def __init__(self, source=None, name=None, lookup=[], encoding='utf8', **settings):
-        """ Create a new template.
-        If the source parameter (str or buffer) is missing, the name argument
-        is used to guess a template filename. Subclasses can assume that
-        self.source and/or self.filename are set. Both are strings.
-        The lookup, encoding and settings parameters are stored as instance
-        variables.
-        The lookup parameter stores a list containing directory paths.
-        The encoding parameter should be used to decode byte strings or files.
-        The settings parameter contains a dict for engine-specific settings.
+        """ 새 템플릿 만들기.
+        source 매개변수(str 또는 buffer)가 없으면 name 인자를 이용해 템플릿
+        파일 이름을 추측한다. 서브클래스에선 self.source 및/또는 self.filename이
+        설정돼 있다고 상정할 수 있다. 둘 모두 문자열이다.
+        lookup, encoding, settings 매개변수는 인스턴스 변수로 저장된다.
+        lookup 매개변수는 디렉터리 경로들을 담은 리스트다.
+        encoding 매개변수는 바이트열이나 파일을 디코딩 하는 데 쓰게 된다.
+        settings 매개변수는 엔진별 설정들의 딕셔너리다.
         """
         self.name = name
         self.source = source.read() if hasattr(source, 'read') else source
@@ -3236,8 +3229,8 @@ class BaseTemplate(object):
 
     @classmethod
     def search(cls, name, lookup=[]):
-        """ Search name in all directories specified in lookup.
-        First without, then with common extensions. Return first hit. """
+        """ lookup에 지정된 모든 디렉터리에서 이름을 탐색.
+        일단 확장자 없이, 다음엔 많이 쓰는 확장자들로. 처음 걸린 것 반환. """
         if not lookup:
             depr('The template lookup path list should not be empty.') #0.12
             lookup = ['.']
@@ -3257,7 +3250,7 @@ class BaseTemplate(object):
 
     @classmethod
     def global_config(cls, key, *args):
-        ''' This reads or sets the global settings stored in class.settings. '''
+        ''' class.settings에 저장된 전역 설정을 읽거나 설정한다. '''
         if args:
             cls.settings = cls.settings.copy() # Make settings local to class
             cls.settings[key] = args[0]
@@ -3265,18 +3258,18 @@ class BaseTemplate(object):
             return cls.settings[key]
 
     def prepare(self, **options):
-        """ Run preparations (parsing, caching, ...).
-        It should be possible to call this again to refresh a template or to
-        update settings.
+        """ 준비 동작(파싱, 캐싱, ...) 수행.
+        템플릿을 갱신하거나 설정을 바꾸기 위해 다시 호출하는 게
+        가능해야 한다.
         """
         raise NotImplementedError
 
     def render(self, *args, **kwargs):
-        """ Render the template with the specified local variables and return
-        a single byte or unicode string. If it is a byte string, the encoding
-        must match self.encoding. This method must be thread-safe!
-        Local variables may be provided in dictionaries (args)
-        or directly, as keywords (kwargs).
+        """ 지정한 지역 변수들로 템플릿을 렌더링 해서 바이트열 또는
+        유니코드열을 하나 반환한다. 바이트열인 경우 인코딩이
+        self.encoding과 일치해야 한다. 이 메소드는 스레드에 안전해야
+        한다. 지역 변수들이 딕셔너리로(args) 제공될 수도 있고 바로
+        키워드로(kwargs) 제공될 수도 있다.
         """
         raise NotImplementedError
 
@@ -3412,7 +3405,7 @@ class SimpleTemplate(BaseTemplate):
         return env
 
     def render(self, *args, **kwargs):
-        """ Render the template using keyword arguments as local variables. """
+        """ 키워드 인자들을 지역 변수로 해서 템플릿을 렌더링 한다. """
         env = {}; stdout = []
         for dictarg in args: env.update(dictarg)
         env.update(kwargs)
@@ -3606,10 +3599,10 @@ class StplParser(object):
 
 def template(*args, **kwargs):
     '''
-    Get a rendered template as a string iterator.
-    You can use a name, a filename or a template string as first parameter.
-    Template rendering arguments can be passed as dictionaries
-    or directly (as keyword arguments).
+    렌더링 된 템플릿을 문자열 이터레이터로 얻기.
+    첫 번째 매개변수에 이름, 파일 이름, 템플릿 문자열을 쓸 수 있다.
+    템플릿 렌더링 인자를 딕셔너리로 또는 (키워드 인자로) 직접
+    줄 수 있다.
     '''
     tpl = args[0] if args else None
     adapter = kwargs.pop('template_adapter', SimpleTemplate)
@@ -3635,14 +3628,14 @@ jinja2_template = functools.partial(template, template_adapter=Jinja2Template)
 
 
 def view(tpl_name, **defaults):
-    ''' Decorator: renders a template for a handler.
-        The handler can control its behavior like that:
+    ''' 데코레이터: 핸들러 대신 템플릿을 렌더링.
+        핸들러에서 다음처럼 동작을 제어할 수 있다.
 
-          - return a dict of template vars to fill out the template
-          - return something other than a dict and the view decorator will not
-            process the template, but return the handler result as is.
-            This includes returning a HTTPResponse(dict) to get,
-            for instance, JSON with autojson or other castfilters.
+          - 템플릿 변수들의 dict를 반환하면 그걸로 템플릿을 채운다.
+          - dict 아닌 뭔가를 반환하면 view 데코레이터가 템플릿을 처리하지
+            않고 핸들러 결과를 그대로 반환한다. 예를 들어
+            HTTPResponse(dict)를 반환해서 autojson이나 기타 castfilter로
+            JSON을 얻을 수 있다.
     '''
     def decorator(func):
         @functools.wraps(func)
@@ -3677,7 +3670,7 @@ TEMPLATES = {}
 DEBUG = False
 NORUN = False # If set, run() does nothing. Used by load_app()
 
-#: A dict to map HTTP status codes (e.g. 404) to phrases (e.g. 'Not Found')
+#: HTTP 상태 코드(예: 404)를 문구(예: 'Not Found')로 매핑 하는 dict
 HTTP_CODES = httplib.responses
 HTTP_CODES[418] = "I'm a teapot" # RFC 2324
 HTTP_CODES[422] = "Unprocessable Entity" # RFC 4918
@@ -3723,13 +3716,13 @@ ERROR_PAGE_TEMPLATE = """
 %%end
 """ % __name__
 
-#: A thread-safe instance of :class:`LocalRequest`. If accessed from within a
-#: request callback, this instance always refers to the *current* request
-#: (even on a multithreaded server).
+#: 스레드에 안전한 :class:`LocalRequest` 인스턴스. 요청 콜백 내에서
+#: 접근 시 이 인스턴스는 (다중 스레드 서버에서도) 항상 *현재* 요청을
+#: 가리킨다.
 request = LocalRequest()
 
-#: A thread-safe instance of :class:`LocalResponse`. It is used to change the
-#: HTTP response for the *current* request.
+#: 스레드에 안전한 :class:`LocalResponse` 인스턴스. *현재* 요청에 대한
+#: HTTP 응답을 바꾸는 데 쓴다.
 response = LocalResponse()
 
 #: A thread-safe namespace. Not used by Bottle.
