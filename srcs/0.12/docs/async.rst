@@ -1,25 +1,25 @@
-Primer to Asynchronous Applications
-===================================
+비동기 응용 입문
+================
 
-Asynchronous design patterns don't mix well with the synchronous nature of `WSGI <http://www.python.org/dev/peps/pep-3333/>`_. This is why most asynchronous frameworks (tornado, twisted, ...) implement a specialized API to expose their asynchronous features. Bottle is a WSGI framework and shares the synchronous nature of WSGI, but thanks to the awesome `gevent project <http://www.gevent.org/>`_, it is still possible to write asynchronous applications with bottle. This article documents the usage of Bottle with Asynchronous WSGI.
+비동기 설계 패턴은 `WSGI <http://www.python.org/dev/peps/pep-3333/>`_\의 동기적 성격과 잘 어울리지 않는다. 그래서 대부분의 비동기 프레임워크들(tornado, twisted, ...)에선 비동기 기능을 드러내기 위한 특별한 API를 구현하고 있다. 보틀은 WSGI 프레임워크이고 WSGI의 동기적 성격을 공유하긴 하지만 정말 멋진 `gevent 프로젝트 <http://www.gevent.org/>`_ 덕분에 보틀로도 비동기 응용을 작성하는 게 가능하다. 이 문서에선 비동기 WSGI로 보틀을 사용하는 방법을 기록한다.
 
-The Limits of Synchronous WSGI
--------------------------------
+동기식 WSGI의 한계
+------------------
 
-Briefly worded, the `WSGI specification (pep 3333) <http://www.python.org/dev/peps/pep-3333/>`_ defines a request/response circle as follows: The application callable is invoked once for each request and must return a body iterator. The server then iterates over the body and writes each chunk to the socket. As soon as the body iterator is exhausted, the client connection is closed.
+`WSGI 명세 (pep 3333) <http://www.python.org/dev/peps/pep-3333/>`_\에선 규정하는 요청/응답 사이클을 간략하게 말하면 이렇다. 각 요청마다 응용 콜러블이 호출되고 그 콜러블은 바디 이터레이터를 반환해야 한다. 그러면 서버가 그 바디를 돌리면서 각 덩어리를 소켓에 써넣는다. 바디 이터레이터가 끝나면 클라이언트 연결을 닫는다.
 
-Simple enough, but there is a snag: All this happens synchronously. If your application needs to wait for data (IO, sockets, databases, ...), it must either yield empty strings (busy wait) or block the current thread. Both solutions occupy the handling thread and prevent it from answering new requests. There is consequently only one ongoing request per thread.
+간단하지만 문제가 있다. 이 모든 게 동기적으로 이뤄진다는 점이다. 응용에서 데이터를 기다려야 한다면 (IO, 소켓, 데이터베이스, ...) 빈 문자열을 내놓거나 (바쁜 대기) 현재 스레드를 블록 시켜야 한다. 두 해법 모두 처리 스레드를 점유하므로 새 요청에 답할 수 없게 된다. 그래서 스레드별로 한 요청만 처리 중일 수 있다.
 
-Most servers limit the number of threads to avoid their relatively high overhead. Pools of 20 or less threads are common. As soon as all threads are occupied, any new connection is stalled. The server is effectively dead for everyone else. If you want to implement a chat that uses long-polling ajax requests to get real-time updates, you'd reach the limited at 20 concurrent connections. That's a pretty small chat.
+대부분 서버에서는 스레드의 비교적 높은 오버헤드를 피하기 위해 그 수를 제한한다. 20개나 그보다 적은 스레드로 이뤄진 풀을 많이 쓴다. 모든 스레드가 점유되면 새 연결은 모두 정지 상태가 되고, 다른 모두에게는 서버가 실질적으로 죽은 게 된다. 실시간 업데이트를 위해 오래 폴링 하는 AJAX 요청을 써서 채팅을 구현하려 한다면 동시 연결 20개가 한계가 될 것이다. 꽤 소규모의 채팅이다.
 
-Greenlets to the rescue
-------------------------
+해결사 Greenlet
+---------------
 
-Most servers limit the size of their worker pools to a relatively low number of concurrent threads, due to the high overhead involved in switching between and creating new threads. While threads are cheap compared to processes (forks), they are still expensive to create for each new connection.
+대부분 서버에서는 스레드 간 전환과 새 스레드 생성의 높은 오버헤드 때문에 동시 스레드 수가 상당히 적게 작업 스레드 풀 크기를 제한한다. 스레드가 프로세스(fork)에 비해 싸긴 하지만 새 연결마다 만들기엔 여전히 비용이 크다.
 
-The `gevent <http://www.gevent.org/>`_ module adds *greenlets* to the mix. Greenlets behave similar to traditional threads, but are very cheap to create. A gevent-based server can spawn thousands of greenlets (one for each connection) with almost no overhead. Blocking individual greenlets has no impact on the servers ability to accept new requests. The number of concurrent connections is virtually unlimited.
+`gevent <http://www.gevent.org/>`_ 모듈은 거기에 *그린렛(greenlet)*\을 추가한다. 그린렛은 전통적인 스레드와 비슷하게 동작하지만 생성 비용이 아주 작다. gevent 기반 서버에서 오버헤드 거의 없이 (연결마다 하나씩) 그린렛 수천 개를 만들 수 있다. 그리고 개별 그린렛이 블록 돼도 서버가 새 요청을 받는 데 아무 영향도 주지 않는다. 동시 연결 수에 실질적으로 제한이 없다.
 
-This makes creating asynchronous applications incredibly easy, because they look and feel like synchronous applications. A gevent-based server is actually not asynchronous, but massively multi-threaded. Here is an example::
+그래서 비동기식 응용을 만드는 게 엄청나게 쉬워지는데, 모양새가 동기식 응용과 비슷하기 때문이다. gevent 기반 서버는 사실 비동기가 아니라 초다중 스레드다. 다음이 예이다. ::
 
     from gevent import monkey; monkey.patch_all()
 
@@ -36,22 +36,22 @@ This makes creating asynchronous applications incredibly easy, because they look
 
     run(host='0.0.0.0', port=8080, server='gevent')
 
-The first line is important. It causes gevent to monkey-patch most of Python's blocking APIs to not block the current thread, but pass the CPU to the next greenlet instead. It actually replaces Python's threading with gevent-based pseudo-threads. This is why you can still use ``time.sleep()`` which would normally block the whole thread. If you don't feel comfortable with monkey-patching python built-ins, you can use the corresponding gevent functions (``gevent.sleep()`` in this case).
+첫 번째 행이 중요하다. gevent에서 파이썬의 블로킹 API 대부분을 몽키 패치 해서 현재 스레드를 블록 시키지 않고 CPU를 다음 그린렛으로 넘기게 만든다. 실제로 파이썬의 스레드 처리를 gevent 기반의 유사 스레드로 교체한다. 그래서 원래는 스레드 전체를 블록 시킬 ``time.sleep()``\을 사용할 수 있는 것이다. 만약 파이썬 내장 모듈들을 몽키 패치 하는 게 마음에 들지 않는다면 대응하는 gevent 함수(이 경우 ``gevent.sleep()``)를 쓸 수 있다.
 
-If you run this script and point your browser to ``http://localhost:8080/stream``, you should see `START`, `MIDDLE`, and `END` show up one by one (rather than waiting 8 seconds to see them all at once). It works exactly as with normal threads, but now your server can handle thousands of concurrent requests without any problems.
+이 스크립트를 돌리고 브라우저로 ``http://localhost:8080/stream``\을 열면 `START`, `MIDDLE`, `END`\가 (8초 후에 한번에 다 나오는 게 아니라) 하나씩 나오는 걸 볼 수 있다. 정확히 일반 스레드처럼 동작하는데도 이제는 서버가 수천 개 동시 요청을 문제 없이 처리할 수 있다.
 
 .. note::
 
-    Some browsers buffer a certain amount of data before they start rendering a
-    page. You might need to yield more than a few bytes to see an effect in
-    these browsers. Additionally, many browsers have a limit of one concurrent
-    connection per URL. If this is the case, you can use a second browser or a
-    benchmark tool (e.g. `ab` or `httperf`) to measure performance.
+    일부 브라우저에선 페이지 렌더링을 시작하기 전에 데이터를 어느 정도
+    버퍼링 한다. 그런 브라우저에선 효과를 눈으로 확인하려면 몇 바이트 더
+    yield 해야 할 수도 있다. 더불어 여러 브라우저에선 URL당 동시 연결이
+    1개로 제한돼 있다. 거기 해당하는 경우 브라우저를 하나 더 띄우거나
+    벤치마크 도구(예: `ab`, `httperf`)를 써서 성능을 측정할 수 있다.
 
-Event Callbacks
----------------
+이벤트 콜백
+-----------
 
-A very common design pattern in asynchronous frameworks (including tornado, twisted, node.js and friends) is to use non-blocking APIs and bind callbacks to asynchronous events. The socket object is kept open until it is closed explicitly to allow callbacks to write to the socket at a later point. Here is an example based on the `tornado library <http://www.tornadoweb.org/documentation#non-blocking-asynchronous-requests>`_::
+비동기 프레임워크(tornado, twisted, node.js 등)에서 아주 흔한 설계 패턴은 논블로킹 API를 쓰면서 비동기 이벤트에 콜백을 결속시키는 것이다. 명시적으로 닫기 전까진 소켓 객체를 계속 열어 두기 때문에 콜백에서 이후에 소켓에 쓰기를 할 수 있다. 다음은 `tornado 라이브러리 <http://www.tornadoweb.org/documentation#non-blocking-asynchronous-requests>`_\를 기반으로 한 예이다. ::
 
     class MainHandler(tornado.web.RequestHandler):
         @tornado.web.asynchronous
@@ -60,11 +60,11 @@ A very common design pattern in asynchronous frameworks (including tornado, twis
             worker.on_data(lambda chunk: self.write(chunk))
             worker.on_finish(lambda: self.finish())
 
-The main benefit is that the request handler terminates early. The handling thread can move on and accept new requests while the callbacks continue to write to sockets of previous requests. This is how these frameworks manage to process a lot of concurrent requests with only a small number of OS threads.
+이렇게 하면 좋은 점은 요청 핸들러가 빨리 끝난다는 것이다. 콜백에서 계속 이전 요청의 소켓에 쓰기를 하는 동안 처리 스레드는 다음으로 넘어가서 새 요청을 받을 수 있다. 그런 프레임워크들은 이런 식으로 해서 적은 OS 스레드만으로 많은 동시 요청을 처리해 낸다.
 
-With Gevent+WSGI, things are different: First, terminating early has no benefit because we have an unlimited pool of (pseudo)threads to accept new connections. Second, we cannot terminate early because that would close the socket (as required by WSGI). Third, we must return an iterable to conform to WSGI.
+Gevent+WSGI에서는 사정이 다르다. 첫째로, 새 연결을 받아들일 수 있는 무한한 (유사) 스레드 풀이 있기 때문에 콜백을 일찍 끝내는 데 좋은 점이 없다. 둘째로, 일찍 끝낼 수 없기도 한데, 그러면 (WSGI에서 요구하는 대로) 소켓을 닫게 될 것이기 때문이다. 셋째로, WSGI를 준수하려면 이터러블을 반환해야 한다.
 
-In order to conform to the WSGI standard, all we have to do is to return a body iterable that we can write to asynchronously. With the help of `gevent.queue <http://www.gevent.org/gevent.queue.html>`_, we can *simulate* a detached socket and rewrite the previous example as follows::
+WSGI 표준을 준수하기 위해서 우리가 해야 할 일은 비동기적으로 쓰기를 할 수 있는 바디 이터러블을 반환하는 것이다. `gevent.queue <http://www.gevent.org/gevent.queue.html>`_\의 도움으로 분리된 소켓을 *흉내내서* 앞의 예를 다음처럼 작성할 수 있다. ::
 
     @route('/fetch')
     def fetch():
@@ -75,15 +75,15 @@ In order to conform to the WSGI standard, all we have to do is to return a body 
         worker.start()
         return body
 
-From the server perspective, the queue object is iterable. It blocks if empty and stops as soon as it reaches ``StopIteration``. This conforms to WSGI. On the application side, the queue object behaves like a non-blocking socket. You can write to it at any time, pass it around and even start a new (pseudo)thread that writes to it asynchronously. This is how long-polling is implemented most of the time.
+서버 관점에서 이 큐 객체는 이터러블이다. 비어 있으면 블록 하고 ``StopIteration``\을 만나면 바로 멈춘다. 이는 WSGI을 준수한다. 응용에서 보기에 그 큐 객체는 논블로킹 소켓처럼 동작한다. 언제든 거기에 쓰기를 할 수 있고 여기 저기 전달할 수 있으며, 심지어 거기에 비동기적으로 쓰기를 하는 새 (유사) 스레드를 시작할 수도 있다. 대부분의 경우 이런 식으로 긴 폴링을 구현한다.
 
 
-Finally: WebSockets
--------------------
+마지막으로: 웹소켓
+------------------
 
-Lets forget about the low-level details for a while and speak about WebSockets. Since you are reading this article, you probably know what WebSockets are: A bidirectional communication channel between a browser (client) and a web application (server).
+저수준 세부 사항에 대해선 잠시 잊고서 웹소켓에 대해 얘기해 보자. 이 글을 읽고 있다면 아마 웹소켓이 뭔지 알고 있을 텐데, 브라우저(클라이언트)와 웹 응용(서버) 사이의 양방향 통신 채널이다.
 
-Thankfully the `gevent-websocket <http://pypi.python.org/pypi/gevent-websocket/>`_ package does all the hard work for us. Here is a simple WebSocket endpoint that receives messages and just sends them back to the client::
+고맙게도 `gevent-websocket <http://pypi.python.org/pypi/gevent-websocket/>`_ 패키지가 어려운 일을 다 해 준다. 다음은 메시지를 받아서 그냥 클라이언트로 돌려 보내는 단순한 웹소켓 종점이다. ::
 
     from bottle import request, Bottle, abort
     app = Bottle()
@@ -107,9 +107,9 @@ Thankfully the `gevent-websocket <http://pypi.python.org/pypi/gevent-websocket/>
                         handler_class=WebSocketHandler)
     server.serve_forever()
 
-The while-loop runs until the client closes the connection. You get the idea :)
+클라이언트가 연결을 닫을 때까지 while 루프가 돈다. 그게 전부다. :)
 
-The client-site JavaScript API is really straight forward, too::
+클라이언트 측 자바스크립트 API 역시 정말 단순하다. ::
 
     <!DOCTYPE html>
     <html>
