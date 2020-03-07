@@ -1193,7 +1193,7 @@ class BaseRequest(object):
 
     @property
     def body(self):
-        """ seek 가능한 파일 같은 객체로 된 HTTP 요청 바디.
+        """ seek 가능한 파일스러운 객체로 된 HTTP 요청 바디.
             :attr:`MEMFILE_MAX`\에 따라 임시 파일 또는 :class:`io.BytesIO`
             인스턴스다. 이 프로퍼티에 처음 접근할 때 환경 변수
             ``wsgi.input``\을 읽어서 교체한다. 이후 접근 시에는 그 파일
@@ -1434,7 +1434,7 @@ class HeaderProperty(object):
 class BaseResponse(object):
     """ 응답 바디, 헤더, 쿠키 저장 클래스.
 
-        이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict 같은 항목
+        이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict스러운 항목
         접근을 지원하지만 dict가 아니다. 무엇보다 응답에 반복문을 돌리면
         헤더가 아니라 바디의 부분들을 내놓는다.
 
@@ -1527,7 +1527,7 @@ class BaseResponse(object):
     @property
     def headers(self):
         ''' :class:`HeaderDict` 인스턴스. 응답 헤더들에 대한 대소문자
-            구별 없는 dict 같은 뷰. '''
+            구별 없는 dict스러운 뷰. '''
         hdict = HeaderDict()
         hdict.dict = self._headers
         return hdict
@@ -1887,7 +1887,7 @@ class MultiDict(DictMixin):
 
 class FormsDict(MultiDict):
     ''' 요청 양식 데이터를 저장하는 데 쓰는 :class:`MultiDict`\의
-        서브클래스. 일반 dict 같은 항목 접근 방법(데이터를 그대로
+        서브클래스. 일반 dict스러운 항목 접근 방법(데이터를 그대로
         네이티브 문자열로 반환)에 더해서 이 컨테이너는 속성처럼 값에
         접근하는 것도 지원한다. 속성은 :attr:`input_encoding`\(기본값:
         'utf8')에 맞도록 자동으로 디코딩 또는 재코딩 된다. 없는 속성은
@@ -1956,7 +1956,7 @@ class HeaderDict(MultiDict):
 
 class WSGIHeaderDict(DictMixin):
     ''' WSGI environ dict를 포장해서 HTTP_* 필드에 편리하게 접근할 수 있게
-        하는 dict 같은 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,
+        하는 dict스러운 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,
         3.x는 unicode)이며 키는 대소문자 구별이 없다. WSGI 환경에 네이티브
         아닌 문자열 값이 들어 있으면 무손실 'latin1' 문자셋을 이용해
         디코딩 또는 인코딩 한다.
@@ -2005,7 +2005,7 @@ class WSGIHeaderDict(DictMixin):
 
 
 class ConfigDict(dict):
-    ''' dict 같은 설정 저장소. 네임스페이스, 값 검사, 메타데이터,
+    ''' dict스러운 설정 저장소. 네임스페이스, 값 검사, 메타데이터,
         변경 주시 등을 추가로 지원.
 
         이 저장소는 빠른 읽기 접근이 가능하게 최적화돼 있다. 키를
@@ -2210,7 +2210,7 @@ class ConfigDict(dict):
 
 
 class AppStack(list):
-    """ 스택 같은 리스트. 호출하면 스택 상단 항목 반환. """
+    """ 스택스러운 리스트. 호출하면 스택 상단 항목 반환. """
 
     def __call__(self):
         """ Return the current default application. """
@@ -2345,7 +2345,7 @@ class FileUpload(object):
 
     def __init__(self, fileobj, name, filename, headers=None):
         ''' Wrapper for file uploads. '''
-        #: 열린 파일 (같은) 객체 (BytesIO 버퍼나 임시 파일)
+        #: 열린 파일(스러운) 객체 (BytesIO 버퍼나 임시 파일)
         self.file = fileobj
         #: 업로드 양식 필드 이름
         self.name = name
@@ -2389,11 +2389,11 @@ class FileUpload(object):
         self.file.seek(offset)
 
     def save(self, destination, overwrite=False, chunk_size=2**16):
-        ''' 파일을 디스크에 저장하거나 내용물을 열린 파일 (같은) 객체로
+        ''' 파일을 디스크에 저장하거나 내용물을 열린 파일(스러운) 객체로
             복사한다. *destination*\이 디렉터리면 경로에 :attr:`filename`\을
             덧붙인다. 기본적으로 기존 파일을 덮어 쓰지 않는다 (IOError).
 
-            :param destination: 파일 경로나 디렉터리, 파일 (같은) 객체.
+            :param destination: 파일 경로나 디렉터리, 파일(스러운) 객체.
             :param overwrite: 참이면 기본 파일을 교체. (기본값: False)
             :param chunk_size: 한 번에 읽을 바이트 수. (기본값: 64kb)
         '''

@@ -35,7 +35,7 @@ API 참조
 .. function:: app()
               default_app()
 
-    현재 :ref:`default-app`\을 반환. 실제로 이는 호출 가능한 :class:`AppStack` 인스턴스이며 스택 같은 API를 구현하고 있다.
+    현재 :ref:`default-app`\을 반환. 실제로 이는 호출 가능한 :class:`AppStack` 인스턴스이며 스택스러운 API를 구현하고 있다.
 
 
 라우팅
