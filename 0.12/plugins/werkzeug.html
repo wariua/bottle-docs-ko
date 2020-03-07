@@ -7,14 +7,14 @@
     <title>Bottle-Werkzeug &#8212; Bottle 0.12.18 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="따라하기: 할 일 목록 응용" href="../tutorial_app.html" />
+    <link rel="next" title="따라하기: 할일 목록 응용" href="../tutorial_app.html" />
     <link rel="prev" title="Bottle-SQLite" href="sqlite.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -37,9 +37,9 @@
 <p><a class="reference external" href="http://werkzeug.pocoo.org/">Werkzeug</a> is a powerful WSGI utility library for
 Python. It includes an interactive debugger and feature-packed request and response
 objects.</p>
-<p>This plugin integrates <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> and
-<a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a> as an alternative to the built-in
-implementations, adds support for <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v0.16.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and replaces the
+<p>This plugin integrates <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> and
+<a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a> as an alternative to the built-in
+implementations, adds support for <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v1.0.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and replaces the
 default error page with an interactive debugger.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
@@ -58,8 +58,8 @@ $ python setup.py install
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>Once installed to an application, this plugin adds support for
-<a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a>, all kinds of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v0.16.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and
-provides a thread-local instance of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> that is
+<a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a>, all kinds of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v1.0.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and
+provides a thread-local instance of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> that is
 updated with each request. The plugin instance itself doubles as a werkzeug
 module object, so you don’t have to import werkzeug in your application. Here
 is an example:</p>
@@ -96,8 +96,8 @@ feature.</p>
 <p>The following configuration options exist for the plugin class:</p>
 <ul class="simple">
 <li><p><strong>evalex</strong>: Enable the exception evaluation feature (interactive debugging). This requires a non-forking server and is a security risk. Please read <a class="reference external" href="werkzeug:debug">Debugging Applications with werkzeug</a>. (default: False)</p></li>
-<li><p><strong>request_class</strong>: Defaults to <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a></p></li>
-<li><p><strong>debugger_class</strong>: Defaults to a subclass of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a> which obeys the <code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.DEBUG</span></code> setting.</p></li>
+<li><p><strong>request_class</strong>: Defaults to <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a></p></li>
+<li><p><strong>debugger_class</strong>: Defaults to a subclass of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a> which obeys the <code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.DEBUG</span></code> setting.</p></li>
 </ul>
 </div>
 </div>
@@ -121,7 +121,7 @@ feature.</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../configuration.html">설정 (초안)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">설정 (작업 중)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../routing.html">요청 라우팅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API 참조</a></li>
@@ -132,7 +132,7 @@ feature.</p>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial_app.html">따라하기: 할 일 목록 응용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../async.html">비동기 응용 입문</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../recipes.html">간단 해법</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">자주 묻는 질문</a></li>
@@ -163,7 +163,7 @@ feature.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">사용 가능한 플러그인 목록</a><ul>
       <li>Previous: <a href="sqlite.html" title="previous chapter">Bottle-SQLite</a></li>
-      <li>Next: <a href="../tutorial_app.html" title="next chapter">따라하기: 할 일 목록 응용</a></li>
+      <li>Next: <a href="../tutorial_app.html" title="next chapter">따라하기: 할일 목록 응용</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -177,7 +177,7 @@ feature.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -194,7 +194,7 @@ feature.</p>
       &copy;2009-2020, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

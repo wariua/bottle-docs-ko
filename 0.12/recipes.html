@@ -7,11 +7,11 @@
     <title>간단 해법 &#8212; Bottle 0.12.18 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="자주 묻는 질문" href="faq.html" />
@@ -71,7 +71,7 @@
 </pre></div>
 </div>
 <p>그러면 보틀은 자체 예외(<a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a>, <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a>, <a class="reference internal" href="api.html#bottle.BottleException" title="bottle.BottleException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BottleException</span></code></a>)만 잡고 미들웨어에서 나머지를 처리할 수 있다.</p>
-<p><a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>와 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a> 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. <a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>에선 <a class="reference external" href="https://werkzeug.palletsprojects.com/en/0.16.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v0.16.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a>를, <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>에선 <code class="xref py py-class docutils literal notranslate"><span class="pre">paste.evalexception.middleware.EvalException</span></code>를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 <strong>운용 환경에서 사용해선 안 된다</strong>.</p>
+<p><a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>와 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a> 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. <a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>에선 <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a>를, <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>에선 <code class="xref py py-class docutils literal notranslate"><span class="pre">paste.evalexception.middleware.EvalException</span></code>를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 <strong>운용 환경에서 사용해선 안 된다</strong>.</p>
 </div>
 <div class="section" id="id4">
 <h2>보틀 응용 유닛 테스트<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
@@ -329,7 +329,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -346,7 +346,7 @@
       &copy;2009-2020, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

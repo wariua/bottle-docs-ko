@@ -7,11 +7,11 @@
     <title>따라하기 &#8212; Bottle 0.12.18 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="설정 (작업 중)" href="configuration.html" />
@@ -258,7 +258,7 @@ $ <span class="nb">source</span> develop/bin/activate     <span class="c1"># 가
 </dd>
 <dt><a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a> 또는 <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a> 인스턴스</dt><dd><p>이걸 반환하는 건 예외로 던지는 것과 효과가 같다. <a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a>인 경우 오류 핸들러를 사용한다. 자세한 건 <a class="reference internal" href="#tutorial-errorhandling"><span class="std std-ref">오류 페이지</span></a> 참고.</p>
 </dd>
-<dt>파일 객체</dt><dd><p><code class="docutils literal notranslate"><span class="pre">.read()</span></code> 메소드가 있는 모든 걸 파일 내지 파일 같은 객체로 보고 WSGI 서버 프레임워크에 정의돼 있는 콜러블 <code class="docutils literal notranslate"><span class="pre">wsgi.file_wrapper</span></code>로 전달한다. 일부 WSGI 서버 구현에선 최적화된 시스템 호출(sendfile)을 이용해 더 효율적으로 파일을 전송할 수 있다. 다른 경우엔 그냥 메모리에 들어가는 크기의 덩어리만큼씩 돈다. <code class="docutils literal notranslate"><span class="pre">Content-Length</span></code>나 <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> 같은 선택적인 헤더들이 자동으로 설정되지 <em>않는다</em>. 되도록 <code class="xref py py-func docutils literal notranslate"><span class="pre">send_static()</span></code>을 쓰는 게 좋다. 자세한 건 <a class="reference internal" href="#tutorial-static-files"><span class="std std-ref">정적 파일</span></a> 참고.</p>
+<dt>파일 객체</dt><dd><p><code class="docutils literal notranslate"><span class="pre">.read()</span></code> 메소드가 있는 모든 걸 파일 내지 파일스러운 객체로 보고 WSGI 서버 프레임워크에 정의돼 있는 콜러블 <code class="docutils literal notranslate"><span class="pre">wsgi.file_wrapper</span></code>로 전달한다. 일부 WSGI 서버 구현에선 최적화된 시스템 호출(sendfile)을 이용해 더 효율적으로 파일을 전송할 수 있다. 다른 경우엔 그냥 메모리에 들어가는 크기의 덩어리만큼씩 돈다. <code class="docutils literal notranslate"><span class="pre">Content-Length</span></code>나 <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> 같은 선택적인 헤더들이 자동으로 설정되지 <em>않는다</em>. 되도록 <code class="xref py py-func docutils literal notranslate"><span class="pre">send_static()</span></code>을 쓰는 게 좋다. 자세한 건 <a class="reference internal" href="#tutorial-static-files"><span class="std std-ref">정적 파일</span></a> 참고.</p>
 </dd>
 <dt>이터러블과 제너레이터</dt><dd><p>콜백 내에서 <code class="docutils literal notranslate"><span class="pre">yield</span></code>를 쓰거나 이터러블을 반환할 수도 있다. 단 그 이터러블은 바이트열이나 유니코드열, <a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a>나 <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a> 인스턴스를 내놓아야 한다. 미안하지만 중첩 이터러블은 안 된다. 이터러블이 첫 번째로 비어 있지 않은 값을 내놓으면 그 즉시 HTTP 상태 코드와 헤더들을 브라우저로 보낸다는 점에 유의하자. 이후에 바꿔도 효과가 없다.</p>
 </dd>
@@ -613,7 +613,7 @@ $ <span class="nb">source</span> develop/bin/activate     <span class="c1"># 가
 </div>
 <div class="section" id="id22">
 <h3>비가공 요청 바디<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="api.html#bottle.BaseRequest.body" title="bottle.BaseRequest.body"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.body</span></code></a>를 통해 가공 안 된 바디 데이터를 파일 같은 객체로 접근할 수 있다. 내용물 길이 및 <a class="reference internal" href="api.html#bottle.BaseRequest.MEMFILE_MAX" title="bottle.BaseRequest.MEMFILE_MAX"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.MEMFILE_MAX</span></code></a> 설정에 따라서 <code class="xref py py-class docutils literal notranslate"><span class="pre">BytesIO</span></code> 버퍼거나 임시 파일이다. 두 경우 모두 바디가 완전히 버퍼링 된 다음에 그 속성에 접근할 수 있다. 데이터가 거대할 것으로 예상되는데 스트림에 버퍼링 없이 바로 접근하고 싶다면 <code class="docutils literal notranslate"><span class="pre">request['wsgi.input']</span></code>을 살펴보라.</p>
+<p><a class="reference internal" href="api.html#bottle.BaseRequest.body" title="bottle.BaseRequest.body"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.body</span></code></a>를 통해 가공 안 된 바디 데이터를 파일스러운 객체로 접근할 수 있다. 내용물 길이 및 <a class="reference internal" href="api.html#bottle.BaseRequest.MEMFILE_MAX" title="bottle.BaseRequest.MEMFILE_MAX"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseRequest.MEMFILE_MAX</span></code></a> 설정에 따라서 <code class="xref py py-class docutils literal notranslate"><span class="pre">BytesIO</span></code> 버퍼거나 임시 파일이다. 두 경우 모두 바디가 완전히 버퍼링 된 다음에 그 속성에 접근할 수 있다. 데이터가 거대할 것으로 예상되는데 스트림에 버퍼링 없이 바로 접근하고 싶다면 <code class="docutils literal notranslate"><span class="pre">request['wsgi.input']</span></code>을 살펴보라.</p>
 </div>
 <div class="section" id="wsgi">
 <h3>WSGI 환경<a class="headerlink" href="#wsgi" title="Permalink to this headline">¶</a></h3>
@@ -804,7 +804,7 @@ $ <span class="nb">source</span> develop/bin/activate     <span class="c1"># 가
 <span class="n">app</span> <span class="o">=</span> <span class="n">default_app</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="api.html#bottle.app" title="bottle.app"><code class="xref py py-func docutils literal notranslate"><span class="pre">app()</span></code></a>과 <a class="reference internal" href="api.html#bottle.default_app" title="bottle.default_app"><code class="xref py py-func docutils literal notranslate"><span class="pre">default_app()</span></code></a> 모두 <a class="reference internal" href="api.html#bottle.AppStack" title="bottle.AppStack"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppStack</span></code></a>의 인스턴스이고 스택 같은 API를 구현하고 있다. 필요한 대로 그 스택에 응용을 밀어 넣거나 꺼낼 수 있다. 별도의 응용 객체를 제공하지 않는 서드파티 모듈을 임포트 하려 할 때도 도움이 된다.</p>
+<p><a class="reference internal" href="api.html#bottle.app" title="bottle.app"><code class="xref py py-func docutils literal notranslate"><span class="pre">app()</span></code></a>과 <a class="reference internal" href="api.html#bottle.default_app" title="bottle.default_app"><code class="xref py py-func docutils literal notranslate"><span class="pre">default_app()</span></code></a> 모두 <a class="reference internal" href="api.html#bottle.AppStack" title="bottle.AppStack"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppStack</span></code></a>의 인스턴스이고 스택스러운 API를 구현하고 있다. 필요한 대로 그 스택에 응용을 밀어 넣거나 꺼낼 수 있다. 별도의 응용 객체를 제공하지 않는 서드파티 모듈을 임포트 하려 할 때도 도움이 된다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">default_app</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">some.module</span>
@@ -995,7 +995,7 @@ URL 경로와 응용 코드 간에 매핑을 하는 경우가 많다.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -1012,7 +1012,7 @@ URL 경로와 응용 코드 간에 매핑을 하는 경우가 많다.</p>
       &copy;2009-2020, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

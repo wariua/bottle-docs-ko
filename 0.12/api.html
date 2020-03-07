@@ -7,11 +7,11 @@
     <title>API 참조 &#8212; Bottle 0.12.18 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="사용 가능한 플러그인 목록" href="plugins/index.html" />
@@ -119,7 +119,7 @@ HTTP 응답을 바꾸는 데 쓴다.</p>
 <code class="sig-name descname">app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bottle.app" title="Permalink to this definition">¶</a></dt>
 <dt id="bottle.default_app">
 <code class="sig-name descname">default_app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bottle.default_app" title="Permalink to this definition">¶</a></dt>
-<dd><p>현재 <a class="reference internal" href="tutorial.html#default-app"><span class="std std-ref">기본 응용</span></a>을 반환. 실제로 이는 호출 가능한 <a class="reference internal" href="#bottle.AppStack" title="bottle.AppStack"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppStack</span></code></a> 인스턴스이며 스택 같은 API를 구현하고 있다.</p>
+<dd><p>현재 <a class="reference internal" href="tutorial.html#default-app"><span class="std std-ref">기본 응용</span></a>을 반환. 실제로 이는 호출 가능한 <a class="reference internal" href="#bottle.AppStack" title="bottle.AppStack"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppStack</span></code></a> 인스턴스이며 스택스러운 API를 구현하고 있다.</p>
 </dd></dl>
 
 <div class="section" id="id2">
@@ -348,7 +348,7 @@ HTTP 응답을 바꾸는 데 쓴다.</p>
 <dt id="bottle.FormsDict">
 <em class="property">class </em><code class="sig-name descname">FormsDict</code><span class="sig-paren">(</span><em class="sig-param">*a</em>, <em class="sig-param">**k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FormsDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FormsDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>요청 양식 데이터를 저장하는 데 쓰는 <a class="reference internal" href="#bottle.MultiDict" title="bottle.MultiDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiDict</span></code></a>의
-서브클래스. 일반 dict 같은 항목 접근 방법(데이터를 그대로
+서브클래스. 일반 dict스러운 항목 접근 방법(데이터를 그대로
 네이티브 문자열로 반환)에 더해서 이 컨테이너는 속성처럼 값에
 접근하는 것도 지원한다. 속성은 <a class="reference internal" href="#bottle.FormsDict.input_encoding" title="bottle.FormsDict.input_encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">input_encoding</span></code></a>(기본값:
 ‘utf8’)에 맞도록 자동으로 디코딩 또는 재코딩 된다. 없는 속성은
@@ -386,7 +386,7 @@ HTTP 응답을 바꾸는 데 쓴다.</p>
 <dt id="bottle.WSGIHeaderDict">
 <em class="property">class </em><code class="sig-name descname">WSGIHeaderDict</code><span class="sig-paren">(</span><em class="sig-param">environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#WSGIHeaderDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.WSGIHeaderDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>WSGI environ dict를 포장해서 HTTP_* 필드에 편리하게 접근할 수 있게
-하는 dict 같은 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,
+하는 dict스러운 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,
 3.x는 unicode)이며 키는 대소문자 구별이 없다. WSGI 환경에 네이티브
 아닌 문자열 값이 들어 있으면 무손실 ‘latin1’ 문자셋을 이용해
 디코딩 또는 인코딩 한다.</p>
@@ -415,7 +415,7 @@ HTTP 응답을 바꾸는 데 쓴다.</p>
 <dl class="class">
 <dt id="bottle.AppStack">
 <em class="property">class </em><code class="sig-name descname">AppStack</code><a class="reference internal" href="_modules/bottle.html#AppStack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.AppStack" title="Permalink to this definition">¶</a></dt>
-<dd><p>스택 같은 리스트. 호출하면 스택 상단 항목 반환.</p>
+<dd><p>스택스러운 리스트. 호출하면 스택 상단 항목 반환.</p>
 <dl class="method">
 <dt id="bottle.AppStack.pop">
 <code class="sig-name descname">pop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bottle.AppStack.pop" title="Permalink to this definition">¶</a></dt>
@@ -505,7 +505,7 @@ False 반환.</p>
 <dd><dl class="attribute">
 <dt id="bottle.FileUpload.file">
 <code class="sig-name descname">file</code><em class="property"> = None</em><a class="headerlink" href="#bottle.FileUpload.file" title="Permalink to this definition">¶</a></dt>
-<dd><p>열린 파일 (같은) 객체 (BytesIO 버퍼나 임시 파일)</p>
+<dd><p>열린 파일(스러운) 객체 (BytesIO 버퍼나 임시 파일)</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -558,13 +558,13 @@ False 반환.</p>
 <dl class="method">
 <dt id="bottle.FileUpload.save">
 <code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">destination</em>, <em class="sig-param">overwrite=False</em>, <em class="sig-param">chunk_size=65536</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#FileUpload.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.FileUpload.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>파일을 디스크에 저장하거나 내용물을 열린 파일 (같은) 객체로
+<dd><p>파일을 디스크에 저장하거나 내용물을 열린 파일(스러운) 객체로
 복사한다. <em>destination</em>이 디렉터리면 경로에 <a class="reference internal" href="#bottle.FileUpload.filename" title="bottle.FileUpload.filename"><code class="xref py py-attr docutils literal notranslate"><span class="pre">filename</span></code></a>을
 덧붙인다. 기본적으로 기존 파일을 덮어 쓰지 않는다 (IOError).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>destination</strong> – 파일 경로나 디렉터리, 파일 (같은) 객체.</p></li>
+<li><p><strong>destination</strong> – 파일 경로나 디렉터리, 파일(스러운) 객체.</p></li>
 <li><p><strong>overwrite</strong> – 참이면 기본 파일을 교체. (기본값: False)</p></li>
 <li><p><strong>chunk_size</strong> – 한 번에 읽을 바이트 수. (기본값: 64kb)</p></li>
 </ul>
@@ -684,7 +684,7 @@ False 반환.</p>
 <code class="sig-name descname">install</code><span class="sig-paren">(</span><em class="sig-param">plugin</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#Bottle.install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.Bottle.install" title="Permalink to this definition">¶</a></dt>
 <dd><p>plugin을 플러그인 목록에 추가하고 이 응용의 모든 라우트에
 적용될 수 있게 준비. plugin은 단순 데코레이터일 수도 있고
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Plugin</span></code> API를 구현하는 객체일 수도 있다.</p>
+<a class="reference internal" href="plugindev.html#bottle.Plugin" title="bottle.Plugin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plugin</span></code></a> API를 구현하는 객체일 수도 있다.</p>
 </dd></dl>
 
 <dl class="method">
@@ -767,7 +767,7 @@ False 반환.</p>
 </dd>
 </dl>
 <p>추가 키워드 인자가 있으면 라우트별 설정에 저장돼서 플러그인들로
-전달된다. (<code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.apply()</span></code> 참고.)</p>
+전달된다. (<a class="reference internal" href="plugindev.html#bottle.Plugin.apply" title="bottle.Plugin.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.apply()</span></code></a> 참고.)</p>
 </dd></dl>
 
 <dl class="method">
@@ -1048,7 +1048,7 @@ PUT 요청 바디의 양식 값들을 파싱 한 것. <a class="reference intern
 <dl class="method">
 <dt id="bottle.BaseRequest.body">
 <em class="property">property </em><code class="sig-name descname">body</code><a class="headerlink" href="#bottle.BaseRequest.body" title="Permalink to this definition">¶</a></dt>
-<dd><p>seek 가능한 파일 같은 객체로 된 HTTP 요청 바디.
+<dd><p>seek 가능한 파일스러운 객체로 된 HTTP 요청 바디.
 <a class="reference internal" href="#bottle.BaseRequest.MEMFILE_MAX" title="bottle.BaseRequest.MEMFILE_MAX"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MEMFILE_MAX</span></code></a>에 따라 임시 파일 또는 <a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BytesIO</span></code></a>
 인스턴스다. 이 프로퍼티에 처음 접근할 때 환경 변수
 <code class="docutils literal notranslate"><span class="pre">wsgi.input</span></code>을 읽어서 교체한다. 이후 접근 시에는 그 파일
@@ -1233,7 +1233,7 @@ None을 반환한다.</p>
 <dt id="bottle.BaseResponse">
 <em class="property">class </em><code class="sig-name descname">BaseResponse</code><span class="sig-paren">(</span><em class="sig-param">body=''</em>, <em class="sig-param">status=None</em>, <em class="sig-param">headers=None</em>, <em class="sig-param">**more_headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>응답 바디, 헤더, 쿠키 저장 클래스.</p>
-<p>이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict 같은 항목
+<p>이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict스러운 항목
 접근을 지원하지만 dict가 아니다. 무엇보다 응답에 반복문을 돌리면
 헤더가 아니라 바디의 부분들을 내놓는다.</p>
 <dl class="field-list simple">
@@ -1280,7 +1280,7 @@ None을 반환한다.</p>
 <dt id="bottle.BaseResponse.headers">
 <em class="property">property </em><code class="sig-name descname">headers</code><a class="headerlink" href="#bottle.BaseResponse.headers" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="#bottle.HeaderDict" title="bottle.HeaderDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderDict</span></code></a> 인스턴스. 응답 헤더들에 대한 대소문자
-구별 없는 dict 같은 뷰.</p>
+구별 없는 dict스러운 뷰.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1426,7 +1426,7 @@ pickle 처리를 안전하게 만드는 것이지, 클라이언트 쪽에 비밀
 </div>
 <div class="section" id="id5">
 <h2>템플릿<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="plugins/index.html#module-bottle" title="bottle"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bottle</span></code></a>에서 지원하는 모든 템플릿 엔진은 <a class="reference internal" href="#bottle.BaseTemplate" title="bottle.BaseTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTemplate</span></code></a> API를 구현하고 있다. 그래서 응용 코드를 전혀 바꾸지 않고도 템플릿 엔진을 바꾸거나 혼용하는 게 가능하다.</p>
+<p><a class="reference internal" href="tutorial.html#module-bottle" title="bottle"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bottle</span></code></a>에서 지원하는 모든 템플릿 엔진은 <a class="reference internal" href="#bottle.BaseTemplate" title="bottle.BaseTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTemplate</span></code></a> API를 구현하고 있다. 그래서 응용 코드를 전혀 바꾸지 않고도 템플릿 엔진을 바꾸거나 혼용하는 게 가능하다.</p>
 <dl class="class">
 <dt id="bottle.BaseTemplate">
 <em class="property">class </em><code class="sig-name descname">BaseTemplate</code><span class="sig-paren">(</span><em class="sig-param">source=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">lookup=[]</em>, <em class="sig-param">encoding='utf8'</em>, <em class="sig-param">**settings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#BaseTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bottle.BaseTemplate" title="Permalink to this definition">¶</a></dt>
@@ -1589,6 +1589,7 @@ JSON을 얻을 수 있다.</p></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">릴리스 노트와 변경 로그</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html#id2">기여자</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">개발자를 위해</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
@@ -1612,7 +1613,7 @@ JSON을 얻을 수 있다.</p></li>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -1629,7 +1630,7 @@ JSON을 얻을 수 있다.</p></li>
       &copy;2009-2020, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

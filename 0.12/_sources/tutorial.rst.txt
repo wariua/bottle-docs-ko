@@ -299,7 +299,7 @@ HEAD 메소드는 GET 요청 응답과 동일하되 바디는 없는 응답을 �
     이걸 반환하는 건 예외로 던지는 것과 효과가 같다. :exc:`HTTPError`\인 경우 오류 핸들러를 사용한다. 자세한 건 :ref:`tutorial-errorhandling` 참고.
 
 파일 객체
-    ``.read()`` 메소드가 있는 모든 걸 파일 내지 파일 같은 객체로 보고 WSGI 서버 프레임워크에 정의돼 있는 콜러블 ``wsgi.file_wrapper``\로 전달한다. 일부 WSGI 서버 구현에선 최적화된 시스템 호출(sendfile)을 이용해 더 효율적으로 파일을 전송할 수 있다. 다른 경우엔 그냥 메모리에 들어가는 크기의 덩어리만큼씩 돈다. ``Content-Length``\나 ``Content-Type`` 같은 선택적인 헤더들이 자동으로 설정되지 *않는다*. 되도록 :func:`send_static`\을 쓰는 게 좋다. 자세한 건 :ref:`tutorial-static-files` 참고.
+    ``.read()`` 메소드가 있는 모든 걸 파일 내지 파일스러운 객체로 보고 WSGI 서버 프레임워크에 정의돼 있는 콜러블 ``wsgi.file_wrapper``\로 전달한다. 일부 WSGI 서버 구현에선 최적화된 시스템 호출(sendfile)을 이용해 더 효율적으로 파일을 전송할 수 있다. 다른 경우엔 그냥 메모리에 들어가는 크기의 덩어리만큼씩 돈다. ``Content-Length``\나 ``Content-Type`` 같은 선택적인 헤더들이 자동으로 설정되지 *않는다*. 되도록 :func:`send_static`\을 쓰는 게 좋다. 자세한 건 :ref:`tutorial-static-files` 참고.
 
 이터러블과 제너레이터
     콜백 내에서 ``yield``\를 쓰거나 이터러블을 반환할 수도 있다. 단 그 이터러블은 바이트열이나 유니코드열, :exc:`HTTPError`\나 :exc:`HTTPResponse` 인스턴스를 내놓아야 한다. 미안하지만 중첩 이터러블은 안 된다. 이터러블이 첫 번째로 비어 있지 않은 값을 내놓으면 그 즉시 HTTP 상태 코드와 헤더들을 브라우저로 보낸다는 점에 유의하자. 이후에 바꿔도 효과가 없다.
@@ -684,7 +684,7 @@ JSON 내용물
 비가공 요청 바디
 ----------------
 
-:attr:`BaseRequest.body`\를 통해 가공 안 된 바디 데이터를 파일 같은 객체로 접근할 수 있다. 내용물 길이 및 :attr:`BaseRequest.MEMFILE_MAX` 설정에 따라서 :class:`BytesIO` 버퍼거나 임시 파일이다. 두 경우 모두 바디가 완전히 버퍼링 된 다음에 그 속성에 접근할 수 있다. 데이터가 거대할 것으로 예상되는데 스트림에 버퍼링 없이 바로 접근하고 싶다면 ``request['wsgi.input']``\을 살펴보라.
+:attr:`BaseRequest.body`\를 통해 가공 안 된 바디 데이터를 파일스러운 객체로 접근할 수 있다. 내용물 길이 및 :attr:`BaseRequest.MEMFILE_MAX` 설정에 따라서 :class:`BytesIO` 버퍼거나 임시 파일이다. 두 경우 모두 바디가 완전히 버퍼링 된 다음에 그 속성에 접근할 수 있다. 데이터가 거대할 것으로 예상되는데 스트림에 버퍼링 없이 바로 접근하고 싶다면 ``request['wsgi.input']``\을 살펴보라.
 
 
 
@@ -919,7 +919,7 @@ WSGI 환경
 
     app = default_app.pop()
 
-:func:`app`\과 :func:`default_app` 모두 :class:`AppStack`\의 인스턴스이고 스택 같은 API를 구현하고 있다. 필요한 대로 그 스택에 응용을 밀어 넣거나 꺼낼 수 있다. 별도의 응용 객체를 제공하지 않는 서드파티 모듈을 임포트 하려 할 때도 도움이 된다. ::
+:func:`app`\과 :func:`default_app` 모두 :class:`AppStack`\의 인스턴스이고 스택스러운 API를 구현하고 있다. 필요한 대로 그 스택에 응용을 밀어 넣거나 꺼낼 수 있다. 별도의 응용 객체를 제공하지 않는 서드파티 모듈을 임포트 하려 할 때도 도움이 된다. ::
 
     default_app.push()
 

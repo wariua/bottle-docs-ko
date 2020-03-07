@@ -7,11 +7,11 @@
     <title>bottle &#8212; Bottle 0.12.18 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -1226,7 +1226,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; seek 가능한 파일 같은 객체로 된 HTTP 요청 바디.</span>
+        <span class="sd">&quot;&quot;&quot; seek 가능한 파일스러운 객체로 된 HTTP 요청 바디.</span>
 <span class="sd">            :attr:`MEMFILE_MAX`\에 따라 임시 파일 또는 :class:`io.BytesIO`</span>
 <span class="sd">            인스턴스다. 이 프로퍼티에 처음 접근할 때 환경 변수</span>
 <span class="sd">            ``wsgi.input``\을 읽어서 교체한다. 이후 접근 시에는 그 파일</span>
@@ -1467,7 +1467,7 @@
 <div class="viewcode-block" id="BaseResponse"><a class="viewcode-back" href="../api.html#bottle.BaseResponse">[docs]</a><span class="k">class</span> <span class="nc">BaseResponse</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; 응답 바디, 헤더, 쿠키 저장 클래스.</span>
 
-<span class="sd">        이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict 같은 항목</span>
+<span class="sd">        이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict스러운 항목</span>
 <span class="sd">        접근을 지원하지만 dict가 아니다. 무엇보다 응답에 반복문을 돌리면</span>
 <span class="sd">        헤더가 아니라 바디의 부분들을 내놓는다.</span>
 
@@ -1560,7 +1560,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; :class:`HeaderDict` 인스턴스. 응답 헤더들에 대한 대소문자</span>
-<span class="sd">            구별 없는 dict 같은 뷰. &#39;&#39;&#39;</span>
+<span class="sd">            구별 없는 dict스러운 뷰. &#39;&#39;&#39;</span>
         <span class="n">hdict</span> <span class="o">=</span> <span class="n">HeaderDict</span><span class="p">()</span>
         <span class="n">hdict</span><span class="o">.</span><span class="n">dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span>
         <span class="k">return</span> <span class="n">hdict</span>
@@ -1920,7 +1920,7 @@
 
 <div class="viewcode-block" id="FormsDict"><a class="viewcode-back" href="../api.html#bottle.FormsDict">[docs]</a><span class="k">class</span> <span class="nc">FormsDict</span><span class="p">(</span><span class="n">MultiDict</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; 요청 양식 데이터를 저장하는 데 쓰는 :class:`MultiDict`\의</span>
-<span class="sd">        서브클래스. 일반 dict 같은 항목 접근 방법(데이터를 그대로</span>
+<span class="sd">        서브클래스. 일반 dict스러운 항목 접근 방법(데이터를 그대로</span>
 <span class="sd">        네이티브 문자열로 반환)에 더해서 이 컨테이너는 속성처럼 값에</span>
 <span class="sd">        접근하는 것도 지원한다. 속성은 :attr:`input_encoding`\(기본값:</span>
 <span class="sd">        &#39;utf8&#39;)에 맞도록 자동으로 디코딩 또는 재코딩 된다. 없는 속성은</span>
@@ -1989,7 +1989,7 @@
 
 <div class="viewcode-block" id="WSGIHeaderDict"><a class="viewcode-back" href="../api.html#bottle.WSGIHeaderDict">[docs]</a><span class="k">class</span> <span class="nc">WSGIHeaderDict</span><span class="p">(</span><span class="n">DictMixin</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; WSGI environ dict를 포장해서 HTTP_* 필드에 편리하게 접근할 수 있게</span>
-<span class="sd">        하는 dict 같은 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,</span>
+<span class="sd">        하는 dict스러운 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,</span>
 <span class="sd">        3.x는 unicode)이며 키는 대소문자 구별이 없다. WSGI 환경에 네이티브</span>
 <span class="sd">        아닌 문자열 값이 들어 있으면 무손실 &#39;latin1&#39; 문자셋을 이용해</span>
 <span class="sd">        디코딩 또는 인코딩 한다.</span>
@@ -2038,7 +2038,7 @@
 
 
 <div class="viewcode-block" id="ConfigDict"><a class="viewcode-back" href="../configuration.html#bottle.ConfigDict">[docs]</a><span class="k">class</span> <span class="nc">ConfigDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; dict 같은 설정 저장소. 네임스페이스, 값 검사, 메타데이터,</span>
+    <span class="sd">&#39;&#39;&#39; dict스러운 설정 저장소. 네임스페이스, 값 검사, 메타데이터,</span>
 <span class="sd">        변경 주시 등을 추가로 지원.</span>
 
 <span class="sd">        이 저장소는 빠른 읽기 접근이 가능하게 최적화돼 있다. 키를</span>
@@ -2243,7 +2243,7 @@
 
 
 <div class="viewcode-block" id="AppStack"><a class="viewcode-back" href="../api.html#bottle.AppStack">[docs]</a><span class="k">class</span> <span class="nc">AppStack</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; 스택 같은 리스트. 호출하면 스택 상단 항목 반환. &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; 스택스러운 리스트. 호출하면 스택 상단 항목 반환. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return the current default application. &quot;&quot;&quot;</span>
@@ -2378,7 +2378,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileobj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Wrapper for file uploads. &#39;&#39;&#39;</span>
-        <span class="c1">#: 열린 파일 (같은) 객체 (BytesIO 버퍼나 임시 파일)</span>
+        <span class="c1">#: 열린 파일(스러운) 객체 (BytesIO 버퍼나 임시 파일)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">fileobj</span>
         <span class="c1">#: 업로드 양식 필드 이름</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -2422,11 +2422,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FileUpload.save"><a class="viewcode-back" href="../api.html#bottle.FileUpload.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 파일을 디스크에 저장하거나 내용물을 열린 파일 (같은) 객체로</span>
+        <span class="sd">&#39;&#39;&#39; 파일을 디스크에 저장하거나 내용물을 열린 파일(스러운) 객체로</span>
 <span class="sd">            복사한다. *destination*\이 디렉터리면 경로에 :attr:`filename`\을</span>
 <span class="sd">            덧붙인다. 기본적으로 기존 파일을 덮어 쓰지 않는다 (IOError).</span>
 
-<span class="sd">            :param destination: 파일 경로나 디렉터리, 파일 (같은) 객체.</span>
+<span class="sd">            :param destination: 파일 경로나 디렉터리, 파일(스러운) 객체.</span>
 <span class="sd">            :param overwrite: 참이면 기본 파일을 교체. (기본값: False)</span>
 <span class="sd">            :param chunk_size: 한 번에 읽을 바이트 수. (기본값: 64kb)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -3855,7 +3855,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -3872,7 +3872,7 @@
       &copy;2009-2020, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
