@@ -7,15 +7,15 @@
 .. _paste: http://pythonpaste.org/modules/evalexception.html
 .. _pylons: http://pylonshq.com/
 .. _gevent: http://www.gevent.org/
-.. _compression: https://github.com/defnull/bottle/issues/92
+.. _`압축 이슈`: https://github.com/defnull/bottle/issues/92
 .. _GzipFilter: http://www.cherrypy.org/wiki/GzipFilter
 .. _cherrypy: http://www.cherrypy.org
 .. _heroku: http://heroku.com
 
-간단 해법
+각종 해결법
 =============
 
-다음은 흔한 사용 방식을 위한 코드 조각과 예시 모음이다.
+다음은 흔한 사용 방식들을 위한 코드 조각과 예시 모음이다.
 
 세션 추적하기
 ----------------------------
@@ -42,7 +42,7 @@
 
     bottle.run(app=app)
 
-폼나게 디버깅 하기: 디버깅용 미들웨어
+폼나게 디버깅하기: 디버깅용 미들웨어
 --------------------------------------------------------------------------------
 
 보틀에선 WSGI 서버가 죽는 걸 방지하기 위해 앱 코드에서 던진 모든 예외를 잡는다. 내장 :func:`debug` 모드로는 충분치 않아서 예외가 디버깅용 미들웨어로 전파되기를 바란다면 그 동작을 끌 수 있다. ::
@@ -55,7 +55,7 @@
 
 그러면 보틀은 자체 예외(:exc:`HTTPError`, :exc:`HTTPResponse`, :exc:`BottleException`)만 잡고 미들웨어에서 나머지를 처리할 수 있다.
 
-werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. werkzeug_\에선 :class:`werkzeug.debug.DebuggedApplication`\를, paste_\에선 :class:`paste.evalexception.middleware.EvalException`\를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 **운용 환경에서 사용해선 안 된다**.
+werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. werkzeug_\에선 :class:`werkzeug.debug.DebuggedApplication`\를, paste_\에선 :class:`paste.evalexception.middleware.EvalException`\를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 **운용 환경에선 이용하지 말아야 한다**.
 
 
 보틀 응용 유닛 테스트
@@ -87,7 +87,7 @@ werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI �
 보틀 응용 기능 테스트
 --------------------------------------------------------------------------------
 
-동작 중인 WSGI 서버가 있으면 어떤 HTTP 기반 테스트 시스템이든 함께 사용 가능하지만 어떤 테스팅 프레임워크는 WSGI와 더 밀접하게 동작해서 통제된 환경에서 WSGI 응용을 호출할 수 있고, 트레이스백도 있고, 디버깅 도구들을 완전히 이용 가능하다. `WSGI 테스팅 도구들 <http://www.wsgi.org/en/latest/testing.html>`_\이 좋은 출발점이다.
+동작 중인 WSGI 서버가 있으면 어떤 HTTP 기반 테스트 시스템이든 함께 쓸 수 있지만 어떤 테스팅 프레임워크는 WSGI와 더 밀접하게 동작해서 통제된 환경에서 WSGI 응용을 호출할 수 있고 트레이스백도 있으며 디버깅 도구들을 모두 이용 가능하다. `WSGI 테스팅 도구들 <http://www.wsgi.org/en/latest/testing.html>`_\이 좋은 출발점이다.
 
 `WebTest <http://webtest.pythonpaste.org/>`_\와 `Nose <http://readthedocs.org/docs/nose>`_\를 쓰는 예::
 
@@ -97,7 +97,7 @@ werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI �
     def test_functional_login_logout():
         app = TestApp(mywebapp.app)
         
-        app.post('/login', {'user': 'foo', 'pass': 'bar'}) # 로그인 하고 쿠키 얻기
+        app.post('/login', {'user': 'foo', 'pass': 'bar'}) # 로그인하고 쿠키 얻기
 
         assert app.get('/admin').status == '200 OK'        # 페이지 성공적으로 가져옴
 
@@ -111,7 +111,7 @@ werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI �
 다른 WSGI 앱 내장하기
 --------------------------------------------------------------------------------
 
-권장하는 방식은 아니지만 (보틀 앞에 미들웨어를 쓰는 게 맞다.) 보틀 앱 안에서 다른 WSGI 응용을 호출해서 보틀이 유사 미들웨어가 되게 할 수 있다. 다음이 예이다. ::
+권장하는 방식은 아니지만 (보틀 앞에 미들웨어를 쓰는 방식이 좋다.) 보틀 앱 안에서 다른 WSGI 응용을 호출해서 보틀이 유사 미들웨어가 되게 할 수 있다. 다음이 예이다. ::
 
     from bottle import request, response, route
     subproject = SomeWSGIApplication()
@@ -127,7 +127,7 @@ werkzeug_\와 paste_ 라이브러리에는 아주 강력한 디버깅용 WSGI �
                 response.add_header(key, value)
         return app(new_environ, start_response)
 
-다시 말하지만 하위 프로젝트를 구현하기 위한 권장 방식이 아니다. 여러 사람들이 요청해서, 그리고 보틀이 어떻게 WSGI로 연결되는지 보여 주기 위해 있는 예시일 뿐이다.
+다시 말하지만 하위 프로젝트를 구현하는 권장하는 방식이 아니다. 여러 사람들이 요청해서, 그리고 보틀이 어떻게 WSGI로 연결되는지 보여 주기 위해 있는 예시일 뿐이다.
 
 
 마지막 슬래시 무시하기
@@ -181,27 +181,27 @@ XHR multipart 같은 여러 "푸시" 메커니즘을 위해선 응답 헤더 "Co
     
     run(host='0.0.0.0', port=8080, server='gevent')
 
-브라우저로 ``http://localhost:8080/stream``\을 열면 'START', 'MIDDLE', 'END'가 (8초 후에 한번에 다 나오는 게 아니라) 하나씩 나오는 걸 볼 수 있다.
+브라우저로 ``http://localhost:8080/stream`` 주소를 열면 'START', 'MIDDLE', 'END'가 (8초 후에 한번에 다 나오는 게 아니라) 하나씩 나오는 걸 볼 수 있다.
 
 보틀에서 Gzip 압축하기
 ----------------------
 
 .. note::
-   자세한 논의는 compression_ 참고.
+   자세한 논의는 `압축 이슈`_ 참고.
 
-보틀에 자주 요청되는 기능 하나가 Gzip 압축 지원이다. 요청 처리 시 (CSS나 JS 파일 같은) 정적 자원을 압축해서 사이트 속도를 높여 준다.
+보틀에 자주 요청이 오는 기능이 바로 Gzip 압축 지원이다. 요청 처리 시 (CSS나 JS 파일 같은) 정적 자원을 압축해서 사이트 속도를 높여 주는 기능이다.
 
-Gzip 압축 지원은 여기 저기서 나오는 여러 예외 상황들 때문에 단순한 작업이 아니다. 제대로 된 Gzip 구현은
+Gzip 압축 지원은 여기저기서 등장하는 여러 예외 상황들 때문에 간단한 작업이 아니다. 제대로 된 Gzip 구현은
 
 * 실시간으로 압축해야 하고 그것도 빠르게 해야 한다.
 * 브라우저가 지원하지 않으면 압축하지 않아야 한다.
 * 이미 압축된 파일(그림, 영상)은 압축하지 않아야 한다.
 * 동적 파일을 압축하지 않아야 한다.
 * 두 가지 다른 압축 알고리즘(gzip, deflate)을 지원해야 한다.
-* 변화가 드문 파일의 압축 결과를 캐싱 해야 한다.
-* 한쪽 파일이 어떻게든 바뀌면 캐시를 무효화해야 한다.
+* 변화가 드문 파일의 압축 결과를 캐싱해야 한다.
+* 파일이 어떻게든 바뀌면 캐시를 무효화해야 한다.
 * 캐시가 너무 커지지 않도록 해야 한다.
-* 실시간으로 압축하는 것보다 디스크 탐색 시간이 더 길 수 있으므로 작은 파일은 캐싱 하지 않아야 한다.
+* 실시간으로 압축하는 것보다 디스크 탐색 시간이 더 길 수 있으므로 작은 파일은 캐싱하지 않아야 한다.
 
 이런 요건들 때문에 보틀 프로젝트에서 권하는 건 보틀이 도는 WSGI 서버에서 Gzip 압축을 다루는 게 가장 좋다는 것이다. cherrypy_ 같은 WSGI 서버에서 이를 위해 쓸 수 있는 GzipFilter_ 미들웨어를 제공한다.
 
@@ -234,7 +234,7 @@ Gzip 압축 지원은 여기 저기서 나오는 여러 예외 상황들 때문�
 Heroku에서 보틀 쓰기
 --------------------
 
-인기 있는 클라우드 응용 플랫폼인 Heroku_\에선 이제 그 인프라
+인기 있는 클라우드 응용 플랫폼인 Heroku_\에서 이제 그 인프라
 위에서 파이썬 응용을 돌리는 걸 지원한다.
 
 이 방법은 `Heroku Quickstart
@@ -253,5 +253,5 @@ Heroku에서 보틀 쓰기
 
     run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
-Heroku의 앱 스택에선 `os.environ` 딕셔너리를 이용해서 응용에서
-요청을 받아야 하는 포트를 전달한다.
+Heroku의 앱 스택에선 `os.environ` 딕셔너리를 이용해 응용에서
+열어야 하는 포트를 전달한다.
