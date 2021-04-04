@@ -8,7 +8,7 @@ API 참조
 .. moduleauthor:: Marcel Hellkamp <marc@gsites.de>
 
 대부분 자동 생성된 API 문서다. 보틀이 처음이라면 서술식으로 된
-:doc:`tutorial`\가 더 도움이 될 수 있다.
+:doc:`tutorial`\가 더 유용할 수 있다.
 
 
 
@@ -41,7 +41,7 @@ API 참조
 라우팅
 -------------------
 
-보틀은 :class:`Bottle` 인스턴스의 스택을 유지하며 (:func:`app` 및 :class:`AppStack` 참고) 스택 최상단 인스턴스를 일부 모듈 층위 함수와 데코레이터에서 *기본 응용*\으로 쓴다.
+보틀은 :class:`Bottle` 인스턴스들의 스택을 유지하며 (:func:`app` 및 :class:`AppStack` 참고) 스택 최상단 인스턴스를 일부 모듈 층위 함수와 데코레이터에서 *기본 응용*\으로 쓴다.
 
 
 .. function:: route(path, method='GET', callback=None, **options)
@@ -125,7 +125,7 @@ WSGI 및 HTTP 유틸리티
 :class:`Request` 객체
 ===================================================
 
-:class:`Request` 클래스는 WSGI 환경을 포장한 것이며 양식 데이터, 쿠키, 파일 업로드, 기타 메타데이터를 파싱 하고 접근하는 유용한 메소드들을 제공한다. 대부분 속성이 읽기 전용이다.
+:class:`Request` 클래스는 WSGI 환경을 포장한 것이며 양식 데이터, 쿠키, 파일 업로드, 기타 메타데이터를 파싱하고 접근하기 위한 유용한 메소드들을 제공한다. 대부분 속성이 읽기 전용이다.
 
 .. autoclass:: Request
    :members:
@@ -156,7 +156,7 @@ WSGI 및 HTTP 유틸리티
    :members:
 
 
-다음 두 클래스를 예외로 던질 수 있다. 둘의 중요한 차이는 :class:`HTTPError`\에 대해선 보틀이 오류 핸들러를 호출하지만 :class:`HTTPResponse`\나 다른 응답 타입에 대해선 하지 않는다는 것이다.
+다음 두 클래스를 예외로 던질 수 있다. 둘의 중요한 차이는 :class:`HTTPError`\에 대해선 보틀이 오류 핸들러를 호출하지만 :class:`HTTPResponse`\나 다른 응답 타입에 대해선 하지 않는다는 점이다.
 
 .. autoexception:: HTTPResponse
    :members:
@@ -192,7 +192,7 @@ WSGI 및 HTTP 유틸리티
 :class:`Jinja2Template`    http://jinja.pocoo.org/           :func:`jinja2_view`    :func:`jinja2_template`
 ========================   ===============================   ====================   ========================
 
-:class:`MakoTemplate`\을 기본 템플릿 엔진으로 쓰려면 특수 데코레이터와 렌더링 함수를 임포트 하기만 하면 된다. ::
+:class:`MakoTemplate`\을 기본 템플릿 엔진으로 쓰려면 해당 데코레이터와 렌더링 함수를 임포트하기만 하면 된다. ::
 
   from bottle import mako_view as view, mako_template as template
 

@@ -1,21 +1,21 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>자주 묻는 질문 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="릴리스 노트와 변경 로그" href="changelog.html" />
-    <link rel="prev" title="간단 해법" href="recipes.html" />
+    <link rel="prev" title="각종 해결법" href="recipes.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -38,7 +38,7 @@
 <h2>보틀에 대해<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3>복잡한 응용에 보틀이 적합한가?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>보틀은 작은 웹 응용 및 서비스를 시험하고 만들기 위해 설계된 <em>마이크로</em> 프레임워크다. 걸리적거리지 않고 일을 빨리 끝낼 수 있게 해 주지만 다른 프레임워크엔 있는 일부 고급 기능과 준비된 솔루션들(MVC, ORM, 양식 검사, 스캐폴딩, XML-RPC)이 빠져 있다. 보틀에 그런 기능들을 덧붙여서 복잡한 응용을 만드는 게 분명 가능하긴 하지만 그보단 <a class="reference external" href="http://pylonshq.com/">pylons</a>나 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>처럼 모든 걸 갖춘 웹 프레임워크 사용을 고려하는 게 좋다.</p>
+<p>보틀은 작은 웹 응용 및 서비스를 실험하고 만들기 위해 설계된 <em>마이크로</em> 프레임워크다. 걸리적거리는 것 없이 일을 빨리 끝낼 수 있게 해 주지만 다른 프레임워크엔 있는 일부 고급 기능과 기성 솔루션들(MVC, ORM, 양식 검사, 스캐폴딩, XML-RPC)이 빠져 있다. 보틀에 그런 기능들을 덧붙여서 복잡한 응용을 만드는 게 분명 가능하긴 하지만 그보단 <a class="reference external" href="http://pylonshq.com/">pylons</a>나 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>처럼 모든 걸 갖춘 웹 프레임워크 사용을 고려하는 게 좋다.</p>
 </div>
 </div>
 <div class="section" id="id4">
@@ -52,7 +52,7 @@
 </div>
 <div class="section" id="id5">
 <h3>동적 라우트와 슬래시<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="tutorial.html#tutorial-dynamic-routes"><span class="std std-ref">동적 라우트 문법</span></a>에서 위치 토큰(<code class="docutils literal notranslate"><span class="pre">:name</span></code>)은 다음 슬래시 전의 전부에 걸린다. 정규 표현식 문법으로는 <code class="docutils literal notranslate"><span class="pre">[^/]+</span></code>와 동등하다. 슬래시도 받으려면 위치 토큰에 따로 정규 표현식 패턴을 추가해 줘야 한다. 예: <code class="docutils literal notranslate"><span class="pre">/images/:filepath#.*#</span></code>에는 <code class="docutils literal notranslate"><span class="pre">/images/icons/error.png</span></code>가 걸리지만 <code class="docutils literal notranslate"><span class="pre">/images/:filename</span></code>에는 안 걸린다.</p>
+<p><a class="reference internal" href="tutorial.html#tutorial-dynamic-routes"><span class="std std-ref">동적 라우트 문법</span></a>에서 위치 토큰(<code class="docutils literal notranslate"><span class="pre">:name</span></code>)은 다음 슬래시 전의 전부에 걸린다. 정규 표현식 문법으로 <code class="docutils literal notranslate"><span class="pre">[^/]+</span></code>와 같다. 슬래시도 받으려면 위치 토큰에 따로 정규 표현식 패턴을 추가해 줘야 한다. 예: <code class="docutils literal notranslate"><span class="pre">/images/:filepath#.*#</span></code>에는 <code class="docutils literal notranslate"><span class="pre">/images/icons/error.png</span></code>가 걸리지만 <code class="docutils literal notranslate"><span class="pre">/images/:filename</span></code>에는 안 걸린다.</p>
 </div>
 <div class="section" id="id6">
 <h3>역방향 프록시 문제<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
@@ -91,16 +91,16 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (초안)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">각종 해결법</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">자주 묻는 질문</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">보틀에 대해</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">흔한 문제와 함정</a></li>
@@ -114,14 +114,14 @@
 <li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="recipes.html" title="previous chapter">간단 해법</a></li>
+      <li>Previous: <a href="recipes.html" title="previous chapter">각종 해결법</a></li>
       <li>Next: <a href="changelog.html" title="next chapter">릴리스 노트와 변경 로그</a></li>
   </ul></li>
 </ul>
@@ -149,10 +149,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2020, Marcel Hellkamp.
+      &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

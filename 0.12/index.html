@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>보틀: 파이썬 웹 프레임워크 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="따라하기" href="tutorial.html" />
@@ -35,10 +35,10 @@
 <h1>보틀: 파이썬 웹 프레임워크<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
 <p>보틀(Bottle)은 <a class="reference external" href="http://python.org/">파이썬</a>을 위한 빠르고 단순하며 경량인 <a class="reference external" href="http://www.wsgi.org/">WSGI</a> 마이크로 웹 프레임워크다. 한 파일로 된 모듈로 배포되며 <a class="reference external" href="http://docs.python.org/library/">파이썬 표준 라이브러리</a> 외에 다른 의존성이 없다.</p>
 <ul class="simple">
-<li><p><strong>라우팅:</strong> 요청을 함수 호출로 연결해 준다. 깔끔한 동적 URL을 지원한다.</p></li>
+<li><p><strong>라우팅:</strong> 요청을 함수 호출로 연결해 준다. 단순한 URL과 동적인 URL을 지원한다.</p></li>
 <li><p><strong>템플릿:</strong> 빠르고 파이썬스러운 <a class="reference internal" href="tutorial.html#tutorial-templates"><span class="std std-ref">내장 템플릿 엔진</span></a>이 있으며 <a class="reference external" href="http://www.makotemplates.org/">mako</a>, <a class="reference external" href="http://jinja.pocoo.org/">jinja2</a>, <a class="reference external" href="http://www.cheetahtemplate.org/">cheetah</a> 템플릿을 지원한다.</p></li>
 <li><p><strong>유틸리티:</strong> 폼 데이터, 파일 업로드, 쿠키, 헤더, 기타 HTTP 관련 메타데이터에 편리하게 접근할 수 있다.</p></li>
-<li><p><strong>서버:</strong> 개발용 HTTP 서버가 내장돼 있으며 <a class="reference external" href="http://pythonpaste.org/">paste</a>, <a class="reference external" href="https://github.com/william-os4y/fapws3">fapws3</a>, <a class="reference external" href="https://github.com/jonashaag/bjoern">bjoern</a>, <a class="reference external" href="http://code.google.com/intl/en-US/appengine/">구글 앱 엔진</a>, <a class="reference external" href="http://www.cherrypy.org/">cherrypy</a>, 기타 <a class="reference external" href="http://www.wsgi.org/">WSGI</a> 가능 HTTP 서버를 지원한다.</p></li>
+<li><p><strong>서버:</strong> 개발용 HTTP 서버가 내장돼 있으며 <a class="reference external" href="http://pythonpaste.org/">paste</a>, <a class="reference external" href="https://github.com/william-os4y/fapws3">fapws3</a>, <a class="reference external" href="https://github.com/jonashaag/bjoern">bjoern</a>, <a class="reference external" href="http://code.google.com/intl/en-US/appengine/">구글 앱 엔진</a>, <a class="reference external" href="http://www.cherrypy.org/">cherrypy</a>, 기타 <a class="reference external" href="http://www.wsgi.org/">WSGI</a> 지원 HTTP 서버와 쓸 수 있다.</p></li>
 </ul>
 <p class="rubric">예시: 보틀에서 “Hello World”</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">template</span>
@@ -50,12 +50,12 @@
 <span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>이 스크립트를 실행하거나 파이썬 콘솔에 붙여 넣은 다음 브라우저로 <a class="reference external" href="http://localhost:8080/hello/world">http://localhost:8080/hello/world</a>를 열어 보자. 다 됐다.</p>
-<p class="rubric">내려받기 및 실행</p>
-<p><a class="reference external" href="http://pypi.python.org/pypi/bottle">PyPI</a>를 통해 (<code class="docutils literal notranslate"><span class="pre">easy_install</span> <span class="pre">-U</span> <span class="pre">bottle</span></code>) 최신 안정 버전을 설치하거나 <a class="reference external" href="https://github.com/defnull/bottle/raw/master/bottle.py">bottle.py</a>(불안정 버전)을 프로젝트 디렉터리로 내려받으면 된다. 파이썬 표준 라이브러리 외 모듈에 대한 필수 의존성은 전혀 없다 <a class="footnote-reference brackets" href="#id12" id="id6">1</a>. 보틀은 <strong>파이썬 2.5+ 및 3.x</strong>에서 돈다.</p>
+<p>이 스크립트를 실행하거나 파이썬 콘솔에 붙여 넣은 다음 브라우저로 <a class="reference external" href="http://localhost:8080/hello/world">http://localhost:8080/hello/world</a> 주소를 열어 보자. 이게 전부다.</p>
+<p class="rubric">내려받아 설치하기</p>
+<p><a class="reference external" href="http://pypi.python.org/pypi/bottle">PyPI</a>를 통해 (<code class="docutils literal notranslate"><span class="pre">easy_install</span> <span class="pre">-U</span> <span class="pre">bottle</span></code>) 최신 안정 버전을 설치하거나 <a class="reference external" href="https://github.com/defnull/bottle/raw/master/bottle.py">bottle.py</a> 파일(불안정 버전)을 프로젝트 디렉터리로 내려받으면 된다. 파이썬 표준 라이브러리 외 모듈에 대한 필수 의존성이 전혀 없다 <a class="footnote-reference brackets" href="#id12" id="id6">1</a>. 보틀은 <strong>파이썬 2.5+ 및 3.x</strong>에서 돈다.</p>
 <div class="section" id="id7">
 <h2>사용자 안내서<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>웹 개발에 보틀 프레임워크를 이용하는 방법을 배우고 싶다면 여기서 시작하면 된다. 여기서 답을 얻지 못한 질문이 있으면 자유롭게 <a class="reference external" href="mailto:bottlepy&#37;&#52;&#48;googlegroups&#46;com">메일링 리스트</a>에 물어 보면 된다.</p>
+<p>웹 개발에 보틀 프레임워크를 이용하는 방법을 배우고 싶다면 여기서 시작하면 된다. 여기서 답을 얻지 못한 질문이 있다면 <a class="reference external" href="mailto:bottlepy&#37;&#52;&#48;googlegroups&#46;com">메일링 리스트</a>에서 마음껏 물어 보면 된다.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a><ul>
@@ -71,13 +71,13 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#tutorial-glossary">용어</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (초안)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">설정 기본</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id3">이름 관행</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">파일에서 설정 읽어 오기</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#dict">중첩 <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>에서 설정 읽어 오기</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id5">설정 변경 주시하기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id6">필터 및 기타 메타 데이터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id6">필터 및 기타 메타데이터</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#api">API 문서</a></li>
 </ul>
 </li>
@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api.html#id5">템플릿</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 </div>
 </div>
@@ -127,17 +127,17 @@
 <li class="toctree-l2"><a class="reference internal" href="async.html#id5">마지막으로: 웹소켓</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id2">세션 추적하기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id3">폼나게 디버깅 하기: 디버깅용 미들웨어</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id4">보틀 응용 유닛 테스트</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id5">보틀 응용 기능 테스트</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id7">다른 WSGI 앱 내장하기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id8">마지막 슬래시 무시하기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id11">킵얼라이브 요청</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">각종 해결법</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id3">세션 추적하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id4">폼나게 디버깅하기: 디버깅용 미들웨어</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id5">보틀 응용 유닛 테스트</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id6">보틀 응용 기능 테스트</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id8">다른 WSGI 앱 내장하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id9">마지막 슬래시 무시하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id12">킵얼라이브 요청</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recipes.html#gzip">보틀에서 Gzip 압축하기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id12">훅 플러그인 쓰기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recipes.html#id13">Heroku에서 보틀 쓰기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id13">훅 플러그인 쓰기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#id14">Heroku에서 보틀 쓰기</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a><ul>
@@ -168,7 +168,7 @@
 <li class="toctree-l2"><a class="reference internal" href="development.html#id9">릴리스와 업데이트</a></li>
 <li class="toctree-l2"><a class="reference internal" href="development.html#id10">저장소 구조</a></li>
 <li class="toctree-l2"><a class="reference internal" href="development.html#id11">패치 제출하기</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#id12">문서 빌드 하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#id12">문서 빌드하기</a></li>
 <li class="toctree-l2"><a class="reference internal" href="development.html#git">GIT 작업 흐름 예시</a></li>
 </ul>
 </li>
@@ -210,8 +210,8 @@
 </pre></div>
 </div>
 <p>하지만 보틀 로고는 그 라이선스에 포함되지 <em>않는다</em>. 보틀 홈페이지에
-대한 링크로, 또는 변경 안 된 라이브러리에서 직접 사용하는 건 허용된다.
-그 외 경우에는 먼저 확인을 구하자.</p>
+대한 링크로 쓰거나 변경 안 된 라이브러리와 함께 직접 사용하는 건 허용된다.
+그 외 경우에는 먼저 확인을 구하길 바란다.</p>
 <p class="rubric">각주</p>
 <dl class="footnote brackets">
 <dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
@@ -240,16 +240,16 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (초안)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">각종 해결법</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
 </ul>
 <ul>
@@ -259,7 +259,7 @@
 <li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 
 <div class="relations">
@@ -293,10 +293,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2020, Marcel Hellkamp.
+      &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

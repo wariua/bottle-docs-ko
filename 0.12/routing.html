@@ -1,21 +1,21 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>요청 라우팅 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="SimpleTemplate 엔진" href="stpl.html" />
-    <link rel="prev" title="설정 (작업 중)" href="configuration.html" />
+    <link rel="prev" title="설정 (초안)" href="configuration.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,12 +37,12 @@
 <p>보틀에선 강력한 라우팅 엔진을 이용해 각 요청에 맞는 콜백을 찾는다. <a class="reference internal" href="tutorial.html#tutorial-routing"><span class="std std-ref">따라하기</span></a>에서 기본 사용법을 볼 수 있다. 이 문서에선 고급 기법과 규칙 동작 방식을 자세히 다룬다.</p>
 <div class="section" id="id2">
 <h2>규칙 문법<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code>에서는 두 가지 기본 라우트 종류, 즉 <strong>정적 라우트</strong>(예: <code class="docutils literal notranslate"><span class="pre">/contact</span></code>)와 <strong>동적 라우트</strong>(예: <code class="docutils literal notranslate"><span class="pre">/hello/&lt;name&gt;</span></code>)를 구별한다. 와일드카드를 하나 이상 가지고 있는 라우트를 동적이라고 한다. 나머지 라우트는 모두 정적이다.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code>에서는 두 가지 기본 라우트 종류, 즉 <strong>정적 라우트</strong>(예: <code class="docutils literal notranslate"><span class="pre">/contact</span></code>)와 <strong>동적 라우트</strong>(예: <code class="docutils literal notranslate"><span class="pre">/hello/&lt;name&gt;</span></code>)를 구별한다. 와일드카드를 하나 이상 가지고 있는 라우트를 동적이라고 한다. 그 외 라우트는 정적이다.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.10.</span></p>
 </div>
 <p>가장 간단한 형태의 와일드카드는 꺾쇠괄호 안에 이름이 있는 것(예: <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span></code>)이다. 이름은 해당 라우트에서 유일해야 하며 유효한 파이썬 식별자(알파벳 또는 숫자로만, 시작은 알파벳)여야 한다. 와일드카드가 이후 요청 콜백에서 키워드 인자로 쓰이기 때문이다.</p>
-<p>각 와일드카드는 한 개 이상 문자에 일치하되 첫 번째 슬래시(<code class="docutils literal notranslate"><span class="pre">/</span></code>)에서 멈춘다. 정규 표현식 <code class="docutils literal notranslate"><span class="pre">[^/]+</span></code>와 동등한데, 경로 요소 하나에만 걸리고 와일드카드가 여럿인 라우트에서 모호함이 없게 된다.</p>
+<p>각 와일드카드는 한 개 이상 문자에 걸리고 슬래시(<code class="docutils literal notranslate"><span class="pre">/</span></code>)가 나오면 멈춘다. 정규 표현식 <code class="docutils literal notranslate"><span class="pre">[^/]+</span></code>와 동등한데, 경로 분절 하나에만 걸리고 와일드카드가 여럿인 라우트에서 모호함이 없다.</p>
 <p><code class="docutils literal notranslate"><span class="pre">/&lt;action&gt;/&lt;item&gt;</span></code>이라는 규칙은 다음처럼 걸린다.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -81,10 +81,10 @@
 <ul class="simple">
 <li><p><strong>:int</strong> (부호 있는) 숫자에만 걸리고 값을 정수로 변환한다.</p></li>
 <li><p><strong>:float</strong> :int와 비슷하되 부동소수점수다.</p></li>
-<li><p><strong>:path</strong> 슬래시 문자를 포함한 모든 문자들에 비탐욕 방식으로 걸리며 하나 이상의 경로 조각이 걸리게 하는 데 쓸 수 있다.</p></li>
+<li><p><strong>:path</strong> 슬래시 문자를 포함한 모든 문자들에 비탐욕 방식으로 걸리며 하나 이상의 경로 분절이 걸리게 하는 데 쓸 수 있다.</p></li>
 <li><p><strong>:re[:exp]</strong> config 필드에 원하는 정규 표현식을 지정할 수 있다. 걸린 값이 바뀌지 않는다.</p></li>
 </ul>
-<p>새로운 필터를 만들어서 라우터에 추가할 수도 있다. 세 가지를 반환하는 함수를 작성하면 되는데, 정규 표현식 문자열, URL 조각을 파이썬 값으로 변환하는 콜러블, 그리고 그 반대 동작을 하는 콜러블이다. 설정 문자열을 유일한 매개변수로 해서 필터 함수가 호출되며 필요한 대로 설정을 파싱 하면 된다.</p>
+<p>새로운 필터를 만들어서 라우터에 추가할 수도 있다. 세 가지를 반환하는 함수를 작성하면 되는데, 정규 표현식 문자열, URL 조각을 파이썬 값으로 변환하는 콜러블, 그리고 그 반대 동작을 하는 콜러블이다. 설정 문자열을 유일한 매개변수로 해서 필터 함수가 호출되며 필요한 대로 설정을 파싱하면 된다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">Bottle</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">list_filter</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
@@ -114,7 +114,7 @@
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.10.</span></p>
 </div>
-<p>흔한 사용 방식들을 단순화하기 위해 <strong>보틀 0.10</strong>에서 새로운 규칙 문법이 도입됐다. 하지만 이전 문법도 여전히 동작하며 많은 코드 예시에서 이전 문법을 쓰고 있는 걸 볼 수 있다. 예시를 보면 차이를 잘 알 수 있다.</p>
+<p>흔한 사용 방식들을 단순화하기 위해 <strong>보틀 0.10</strong>에서 새로운 규칙 문법이 도입됐다. 하지만 이전 문법도 여전히 동작하며 많은 코드 예시에서 이전 문법을 쓰는 걸 볼 수 있다. 예시를 보면 차이를 잘 알 수 있다.</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 49%" />
@@ -144,7 +144,7 @@
 </div>
 <div class="section" id="id5">
 <h2>명시적 라우팅 설정<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>라우터 데코레이터를 직접 메소드로 호출할 수도 있다. 이렇게 하면 복잡한 구성을 위한 유연한 처리가 가능하며, 라우팅 설정이 이뤄지는 시점과 방법을 완전히 제어할 수 있다.</p>
+<p>라우터 데코레이터를 메소드 형태로 직접 호출할 수도 있다. 이렇게 하면 복잡한 구성을 위한 유연한 처리가 가능하며, 라우팅 설정이 이뤄지는 시점과 방법을 완전히 제어할 수 있다.</p>
 <p>다음은 기본 보틀 응용에 대한 명시적인 라우팅 설정 예시다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setup_routing</span><span class="p">():</span>
     <span class="n">bottle</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
@@ -182,7 +182,7 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (초안)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">요청 라우팅</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">규칙 문법</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">와일드카드 필터</a></li>
@@ -192,12 +192,12 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">각종 해결법</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
 </ul>
 <ul>
@@ -207,14 +207,14 @@
 <li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="configuration.html" title="previous chapter">설정 (작업 중)</a></li>
+      <li>Previous: <a href="configuration.html" title="previous chapter">설정 (초안)</a></li>
       <li>Next: <a href="stpl.html" title="next chapter">SimpleTemplate 엔진</a></li>
   </ul></li>
 </ul>
@@ -242,10 +242,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2020, Marcel Hellkamp.
+      &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

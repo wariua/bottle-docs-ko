@@ -1,18 +1,17 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -141,9 +140,14 @@
         <li><a href="api.html#bottle.LocalResponse.body">(LocalResponse property)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#bottle.Bottle">Bottle (class in bottle)</a>
+      <li>
+    bottle
+
+      <ul>
+        <li><a href="api.html#module-bottle">module</a>, <a href="faq.html#module-bottle">[1]</a>, <a href="plugindev.html#module-bottle">[2]</a>, <a href="plugins/index.html#module-bottle">[3]</a>, <a href="recipes.html#module-bottle">[4]</a>, <a href="tutorial.html#module-bottle">[5]</a>
 </li>
-      <li><a href="api.html#module-bottle">bottle (module)</a>, <a href="faq.html#module-bottle">[1]</a>, <a href="plugindev.html#module-bottle">[2]</a>, <a href="plugins/index.html#module-bottle">[3]</a>, <a href="recipes.html#module-bottle">[4]</a>, <a href="tutorial.html#module-bottle">[5]</a>
+      </ul></li>
+      <li><a href="api.html#bottle.Bottle">Bottle (class in bottle)</a>
 </li>
       <li><a href="api.html#bottle.BottleException">BottleException</a>
 </li>
@@ -247,16 +251,14 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#bottle.BaseRequest.environ">environ (BaseRequest attribute)</a>
 </li>
-      <li><a href="api.html#bottle.LocalRequest.environ">environ() (LocalRequest property)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#bottle.Bottle.error">error() (Bottle method)</a>
 
       <ul>
         <li><a href="api.html#bottle.error">(in module bottle)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#bottle.BaseResponse.expires">expires (BaseResponse attribute)</a>
 </li>
   </ul></td>
@@ -449,14 +451,21 @@
 </li>
       <li><a href="configuration.html#bottle.ConfigDict.meta_list">meta_list() (ConfigDict method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="configuration.html#bottle.ConfigDict.meta_set">meta_set() (ConfigDict method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#bottle.Route.method">method (Route attribute)</a>
 </li>
       <li><a href="api.html#bottle.BaseRequest.method">method() (BaseRequest property)</a>
 </li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api.html#module-bottle">bottle</a>, <a href="faq.html#module-bottle">[1]</a>, <a href="plugindev.html#module-bottle">[2]</a>, <a href="plugins/index.html#module-bottle">[3]</a>, <a href="recipes.html#module-bottle">[4]</a>, <a href="tutorial.html#module-bottle">[5]</a>
+</li>
+      </ul></li>
       <li><a href="api.html#bottle.Bottle.mount">mount() (Bottle method)</a>
 </li>
       <li><a href="api.html#bottle.MultiDict">MultiDict (class in bottle)</a>
@@ -583,7 +592,7 @@
       </ul></li>
       <li><a href="api.html#bottle.Request">Request (in module bottle)</a>
 </li>
-      <li><a href="api.html#bottle.request">request (in module bottle)</a>, <a href="api.html#bottle.request">[1]</a>
+      <li><a href="api.html#bottle.request">request (in module bottle)</a>, <a href="api.html#id0">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -776,16 +785,16 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (초안)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">각종 해결법</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
 </ul>
 <ul>
@@ -795,7 +804,7 @@
 <li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 
 <div class="relations">
@@ -828,10 +837,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2020, Marcel Hellkamp.
+      &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

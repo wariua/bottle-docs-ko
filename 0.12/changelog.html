@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>릴리스 노트와 변경 로그 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="개발자를 위해" href="development.html" />
@@ -42,7 +42,7 @@
 * The keywords <cite>include</cite> and <cite>rebase</cite> are functions now and can accept variable template names.</p></li>
 <li><p>The new <a class="reference internal" href="api.html#bottle.BaseRequest.route" title="bottle.BaseRequest.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseRequest.route()</span></code></a> property returns the <a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> that originally matched the request.</p></li>
 <li><p>Removed the <code class="docutils literal notranslate"><span class="pre">BaseRequest.MAX_PARAMS</span></code> limit. The hash collision bug in CPythons dict() implementation was fixed over a year ago. If you are still using Python 2.5 in production, consider upgrading or at least make sure that you get security fixed from your distributor.</p></li>
-<li><p>New <a class="reference internal" href="configuration.html#bottle.ConfigDict" title="bottle.ConfigDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code></a> API (see <a class="reference internal" href="configuration.html"><span class="doc">설정 (작업 중)</span></a>)</p></li>
+<li><p>New <a class="reference internal" href="configuration.html#bottle.ConfigDict" title="bottle.ConfigDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code></a> API (see <a class="reference internal" href="configuration.html"><span class="doc">설정 (초안)</span></a>)</p></li>
 </ul>
 <p>More information can be found in this <a class="reference external" href="http://blog.bottlepy.org/2013/07/19/preview-bottle-012.html">development blog post</a>.</p>
 </div>
@@ -263,16 +263,16 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">설정 (초안)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="routing.html">요청 라우팅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API 참조</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="async.html">비동기 응용 입문</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">각종 해결법</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">자주 묻는 질문</a></li>
 </ul>
 <ul class="current">
@@ -289,7 +289,7 @@
 <li class="toctree-l1"><a class="reference internal" href="plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 
 <div class="relations">
@@ -324,10 +324,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2020, Marcel Hellkamp.
+      &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

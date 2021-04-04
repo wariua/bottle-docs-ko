@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bottle &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -492,9 +492,9 @@
 
 
 <div class="viewcode-block" id="Route"><a class="viewcode-back" href="../api.html#bottle.Route">[docs]</a><span class="k">class</span> <span class="nc">Route</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; 이 클래스는 라우트 콜백과 라우트별 메타데이터 및 설정을 감싸고</span>
-<span class="sd">        있으면서 필요에 따라 플러그인들을 적용한다. 또한 URL 경로 규칙을</span>
-<span class="sd">        Router에서 쓸 수 있는 정규 표현식으로 바꾸는 일도 맡는다.</span>
+    <span class="sd">&#39;&#39;&#39; 이 클래스는 라우트 콜백과 라우트별 메타데이터 및 설정을 감싸며</span>
+<span class="sd">        필요시 플러그인들을 적용한다. 또한 URL 경로 규칙을 Router에서</span>
+<span class="sd">        쓸 수 있는 정규 표현식으로 바꾸는 일도 맡는다.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">rule</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -526,17 +526,17 @@
 
 <div class="viewcode-block" id="Route.call"><a class="viewcode-back" href="../api.html#bottle.Route.call">[docs]</a>    <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 모든 플러그인이 적용된 라우트 콜백. 이 프로퍼티는 필요에 따라</span>
-<span class="sd">            생성되며 캐싱 해서 이후 요청 처리 속도를 높인다.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; 모든 플러그인이 적용된 라우트 콜백. 이 프로퍼티는 필요시</span>
+<span class="sd">            생성되며 이후 요청 처리 속도를 높이기 위해 캐싱된다.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_callback</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Route.reset"><a class="viewcode-back" href="../api.html#bottle.Route.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 캐싱 된 값이 있으면 잊기. 다음 :attr:`call` 접근 때 모든</span>
+        <span class="sd">&#39;&#39;&#39; 캐싱된 값이 있으면 잊어 버리기. 다음 :attr:`call` 접근 때 모든</span>
 <span class="sd">            플러그인이 재적용된다. &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;call&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Route.prepare"><a class="viewcode-back" href="../api.html#bottle.Route.prepare">[docs]</a>    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 모든 온디맨드 작업을 즉시 하기. (디버깅에 유용)&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; 필요시 이뤄지는 작업 모두를 즉시 하기. (디버깅에 유용)&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call</span></div>
 
     <span class="nd">@property</span>
@@ -574,7 +574,7 @@
         <span class="k">return</span> <span class="n">callback</span>
 
 <div class="viewcode-block" id="Route.get_undecorated_callback"><a class="viewcode-back" href="../api.html#bottle.Route.get_undecorated_callback">[docs]</a>    <span class="k">def</span> <span class="nf">get_undecorated_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 콜백 반환. 콜백이 데코레이터로 꾸민 함수면 원래 함수를</span>
+        <span class="sd">&#39;&#39;&#39; 콜백 반환. 콜백이 데코레이터로 꾸며진 함수면 원래 함수를</span>
 <span class="sd">            복원하려고 시도한다. &#39;&#39;&#39;</span>
         <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span>
         <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="s1">&#39;__func__&#39;</span> <span class="k">if</span> <span class="n">py3k</span> <span class="k">else</span> <span class="s1">&#39;im_func&#39;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
@@ -584,9 +584,9 @@
         <span class="k">return</span> <span class="n">func</span></div>
 
 <div class="viewcode-block" id="Route.get_callback_args"><a class="viewcode-back" href="../api.html#bottle.Route.get_callback_args">[docs]</a>    <span class="k">def</span> <span class="nf">get_callback_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 콜백이 키워드 인자로 (아마도) 받는 인자 이름들의 목록 반환.</span>
-<span class="sd">            콜백이 데코레이터로 꾸민 함수면 인트로스펙션 전에 원래 함수를</span>
-<span class="sd">            복원하려고 시도한다. &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; (아마도) 콜백이 키워드 인자로 받는 인자 이름 목록 반환.</span>
+<span class="sd">            콜백이 데코레이터로 꾸며진 함수면 인트로스펙션 전에 원래 함수</span>
+<span class="sd">            복원을 시도한다. &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">getargspec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_undecorated_callback</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Route.get_config"><a class="viewcode-back" href="../api.html#bottle.Route.get_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -688,15 +688,15 @@
 
 <div class="viewcode-block" id="Bottle.mount"><a class="viewcode-back" href="../api.html#bottle.Bottle.mount">[docs]</a>    <span class="k">def</span> <span class="nf">mount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; 응용(:class:`Bottle` 또는 단순 WSGI)을 특정 URL 프리픽스에</span>
-<span class="sd">            마운트. 예::</span>
+<span class="sd">            붙이기. 예::</span>
 
 <span class="sd">                root_app.mount(&#39;/admin/&#39;, admin_app)</span>
 
 <span class="sd">            :param prefix: 경로 프리픽스 내지 `마운트 지점`. 슬래시로</span>
-<span class="sd">                끝나면 그 슬래시가 꼭 있어야 함.</span>
+<span class="sd">                끝나면 그 슬래시가 꼭 있어야 한다.</span>
 <span class="sd">            :param app: :class:`Bottle` 인스턴스 또는 WSGI 응용.</span>
 
-<span class="sd">            다른 매개변수들이 모두 하위 :meth:`route` 호출로 전달된다.</span>
+<span class="sd">            다른 매개변수들은 모두 하위 :meth:`route` 호출로 전달된다.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
             <span class="n">depr</span><span class="p">(</span><span class="s1">&#39;Parameter order of Bottle.mount() changed.&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="c1"># 0.10</span>
@@ -822,16 +822,16 @@
 <span class="sd">            ``:name`` 부분은 와일드카드다. 자세한 문법은 :class:`Router`</span>
 <span class="sd">            참고.</span>
 
-<span class="sd">            :param path: 받을 요청 경로 또는 경로들의 목록. 경로를</span>
-<span class="sd">              지정하지 않으면 함수 시그너처를 가지고 자동으로 생성한다.</span>
+<span class="sd">            :param path: 받을 요청 경로 또는 경로 목록. 경로를 지정하지</span>
+<span class="sd">              않으면 함수 시그너처를 가지고 자동으로 생성한다.</span>
 <span class="sd">            :param method: 받을 HTTP 메소드(`GET`, `POST`, `PUT`, ...) 또는</span>
 <span class="sd">              메소드들의 목록. (기본값: `GET`)</span>
-<span class="sd">            :param callback: 데코레이터 문법을 피하기 위한 선택적 지름길.</span>
+<span class="sd">            :param callback: 데코레이터 문법을 피하기 위한 선택적인 지정 방법.</span>
 <span class="sd">              ``route(..., callback=func)``\가 ``route(...)(func)``\와 같다.</span>
 <span class="sd">            :param name: 이 라우트의 이름. (기본값: None)</span>
-<span class="sd">            :param apply: 데코레이터 또는 플러그인 또는 플러그인들의 목록.</span>
+<span class="sd">            :param apply: 데코레이터, 또는 플러그인, 또는 플러그인 목록.</span>
 <span class="sd">               설치돼 있는 플러그인들에 더해서 라우트 콜백에 적용된다.</span>
-<span class="sd">            :param skip: 플러그인들, 플러그인 클래스들, 이름들의 목록.</span>
+<span class="sd">            :param skip: 플러그인 또는 플러그인 클래스 또는 이름의 목록.</span>
 <span class="sd">              걸리는 플러그인은 이 라우트에 설치하지 않는다. ``True``\면</span>
 <span class="sd">              모두 건너뛴다.</span>
 
@@ -1031,7 +1031,7 @@
 
 <span class="sd">        요청에 새 속성을 추가하면 실제로는 환경 딕셔너리에</span>
 <span class="sd">        (&#39;bottle.request.ext.&lt;name&gt;&#39;으로) 추가된다. 요청별 데이터를</span>
-<span class="sd">        저장하고 접근하는 권장 방식이다.</span>
+<span class="sd">        저장하고 접근하려 할 때 권장하는 방식이다.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">)</span>
@@ -1064,7 +1064,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; ``PATH_INFO`` 값 앞에 슬래시를 딱 한 개 붙인 것. (이상</span>
-<span class="sd">            동작 클라이언트에 대처하고 &quot;빈 경로&quot; 경우를 피하기 위해.) &#39;&#39;&#39;</span>
+<span class="sd">            동작하는 클라이언트에 대처하고 &quot;빈 경로&quot; 경우를 피하기 위해.) &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -1084,8 +1084,8 @@
 
 <div class="viewcode-block" id="BaseRequest.cookies"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.cookies">[docs]</a>    <span class="nd">@DictProperty</span><span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle.request.cookies&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">cookies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 쿠키들을 파싱 해서 담은 :class:`FormsDict`. 서명된 쿠키가</span>
-<span class="sd">            디코딩 돼 있지 않다. 서명된 쿠키에는 :meth:`get_cookie` 사용. &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; 쿠키들을 파싱해서 담은 :class:`FormsDict`. 서명된 쿠키가</span>
+<span class="sd">            디코딩되어 있지 않다. 서명된 쿠키에는 :meth:`get_cookie` 사용. &quot;&quot;&quot;</span>
         <span class="n">cookies</span> <span class="o">=</span> <span class="n">SimpleCookie</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_COOKIE&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">FormsDict</span><span class="p">((</span><span class="n">c</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cookies</span><span class="p">)</span></div>
 
@@ -1102,7 +1102,7 @@
 
 <div class="viewcode-block" id="BaseRequest.query"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.query">[docs]</a>    <span class="nd">@DictProperty</span><span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle.request.query&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; :attr:`query_string`\을 파싱 해서 담은 :class:`FormsDict`.</span>
+        <span class="sd">&#39;&#39;&#39; :attr:`query_string`\을 파싱해서 담은 :class:`FormsDict`.</span>
 <span class="sd">            이 값들을 &quot;URL 인자&quot;나 &quot;GET 매개변수&quot;라고도 하는데,</span>
 <span class="sd">            :class:`Router`\에서 제공하는 &quot;URL 와일드카드&quot;와 혼동하지</span>
 <span class="sd">            말아야 한다. &#39;&#39;&#39;</span>
@@ -1114,8 +1114,8 @@
 
 <div class="viewcode-block" id="BaseRequest.forms"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.forms">[docs]</a>    <span class="nd">@DictProperty</span><span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle.request.forms&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; `url-encoded`\나 `multipart/form-data`\로 인코딩 된 POST 또는</span>
-<span class="sd">            PUT 요청 바디의 양식 값들을 파싱 한 것. :class:`FormsDict`\로</span>
+        <span class="sd">&quot;&quot;&quot; `url-encoded`\나 `multipart/form-data`\로 인코딩된 POST 또는</span>
+<span class="sd">            PUT 요청 바디의 양식 값들을 파싱한 것. :class:`FormsDict`\로</span>
 <span class="sd">            결과를 반환한다. 모든 키와 값이 문자열이다. 파일 업로드는</span>
 <span class="sd">            :attr:`files`\에 따로 저장된다. &quot;&quot;&quot;</span>
         <span class="n">forms</span> <span class="o">=</span> <span class="n">FormsDict</span><span class="p">()</span>
@@ -1137,8 +1137,8 @@
 
 <div class="viewcode-block" id="BaseRequest.files"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.files">[docs]</a>    <span class="nd">@DictProperty</span><span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle.request.files&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; `multipart/form-data`\로 인코딩 된 POST 또는 PUT 요청 바디에서</span>
-<span class="sd">            파싱 한 파일 업로드. 값들이 :class:`FileUpload`\의 인스턴스다.</span>
+        <span class="sd">&quot;&quot;&quot; `multipart/form-data`\로 인코딩된 POST 또는 PUT 요청 바디에서</span>
+<span class="sd">            파싱한 파일 업로드. 값들이 :class:`FileUpload`\의 인스턴스다.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">files</span> <span class="o">=</span> <span class="n">FormsDict</span><span class="p">()</span>
@@ -1150,7 +1150,7 @@
 <div class="viewcode-block" id="BaseRequest.json"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.json">[docs]</a>    <span class="nd">@DictProperty</span><span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle.request.json&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; ``Content-Type`` 헤더가 ``application/json``\인 경우 이</span>
-<span class="sd">            프로퍼티는 파싱 된 요청 바디 내용물을 담는다. 메모리 고갈을</span>
+<span class="sd">            프로퍼티는 파싱된 요청 바디 내용물을 담는다. 메모리 고갈을</span>
 <span class="sd">            피하기 위해 :attr:`MEMFILE_MAX`\보다 작은 요청만 처리한다. &#39;&#39;&#39;</span>
         <span class="n">ctype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CONTENT_TYPE&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">ctype</span> <span class="o">==</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
@@ -1227,9 +1227,9 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; seek 가능한 파일스러운 객체로 된 HTTP 요청 바디.</span>
-<span class="sd">            :attr:`MEMFILE_MAX`\에 따라 임시 파일 또는 :class:`io.BytesIO`</span>
+<span class="sd">            :attr:`MEMFILE_MAX`\에 따라 임시 파일이거나 :class:`io.BytesIO`</span>
 <span class="sd">            인스턴스다. 이 프로퍼티에 처음 접근할 때 환경 변수</span>
-<span class="sd">            ``wsgi.input``\을 읽어서 교체한다. 이후 접근 시에는 그 파일</span>
+<span class="sd">            ``wsgi.input``\을 읽어서 교체한다. 이후 접근 때는 그 파일</span>
 <span class="sd">            객체에 `seek(0)`\만 한다. &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_body</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_body</span>
@@ -1287,8 +1287,8 @@
 <div class="viewcode-block" id="BaseRequest.urlparts"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.urlparts">[docs]</a>    <span class="nd">@DictProperty</span><span class="p">(</span><span class="s1">&#39;environ&#39;</span><span class="p">,</span> <span class="s1">&#39;bottle.request.urlparts&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">urlparts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; :attr:`url` 문자열을 :class:`urlparse.SplitResult` 튜플로 만든 것.</span>
-<span class="sd">            그 튜플에 (scheme, host, path, query_string, fragment)가 들어있는데</span>
-<span class="sd">            fragment는 서버에게 보이지 않으므로 항상 비어 있다. &#39;&#39;&#39;</span>
+<span class="sd">            그 튜플에는 (scheme, host, path, query_string, fragment)가 들어</span>
+<span class="sd">            있는데, fragment는 서버에게 보이지 않으므로 항상 비어 있다. &#39;&#39;&#39;</span>
         <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ</span>
         <span class="n">http</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED_PROTO&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">)</span>
         <span class="n">host</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED_HOST&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">)</span>
@@ -1315,16 +1315,16 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">script_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; 응용을 호출하기 전에 상위 단계(서버 또는 라우팅 미들웨어)에서</span>
-<span class="sd">            제거한 URL `path`\의 첫 부분. 그 스크립트 경로 앞과 뒤에</span>
+<span class="sd">            제거한 URL `path` 부분 원래 값. 그 스크립트 경로 앞과 뒤에</span>
 <span class="sd">            슬래시를 붙여서 반환한다. &#39;&#39;&#39;</span>
         <span class="n">script_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">script_name</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="k">if</span> <span class="n">script_name</span> <span class="k">else</span> <span class="s1">&#39;/&#39;</span>
 
 <div class="viewcode-block" id="BaseRequest.path_shift"><a class="viewcode-back" href="../api.html#bottle.BaseRequest.path_shift">[docs]</a>    <span class="k">def</span> <span class="nf">path_shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; :attr:`path`\에서 :attr:`script_name`\으로 또는 반대로 경로</span>
-<span class="sd">            조각들을 이동.</span>
+<span class="sd">            분절들을 이동.</span>
 
-<span class="sd">            :param shift: 옮길 경로 조각 수. 음수로 해서 이동 방향을 바꿀</span>
+<span class="sd">            :param shift: 옮길 경로 분절 수. 음수로 해서 이동 방향을 바꿀</span>
 <span class="sd">                         수도 있다. (기본값: 1)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">script</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
@@ -1469,14 +1469,14 @@
 
 <span class="sd">        이 클래스는 분명 헤더에 대한 대소문자 구별 없는 dict스러운 항목</span>
 <span class="sd">        접근을 지원하지만 dict가 아니다. 무엇보다 응답에 반복문을 돌리면</span>
-<span class="sd">        헤더가 아니라 바디의 부분들을 내놓는다.</span>
+<span class="sd">        헤더가 아니라 바디 조각들을 내놓는다.</span>
 
 <span class="sd">        :param body: 지원 타입들 중 하나로 된 응답 바디.</span>
 <span class="sd">        :param status: HTTP 상태 코드(예: 200) 또는 이유 문구를</span>
 <span class="sd">                       포함한 상태 행(예: &#39;200 OK&#39;).</span>
-<span class="sd">        :param headers: 이름-값 쌍의 딕셔너리 또는 리스트.</span>
+<span class="sd">        :param headers: 이름-값 짝의 딕셔너리 또는 리스트.</span>
 
-<span class="sd">        추가로 준 키워드 인자들이 헤더 목록에 추가된다. 헤더 이름의</span>
+<span class="sd">        추가로 준 키워드 인자들은 헤더 목록에 추가된다. 헤더 이름의</span>
 <span class="sd">        밑줄이 대시로 바뀐다.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1553,7 +1553,7 @@
         <span class="sd">&#39;&#39;&#39; HTTP 응답 상태를 바꾸기 위한 쓰기 가능 프로퍼티. 숫자 코드</span>
 <span class="sd">            (100-999) 또는 자체 이유 문구(예: &quot;404 Brain not found&quot;)가 있는</span>
 <span class="sd">            문자열을 받는다. 그에 따라 :data:`status_line`\과</span>
-<span class="sd">            :data:`status_code`\가 모두 갱신된다. 반환 값은 항상 상태</span>
+<span class="sd">            :data:`status_code`\가 모두 갱신된다. 반환 값은 항상 상태 행</span>
 <span class="sd">            문자열이다. &#39;&#39;&#39;</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">_get_status</span><span class="p">,</span> <span class="n">_set_status</span>
 
@@ -1615,7 +1615,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; content-type 헤더에 지정되는 문자셋 반환. (기본값: utf8) &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; content-type 헤더에 지정된 문자셋 반환. (기본값: utf8) &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;charset=&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;charset=&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">default</span>
@@ -1705,7 +1705,7 @@
 <div class="viewcode-block" id="LocalRequest"><a class="viewcode-back" href="../api.html#bottle.LocalRequest">[docs]</a><span class="k">class</span> <span class="nc">LocalRequest</span><span class="p">(</span><span class="n">BaseRequest</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; 스레드마다 각기 다른 속성 집합이 있는 :class:`BaseRequest`\의</span>
 <span class="sd">        스레드 로컬 서브클래스. 일반적으로 이 클래스의 전역 인스턴스는</span>
-<span class="sd">        하나만(:data:`request`) 있다. 요청/응답 처리 사이클 중 접근 시</span>
+<span class="sd">        하나만(:data:`request`) 있다. 요청/응답 처리 사이클 중에 접근 시</span>
 <span class="sd">        그 인스턴스는 (다중 스레드 서버에서도) 항상 *현재* 요청을</span>
 <span class="sd">        가리킨다. &#39;&#39;&#39;</span>
     <span class="n">bind</span> <span class="o">=</span> <span class="n">BaseRequest</span><span class="o">.</span><span class="fm">__init__</span>
@@ -1847,9 +1847,9 @@
 
 
 <div class="viewcode-block" id="MultiDict"><a class="viewcode-back" href="../api.html#bottle.MultiDict">[docs]</a><span class="k">class</span> <span class="nc">MultiDict</span><span class="p">(</span><span class="n">DictMixin</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; 이 dict는 키별로 여러 값을 저장하되 그 외는 보통 dict와 정확히</span>
+    <span class="sd">&quot;&quot;&quot; 이 dict는 키별로 여러 값을 저장한다는 점을 빼면 일반 dict와</span>
 <span class="sd">        똑같이 동작한다. 키를 주면 최신 값만 반환한다. 전체 값 리스트에</span>
-<span class="sd">        접근하는 데 쓸 수 있는 별도의 메소드들이 있다.</span>
+<span class="sd">        접근하는 데 쓸 수 있는 메소드들이 따로 있다.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
@@ -1890,9 +1890,9 @@
 
 <span class="sd">            :param default: 키가 없거나 타입 변환이 실패한 경우 반환할</span>
 <span class="sd">                   기본값.</span>
-<span class="sd">            :param index: 사용 가능 값 리스트에 대한 색인.</span>
+<span class="sd">            :param index: 값 리스트에 대한 색인.</span>
 <span class="sd">            :param type: 지정돼 있으면 그 콜러블을 이용해 값을 특정 타입으로</span>
-<span class="sd">                    캐스트 한다. 예외 발생 시 숨기고 기본값을 반환한다.</span>
+<span class="sd">                    캐스트한다. 콜러블에서 예외를 던지면 막고서 기본값을 반환한다.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
@@ -1913,7 +1913,7 @@
         <span class="sd">&#39;&#39;&#39; 키에 대한 (비어 있을 수 있는) 값 리스트 반환. &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span></div>
 
-    <span class="c1">#: 다른 multi-dict API (Django)를 흉내내는 WTForms용 에일리어스.</span>
+    <span class="c1">#: 다른 multi-dict API (Django)를 흉내내기 위한 WTForms 에일리어스.</span>
     <span class="n">getone</span> <span class="o">=</span> <span class="n">get</span>
     <span class="n">getlist</span> <span class="o">=</span> <span class="n">getall</span></div>
 
@@ -1921,15 +1921,15 @@
 <div class="viewcode-block" id="FormsDict"><a class="viewcode-back" href="../api.html#bottle.FormsDict">[docs]</a><span class="k">class</span> <span class="nc">FormsDict</span><span class="p">(</span><span class="n">MultiDict</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; 요청 양식 데이터를 저장하는 데 쓰는 :class:`MultiDict`\의</span>
 <span class="sd">        서브클래스. 일반 dict스러운 항목 접근 방법(데이터를 그대로</span>
-<span class="sd">        네이티브 문자열로 반환)에 더해서 이 컨테이너는 속성처럼 값에</span>
+<span class="sd">        네이티브 문자열로 반환)에 더해서 이 컨테이너는 값에 속성처럼</span>
 <span class="sd">        접근하는 것도 지원한다. 속성은 :attr:`input_encoding`\(기본값:</span>
-<span class="sd">        &#39;utf8&#39;)에 맞도록 자동으로 디코딩 또는 재코딩 된다. 없는 속성은</span>
-<span class="sd">        기본으로 빈 문자열을 내놓는다. &#39;&#39;&#39;</span>
+<span class="sd">        &#39;utf8&#39;)에 맞도록 자동으로 디코딩 또는 재인코딩된다. 없는 속성은</span>
+<span class="sd">        기본값으로 빈 문자열을 내놓는다. &#39;&#39;&#39;</span>
 
     <span class="c1">#: 속성 값에 쓰는 인코딩.</span>
     <span class="n">input_encoding</span> <span class="o">=</span> <span class="s1">&#39;utf8&#39;</span>
-    <span class="c1">#: 참(기본값)이면 유니코드열을 먼저 `latin1`\으로 인코딩 한 다음</span>
-    <span class="c1">#: :attr:`input_encoding`\에 맞게 디코딩 한다.</span>
+    <span class="c1">#: 참(기본값)이면 유니코드열을 먼저 `latin1`\으로 인코딩한 다음</span>
+    <span class="c1">#: :attr:`input_encoding`\에 맞게 디코딩한다.</span>
     <span class="n">recode_unicode</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_fix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1941,7 +1941,7 @@
             <span class="k">return</span> <span class="n">s</span>
 
 <div class="viewcode-block" id="FormsDict.decode"><a class="viewcode-back" href="../api.html#bottle.FormsDict.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; :attr:`input_encoding`\에 맞게 디코딩 또는 재코딩 된 전체</span>
+        <span class="sd">&#39;&#39;&#39; :attr:`input_encoding`\에 맞게 디코딩 내지 재인코딩된 전체</span>
 <span class="sd">            키와 값의 사본 반환. 어떤 라이브러리(예: WTForms)는</span>
 <span class="sd">            유니코드 딕셔너리를 원한다. &#39;&#39;&#39;</span>
         <span class="n">copy</span> <span class="o">=</span> <span class="n">FormsDict</span><span class="p">()</span>
@@ -1965,8 +1965,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getunicode</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HeaderDict"><a class="viewcode-back" href="../api.html#bottle.HeaderDict">[docs]</a><span class="k">class</span> <span class="nc">HeaderDict</span><span class="p">(</span><span class="n">MultiDict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; :class:`MultiDict`\의 대소문자 구별 없는 버전이며 원래처럼</span>
-<span class="sd">        값을 덧붙이지 않고 이전 값을 교체함. &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; :class:`MultiDict`\의 대소문자 구별 없는 버전이며 기본적으로</span>
+<span class="sd">        값을 덧붙이지 않고 이전 값을 교체한다. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">ka</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1992,7 +1992,7 @@
 <span class="sd">        하는 dict스러운 클래스. 키와 값은 네이티브 문자열(2.x는 bytes,</span>
 <span class="sd">        3.x는 unicode)이며 키는 대소문자 구별이 없다. WSGI 환경에 네이티브</span>
 <span class="sd">        아닌 문자열 값이 들어 있으면 무손실 &#39;latin1&#39; 문자셋을 이용해</span>
-<span class="sd">        디코딩 또는 인코딩 한다.</span>
+<span class="sd">        디코딩 또는 인코딩한다.</span>
 
 <span class="sd">        관련 PEP가 바뀌는 경우에도 API가 안정적으로 유지될 것이다.</span>
 <span class="sd">        현재 PEP 333, 444, 3333을 지원한다. (PEP 444는 네이티브 아닌</span>
@@ -2012,7 +2012,7 @@
         <span class="k">return</span> <span class="s1">&#39;HTTP_&#39;</span> <span class="o">+</span> <span class="n">key</span>
 
 <div class="viewcode-block" id="WSGIHeaderDict.raw"><a class="viewcode-back" href="../api.html#bottle.WSGIHeaderDict.raw">[docs]</a>    <span class="k">def</span> <span class="nf">raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 헤더 값을 그대로 (bytes 또는 unicode) 반환. &#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39; 헤더 값을 그대로 (bytes 또는 unicode로) 반환. &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ekey</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">default</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
@@ -2042,7 +2042,7 @@
 <span class="sd">        변경 주시 등을 추가로 지원.</span>
 
 <span class="sd">        이 저장소는 빠른 읽기 접근이 가능하게 최적화돼 있다. 키를</span>
-<span class="sd">        가져오거나 변경 없는 dict 메소드(예: `dict.get()`) 사용 시</span>
+<span class="sd">        가져오거나 비변경 dict 메소드(예: `dict.get()`) 사용 시</span>
 <span class="sd">        원래 dict 대비 오버헤드가 전혀 없다.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_meta&#39;</span><span class="p">,</span> <span class="s1">&#39;_on_change&#39;</span><span class="p">)</span>
@@ -2120,7 +2120,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">ka</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ConfigDict.load_config"><a class="viewcode-back" href="../configuration.html#bottle.ConfigDict.load_config">[docs]</a>    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; *.ini 방식 설정 파일에서 값 읽어 들이기.</span>
+        <span class="sd">&#39;&#39;&#39; \*.ini 방식 설정 파일에서 값 읽어 들이기.</span>
 
 <span class="sd">            설정 파일에 섹션이 있으면 그 이름을 네임스페이스로 해서</span>
 <span class="sd">            값을 넣는다. 두 가지 특수 섹션 ``DEFAULT``\와 ``bottle``\은</span>
@@ -2294,7 +2294,7 @@
 
 <span class="sd">        :param base: :meth:`add_path` 호출을 위한 기본값.</span>
 <span class="sd">        :param opener: 자원 여는 데 쓰는 콜러블.</span>
-<span class="sd">        :param cachemode: 어떤 탐색 결과를 캐싱 할지 제어. &#39;all&#39;,</span>
+<span class="sd">        :param cachemode: 어떤 탐색 결과를 캐싱할지 제어. &#39;all&#39;,</span>
 <span class="sd">                         &#39;found&#39;, &#39;none&#39; 중 하나.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
@@ -2303,21 +2303,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">base</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cachemode</span> <span class="o">=</span> <span class="n">cachemode</span>
 
-        <span class="c1">#: 탐색 경로 리스트. 자세한 건 :meth:`add_path` 참고.</span>
+        <span class="c1">#: 탐색 경로 목록. 자세한 건 :meth:`add_path` 참고.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1">#: 결정된 경로의 캐시. ``res.cache.clear()``\로 캐시 비울 수 있음.</span>
+        <span class="c1">#: 결정된 경로들의 캐시. ``res.cache.clear()``\로 캐시 비울 수 있음.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="ResourceManager.add_path"><a class="viewcode-back" href="../api.html#bottle.ResourceManager.add_path">[docs]</a>    <span class="k">def</span> <span class="nf">add_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; 탐색 경로 리스트에 새 경로 추가. 존재하지 않는 경로면</span>
+        <span class="sd">&#39;&#39;&#39; 탐색 경로 목록에 새 경로 추가. 존재하지 않는 경로면</span>
 <span class="sd">            False 반환.</span>
 
 <span class="sd">            :param path: 새 탐색 경로. 상대 경로는 정규화된 절대 경로로</span>
-<span class="sd">                바꾼다. 경로가 파일처럼 생겼으면 (`/`\로 끝나지 않으면)</span>
+<span class="sd">                바뀐다. 경로가 파일처럼 생겼으면 (`/`\로 끝나지 않으면)</span>
 <span class="sd">                파일명 부분을 없앤다.</span>
 <span class="sd">            :param base: 상대 탐색 경로를 절대 경로로 바꾸는 데 쓰는 경로.</span>
-<span class="sd">                기본은 :attr:`base` 값인데, 그 기본값은 ``os.getcwd()``.</span>
-<span class="sd">            :param index: 탐색 경로 리스트 내 위치. 기본은 마지막 색인</span>
+<span class="sd">                기본은 :attr:`base` 속성 값인데, 그 기본값은 ``os.getcwd()``.</span>
+<span class="sd">            :param index: 탐색 경로 목록 내 위치. 기본은 마지막 색인 위치</span>
 <span class="sd">                (리스트에 덧붙이기).</span>
 
 <span class="sd">            `base` 매개변수는 파이썬 모듈 내지 패키지와 함께 설치된</span>
@@ -2353,8 +2353,8 @@
 <div class="viewcode-block" id="ResourceManager.lookup"><a class="viewcode-back" href="../api.html#bottle.ResourceManager.lookup">[docs]</a>    <span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; 자원을 탐색해서 파일 절대 경로를 반환. 없으면 `None` 반환.</span>
 
-<span class="sd">            :attr:`path` 목록을 차례로 탐색한다. 처음 걸린 걸 반환한다.</span>
-<span class="sd">            심볼릭 링크를 따라간다. 결과를 캐싱 해서 이후 검색 속도를</span>
+<span class="sd">            :attr:`path` 목록을 차례로 탐색한다. 먼저 걸린 경로를 반환한다.</span>
+<span class="sd">            심볼릭 링크를 따라간다. 결과를 캐싱해서 이후 검색 속도를</span>
 <span class="sd">            높인다. &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="ow">or</span> <span class="n">DEBUG</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
@@ -2384,7 +2384,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="c1">#: 클라이언트가 보낸 그대로의 파일 이름 (안전하지 않은 문자 있을 수 있음)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="c1">#: 추가 헤더들(예: content-type) 있는 :class:`HeaderDict`</span>
+        <span class="c1">#: 추가 헤더들(예: content-type)이 있는 :class:`HeaderDict`</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">HeaderDict</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span> <span class="k">if</span> <span class="n">headers</span> <span class="k">else</span> <span class="n">HeaderDict</span><span class="p">()</span>
 
     <span class="n">content_type</span> <span class="o">=</span> <span class="n">HeaderProperty</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
@@ -2575,7 +2575,7 @@
     <span class="k">return</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="parse_date"><a class="viewcode-back" href="../api.html#bottle.parse_date">[docs]</a><span class="k">def</span> <span class="nf">parse_date</span><span class="p">(</span><span class="n">ims</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; rfc1123, rfc850, asctime 형식 타임스탬프 파싱 해서 UTC 에포크 시간 반환. &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; rfc1123, rfc850, asctime 형식 타임스탬프를 파싱해서 UTC 에포크 시간 반환. &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ts</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">parsedate_tz</span><span class="p">(</span><span class="n">ims</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">ts</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,))</span> <span class="o">-</span> <span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">timezone</span>
@@ -2583,7 +2583,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="parse_auth"><a class="viewcode-back" href="../api.html#bottle.parse_auth">[docs]</a><span class="k">def</span> <span class="nf">parse_auth</span><span class="p">(</span><span class="n">header</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; rfc2617 HTTP 인증 헤더 문자열(basic) 파싱 해서 (user,pass) 튜플 또는 None 반환.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; rfc2617 HTTP 인증 헤더 문자열(basic)을 파싱해서 (user,pass) 튜플 또는 None 반환.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">method</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;basic&#39;</span><span class="p">:</span>
@@ -2628,14 +2628,14 @@
 
 
 <div class="viewcode-block" id="cookie_encode"><a class="viewcode-back" href="../api.html#bottle.cookie_encode">[docs]</a><span class="k">def</span> <span class="nf">cookie_encode</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; pickle 가능 객체 인코딩 및 서명. (바이트)열 반환. &#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; pickle 가능 객체를 인코딩 및 서명. (바이트)열 반환. &#39;&#39;&#39;</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
     <span class="n">sig</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">tob</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">msg</span><span class="p">,</span> <span class="n">digestmod</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">tob</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">sig</span> <span class="o">+</span> <span class="n">tob</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">msg</span></div>
 
 
 <div class="viewcode-block" id="cookie_decode"><a class="viewcode-back" href="../api.html#bottle.cookie_decode">[docs]</a><span class="k">def</span> <span class="nf">cookie_decode</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; 인코딩 된 문자열 검사 및 디코딩. 객체 또는 None 반환.&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; 인코딩된 문자열을 검사 및 디코딩. 객체 또는 None 반환.&#39;&#39;&#39;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">tob</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cookie_is_encoded</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="n">sig</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">tob</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
@@ -2645,7 +2645,7 @@
 
 
 <div class="viewcode-block" id="cookie_is_encoded"><a class="viewcode-back" href="../api.html#bottle.cookie_is_encoded">[docs]</a><span class="k">def</span> <span class="nf">cookie_is_encoded</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; 인자가 인코딩 된 쿠키처럼 보이면 True 반환.&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; 인자가 인코딩된 쿠키처럼 보이면 True 반환.&#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">tob</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">tob</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span></div>
 
 
@@ -2664,7 +2664,7 @@
 <div class="viewcode-block" id="yieldroutes"><a class="viewcode-back" href="../api.html#bottle.yieldroutes">[docs]</a><span class="k">def</span> <span class="nf">yieldroutes</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; func 매개변수의 시그너처(이름, 인자)에 맞는 라우트를 내놓는</span>
 <span class="sd">    제너레이터 반환. 함수가 선택적 키워드 인자를 받는 경우 여러 라우트를</span>
-<span class="sd">    내놓을 수도 있다. 예를 보면 출력을 이해하기 쉽다. ::</span>
+<span class="sd">    내놓을 수도 있다. 출력 예를 보자. ::</span>
 
 <span class="sd">        a()         -&gt; &#39;/a&#39;</span>
 <span class="sd">        b(x, y)     -&gt; &#39;/b/&lt;x&gt;/&lt;y&gt;&#39;</span>
@@ -2682,12 +2682,12 @@
 
 
 <div class="viewcode-block" id="path_shift"><a class="viewcode-back" href="../api.html#bottle.path_shift">[docs]</a><span class="k">def</span> <span class="nf">path_shift</span><span class="p">(</span><span class="n">script_name</span><span class="p">,</span> <span class="n">path_info</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; PATH_INFO에서 SCRIPT_NAME으로 또는 반대로 경로 조각들을 이동.</span>
+    <span class="sd">&#39;&#39;&#39; PATH_INFO에서 SCRIPT_NAME으로 또는 반대로 경로 분절들을 이동.</span>
 
 <span class="sd">        :return: 수정된 경로들.</span>
 <span class="sd">        :param script_name: SCRIPT_NAME 경로.</span>
 <span class="sd">        :param path_info: PATH_INFO 경로.</span>
-<span class="sd">        :param shift: 옮길 경로 조각 수. 음수로 해서 이동 방향을</span>
+<span class="sd">        :param shift: 옮길 경로 분절 수. 음수로 해서 이동 방향을</span>
 <span class="sd">          바꿀 수도 있다. (기본값: 1)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">shift</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">script_name</span><span class="p">,</span> <span class="n">path_info</span>
@@ -3050,14 +3050,14 @@
 
 
 <div class="viewcode-block" id="load"><a class="viewcode-back" href="../api.html#bottle.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">namespace</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; 모듈을 임포트 하거나 모듈에서 객체 가져오기.</span>
+    <span class="sd">&quot;&quot;&quot; 모듈을 임포트하거나 모듈에서 객체 가져오기.</span>
 
 <span class="sd">        * ``package.module``: `module`\을 모듈 객체로 반환.</span>
 <span class="sd">        * ``pack.mod:name``: `pack.mod`\의 모듈 변수 `name` 반환.</span>
 <span class="sd">        * ``pack.mod:func()``:`pack.mod.func()` 호출하고 결과 반환.</span>
 
 <span class="sd">        마지막 형식은 함수 호출뿐 아니라 임의 타입의 식도 받는다.</span>
-<span class="sd">        이 함수에 전달한 키워드 인자들이 지역 변수로 사용 가능해진다.</span>
+<span class="sd">        이 함수에 전달한 키워드 인자들을 지역 변수로 사용할 수 있게 된다.</span>
 <span class="sd">        예: ``import_string(&#39;re:compile(x)&#39;, x=&#39;[a-z]&#39;)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">module</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">target</span> <span class="k">else</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -3071,7 +3071,7 @@
 
 <div class="viewcode-block" id="load_app"><a class="viewcode-back" href="../api.html#bottle.load_app">[docs]</a><span class="k">def</span> <span class="nf">load_app</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; 모듈에서 보틀 응용을 적재하면서 임포트가 현재 기본 응용에 영향을</span>
-<span class="sd">        주지 않도록 하고, 별도의 응용 객체를 반환한다. target 매개변수에</span>
+<span class="sd">        주지 않도록 하고, 응용 객체를 따로 반환한다. target 매개변수에</span>
 <span class="sd">        대해선 :func:`load` 참고. &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">NORUN</span><span class="p">;</span> <span class="n">NORUN</span><span class="p">,</span> <span class="n">nr_old</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">NORUN</span>
     <span class="k">try</span><span class="p">:</span>
@@ -3086,18 +3086,18 @@
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../api.html#bottle.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="s1">&#39;wsgiref&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span>
         <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plugins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">debug</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; 서버 인스턴스 시작. 서버가 종료할 때까지 이 메소드는 블록 된다.</span>
+    <span class="sd">&quot;&quot;&quot; 서버 인스턴스 시작. 서버가 종료할 때까지 이 메소드는 블록된다.</span>
 
 <span class="sd">        :param app: WSGI 응용 또는 :func:`load_app`\에서 지원하는</span>
 <span class="sd">               대상 문자열. (기본값: :func:`default_app`)</span>
 <span class="sd">        :param server: 사용할 서버 어댑터. 유효한 이름은</span>
 <span class="sd">               :data:`server_names`\의 키 참고. :class:`ServerAdapter`</span>
 <span class="sd">               서브클래스 전달해도 됨. (기본값: `wsgiref`)</span>
-<span class="sd">        :param host: 바인드 할 서버 주소. 외부 인터페이스 포함 모든</span>
-<span class="sd">               인터페이스에 리슨 하려면 ``0.0.0.0``. (기본값: 127.0.0.1)</span>
-<span class="sd">        :param port: 바인드 할 서버 포트. 1024 아래 값에는 루트 권한</span>
+<span class="sd">        :param host: 바인드할 서버 주소. 외부 인터페이스 포함 모든</span>
+<span class="sd">               인터페이스에 리슨하려면 ``0.0.0.0``. (기본값: 127.0.0.1)</span>
+<span class="sd">        :param port: 바인드할 서버 포트. 1024 아래 값에는 루트 권한</span>
 <span class="sd">               필요. (기본값: 8080)</span>
-<span class="sd">        :param reloader: 자동 재적재 서버 시작? (기본값: False)</span>
+<span class="sd">        :param reloader: 자동 재적재 모드로 서버 시작? (기본값: False)</span>
 <span class="sd">        :param interval: 자동 재적재 확인 간격. 초 단위. (기본값: 1)</span>
 <span class="sd">        :param quiet: stdout 및 stderr 출력 끄기? (기본값: False)</span>
 <span class="sd">        :param options: 서버 어댑터로 전달할 옵션들.</span>
@@ -3242,7 +3242,7 @@
 <span class="sd">        설정돼 있다고 상정할 수 있다. 둘 모두 문자열이다.</span>
 <span class="sd">        lookup, encoding, settings 매개변수는 인스턴스 변수로 저장된다.</span>
 <span class="sd">        lookup 매개변수는 디렉터리 경로들을 담은 리스트다.</span>
-<span class="sd">        encoding 매개변수는 바이트열이나 파일을 디코딩 하는 데 쓰게 된다.</span>
+<span class="sd">        encoding 매개변수는 바이트열이나 파일을 디코딩하는 데 쓰게 된다.</span>
 <span class="sd">        settings 매개변수는 엔진별 설정들의 딕셔너리다.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -3263,7 +3263,7 @@
 <div class="viewcode-block" id="BaseTemplate.search"><a class="viewcode-back" href="../api.html#bottle.BaseTemplate.search">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lookup</span><span class="o">=</span><span class="p">[]):</span>
         <span class="sd">&quot;&quot;&quot; lookup에 지정된 모든 디렉터리에서 이름을 탐색.</span>
-<span class="sd">        일단 확장자 없이, 다음엔 많이 쓰는 확장자들로. 처음 걸린 것 반환. &quot;&quot;&quot;</span>
+<span class="sd">        일단 확장자 없이, 다음엔 많이 쓰는 확장자들로. 먼저 걸린 것 반환. &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">lookup</span><span class="p">:</span>
             <span class="n">depr</span><span class="p">(</span><span class="s1">&#39;The template lookup path list should not be empty.&#39;</span><span class="p">)</span> <span class="c1">#0.12</span>
             <span class="n">lookup</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">]</span>
@@ -3298,8 +3298,8 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="BaseTemplate.render"><a class="viewcode-back" href="../api.html#bottle.BaseTemplate.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 지정한 지역 변수들로 템플릿을 렌더링 해서 바이트열 또는</span>
-<span class="sd">        유니코드열을 하나 반환한다. 바이트열인 경우 인코딩이</span>
+        <span class="sd">&quot;&quot;&quot; 지정한 지역 변수들로 템플릿을 렌더링해서 바이트열 또는</span>
+<span class="sd">        유니코드열 하나를 반환한다. 바이트열인 경우 인코딩이</span>
 <span class="sd">        self.encoding과 일치해야 한다. 이 메소드는 스레드에 안전해야</span>
 <span class="sd">        한다. 지역 변수들이 딕셔너리로(args) 제공될 수도 있고 바로</span>
 <span class="sd">        키워드로(kwargs) 제공될 수도 있다.</span>
@@ -3438,7 +3438,7 @@
         <span class="k">return</span> <span class="n">env</span>
 
 <div class="viewcode-block" id="SimpleTemplate.render"><a class="viewcode-back" href="../stpl.html#bottle.SimpleTemplate.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 키워드 인자들을 지역 변수로 해서 템플릿을 렌더링 한다. &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; 키워드 인자들을 지역 변수로 해서 템플릿을 렌더링한다. &quot;&quot;&quot;</span>
         <span class="n">env</span> <span class="o">=</span> <span class="p">{};</span> <span class="n">stdout</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">dictarg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span> <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dictarg</span><span class="p">)</span>
         <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
@@ -3632,8 +3632,8 @@
 
 <div class="viewcode-block" id="template"><a class="viewcode-back" href="../api.html#bottle.template">[docs]</a><span class="k">def</span> <span class="nf">template</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    렌더링 된 템플릿을 문자열 이터레이터로 얻기.</span>
-<span class="sd">    첫 번째 매개변수에 이름, 파일 이름, 템플릿 문자열을 쓸 수 있다.</span>
+<span class="sd">    렌더링된 템플릿을 문자열 이터레이터로 얻기.</span>
+<span class="sd">    첫 번째 매개변수로 이름이나 파일 이름, 템플릿 문자열을 쓸 수 있다.</span>
 <span class="sd">    템플릿 렌더링 인자를 딕셔너리로 또는 (키워드 인자로) 직접</span>
 <span class="sd">    줄 수 있다.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -3703,7 +3703,7 @@
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">NORUN</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># If set, run() does nothing. Used by load_app()</span>
 
-<span class="c1">#: HTTP 상태 코드(예: 404)를 문구(예: &#39;Not Found&#39;)로 매핑 하는 dict</span>
+<span class="c1">#: HTTP 상태 코드(예: 404)를 문구(예: &#39;Not Found&#39;)로 매핑하는 dict</span>
 <span class="n">HTTP_CODES</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">responses</span>
 <span class="n">HTTP_CODES</span><span class="p">[</span><span class="mi">418</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a teapot&quot;</span> <span class="c1"># RFC 2324</span>
 <span class="n">HTTP_CODES</span><span class="p">[</span><span class="mi">422</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Unprocessable Entity&quot;</span> <span class="c1"># RFC 4918</span>
@@ -3815,16 +3815,16 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">따라하기</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../configuration.html">설정 (작업 중)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">설정 (초안)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../routing.html">요청 라우팅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../stpl.html">SimpleTemplate 엔진</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API 참조</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_app.html">따라하기: 할일 목록 응용</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../async.html">비동기 응용 입문</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../recipes.html">간단 해법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recipes.html">각종 해결법</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">자주 묻는 질문</a></li>
 </ul>
 <ul>
@@ -3834,7 +3834,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../plugindev.html">플러그인 개발 안내서</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">사용 가능한 플러그인 목록</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">사용 가능한 플러그인들</a></li>
 </ul>
 
 <div class="relations">
@@ -3869,10 +3869,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2020, Marcel Hellkamp.
+      &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
