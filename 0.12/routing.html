@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>요청 라우팅 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -32,10 +33,10 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>요청 라우팅<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>보틀에선 강력한 라우팅 엔진을 이용해 각 요청에 맞는 콜백을 찾는다. <a class="reference internal" href="tutorial.html#tutorial-routing"><span class="std std-ref">따라하기</span></a>에서 기본 사용법을 볼 수 있다. 이 문서에선 고급 기법과 규칙 동작 방식을 자세히 다룬다.</p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>규칙 문법<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">Router</span></code>에서는 두 가지 기본 라우트 종류, 즉 <strong>정적 라우트</strong>(예: <code class="docutils literal notranslate"><span class="pre">/contact</span></code>)와 <strong>동적 라우트</strong>(예: <code class="docutils literal notranslate"><span class="pre">/hello/&lt;name&gt;</span></code>)를 구별한다. 와일드카드를 하나 이상 가지고 있는 라우트를 동적이라고 한다. 그 외 라우트는 정적이다.</p>
 <div class="versionchanged">
@@ -70,8 +71,8 @@
 </tbody>
 </table>
 <p>필터를 쓰면 세밀한 동작 방식을 다양하게 바꿀 수 있다. 다음 절에서 설명한다.</p>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>와일드카드 필터<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.10.</span></p>
@@ -108,8 +109,8 @@
         <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>구식 문법<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.10.</span></p>
@@ -141,8 +142,8 @@
 </tbody>
 </table>
 <p>향후 프로젝트에선 되도록 이전 문법을 피하자. 현재는 폐기 예정이 아니지만 언젠간 폐기될 것이다.</p>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h2>명시적 라우팅 설정<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>라우터 데코레이터를 메소드 형태로 직접 호출할 수도 있다. 이렇게 하면 복잡한 구성을 위한 유연한 처리가 가능하며, 라우팅 설정이 이뤄지는 시점과 방법을 완전히 제어할 수 있다.</p>
 <p>다음은 기본 보틀 응용에 대한 명시적인 라우팅 설정 예시다.</p>
@@ -160,8 +161,8 @@
 <span class="n">setup_routing</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -245,7 +246,7 @@
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

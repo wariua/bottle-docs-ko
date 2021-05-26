@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Bottle-Werkzeug &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -32,16 +33,16 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="bottle-werkzeug">
+  <section id="bottle-werkzeug">
 <h1>Bottle-Werkzeug<a class="headerlink" href="#bottle-werkzeug" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="http://werkzeug.pocoo.org/">Werkzeug</a> is a powerful WSGI utility library for
 Python. It includes an interactive debugger and feature-packed request and response
 objects.</p>
-<p>This plugin integrates <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> and
-<a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a> as an alternative to the built-in
-implementations, adds support for <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v1.0.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and replaces the
+<p>This plugin integrates <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> and
+<a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a> as an alternative to the built-in
+implementations, adds support for <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v2.0.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and replaces the
 default error page with an interactive debugger.</p>
-<div class="section" id="installation">
+<section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install with one of the following commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install bottle-werkzeug
@@ -54,12 +55,12 @@ $ cd bottle/plugins/werkzeug
 $ python setup.py install
 </pre></div>
 </div>
-</div>
-<div class="section" id="usage">
+</section>
+<section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>Once installed to an application, this plugin adds support for
-<a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a>, all kinds of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v1.0.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and
-provides a thread-local instance of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> that is
+<a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/wrappers/#werkzeug.wrappers.Response" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Response</span></code></a>, all kinds of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/exceptions/#module-werkzeug.exceptions" title="(in Werkzeug v2.0.x)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">werkzeug.exceptions</span></code></a> and
+provides a thread-local instance of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a> that is
 updated with each request. The plugin instance itself doubles as a werkzeug
 module object, so you don’t have to import werkzeug in your application. Here
 is an example:</p>
@@ -82,25 +83,25 @@ is an example:</p>
         <span class="k">raise</span> <span class="n">werkzeug</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">NotAcceptable</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-the-debugger">
+</section>
+<section id="using-the-debugger">
 <h2>Using the Debugger<a class="headerlink" href="#using-the-debugger" title="Permalink to this headline">¶</a></h2>
 <p>This plugin replaces the default error page with an advanced debugger. If you
 have the <cite>evalex</cite> feature enabled, you will get an interactive console that
 allows you to inspect the error context in the browser. Please read
 <a class="reference external" href="werkzeug:debug">Debugging Applications with werkzeug</a> before you enable this
 feature.</p>
-</div>
-<div class="section" id="configuration">
+</section>
+<section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>The following configuration options exist for the plugin class:</p>
 <ul class="simple">
 <li><p><strong>evalex</strong>: Enable the exception evaluation feature (interactive debugging). This requires a non-forking server and is a security risk. Please read <a class="reference external" href="werkzeug:debug">Debugging Applications with werkzeug</a>. (default: False)</p></li>
-<li><p><strong>request_class</strong>: Defaults to <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a></p></li>
-<li><p><strong>debugger_class</strong>: Defaults to a subclass of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a> which obeys the <code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.DEBUG</span></code> setting.</p></li>
+<li><p><strong>request_class</strong>: Defaults to <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/wrappers/#werkzeug.wrappers.Request" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.wrappers.Request</span></code></a></p></li>
+<li><p><strong>debugger_class</strong>: Defaults to a subclass of <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a> which obeys the <code class="xref py py-data docutils literal notranslate"><span class="pre">bottle.DEBUG</span></code> setting.</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -194,7 +195,7 @@ feature.</p>
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>배치 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -30,14 +31,14 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="tutorial-deployment">
+  <section id="tutorial-deployment">
 <span id="id1"></span><h1>배치<a class="headerlink" href="#tutorial-deployment" title="Permalink to this headline">¶</a></h1>
 <p>아무 인자 없이 보틀의 <code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code> 함수를 호출하면 8080 포트로 로컬 개발 서버를 띄운다. 같은 호스트에 있으면 <a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a>을 통해 응용에 접근해서 테스트할 수 있다.</p>
 <p>바깥 세상에서도 응용을 쓸 수 있게 하려면 서버가 리슨할 인터페이스 IP를 지정하거나 (예: <code class="docutils literal notranslate"><span class="pre">run(host='192.168.0.1')</span></code>) 서버가 모든 인터페이스에 리슨하게 하면 (예: <code class="docutils literal notranslate"><span class="pre">run(host='0.0.0.0')</span></code>) 된다. 리슨할 포트도 비슷하게 바꿀 수 있는데, 1024 아래 포트를 쓰려면 root 내지 관리자 권한이 필요하다. 80 포트가 HTTP 서버 표준 포트다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span> <span class="c1"># 모든 인터페이스에서 HTTP 요청 받기</span>
 </pre></div>
 </div>
-<div class="section" id="id2">
+<section id="id2">
 <h2>서버 선택지<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>기본 내장 서버는 <a class="reference external" href="http://docs.python.org/library/wsgiref.html#module-wsgiref.simple_server">wsgiref WSGI 서버</a>를 기반으로 한 것이다. 스레드 안 쓰는 이 HTTP 서버가 개발 및 운용 초기에는 충분할 수 있지만 서버 부하가 커지면 성능 병목이 될 수 있다. 그 병목을 없앨 수 있는 방법이 세 가지 있다.</p>
 <ul class="simple">
@@ -48,8 +49,8 @@
 <p><strong>다중 스레드</strong> 서버는 ‘전통적’ 방법이다. 매우 견고하고 충분히 빠르며 관리하기 쉽다. 단점으로는, 동시에 처리할 수 있는 연결 수가 제한돼 있고 “전역 인터프리터 락(GIL)” 때문에 CPU 코어를 한 개만 활용한다. 대부분 응용에선 어차피 네트워크 IO에 대기하며 대부분의 시간을 보내기 때문에 문제가 되지 않지만 CPU 집약적인 작업(예: 이미지 처리)은 속도가 떨어질 수 있다.</p>
 <p><strong>비동기</strong> 서버는 아주 빠르고 실질적으로 무한대의 동시 연결을 처리할 수 있으며 관리하기 쉽지만 좀 까다로울 수 있다. 그 잠재력을 완전히 이용하려면 그에 맞도록 응용을 설계해야 하며 해당 서버의 개념들을 이해하고 있어야 한다.</p>
 <p><strong>다중 프로세스</strong>(포크) 서버는 GIL의 제약을 받지 않아서 CPU 코어를 여러 개 활용할 수 있지만 그 때문에 서버 인스턴스 간 통신 비용이 커진다. 프로세스들 사이에 상태를 공유하려면 데이터베이스나 외부 메시지 큐가 필요하다. 아니면 아예 공유하는 상태가 필요치 않도록 응용을 설계해야 한다. 구성하는 것 역시 좀 복잡하지만 잘 작성된 튜토리얼들이 있다.</p>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>서버 백엔드 바꾸기<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>성능을 높이는 가장 쉬운 방법은 <a class="reference external" href="http://pythonpaste.org/">paste</a>나 <a class="reference external" href="http://www.cherrypy.org/">cherrypy</a> 같은 다중 스레드 서버 라이브러리를 설치해서 단일 스레드 서버 대신 쓰게 하는 것이다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;paste&#39;</span><span class="p">)</span>
@@ -150,7 +151,7 @@
 <span class="n">httpserver</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="apache-mod-wsgi">
+<section id="apache-mod-wsgi">
 <h3>Apache mod_wsgi<a class="headerlink" href="#apache-mod-wsgi" title="Permalink to this headline">¶</a></h3>
 <p>보틀 내에서 HTTP 서버를 돌리지 말고 <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a>를 쓰는 <a class="reference external" href="apache">Apache 서버</a>에 보틀 응용을 붙일 수도 있다.</p>
 <p><code class="docutils literal notranslate"><span class="pre">application</span></code> 객체를 제공하는 <code class="docutils literal notranslate"><span class="pre">app.wsgi</span></code> 파일만 만들어 주면 된다. mod_wsgi에서 그 객체를 써서 응용을 띄우는데 WSGI 호환 파이썬 콜러블이어야 한다.</p>
@@ -180,8 +181,8 @@
 <span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>구글 앱 엔진<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.9.</span></p>
@@ -204,24 +205,24 @@
   <span class="n">script</span><span class="p">:</span> <span class="n">myapp</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h3>로드 밸런서 (수동 구성)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>파이썬 프로세스 하나는 가용 CPU 코어가 몇 개든 한 번에 한 CPU만 활용할 수 있다. 이때 가능한 기법은 독립된 파이썬 프로세스들로 부하를 분산해서 CPU 코어를 모두 활용하는 것이다.</p>
 <p>보틀 응용 서버를 하나만 띄우는 게 아니라 사용 가능한 CPU 코어마다 로컬 포트를 다르게 해서 (localhost:8080, 8081, 8082, …) 한 인스턴스씩 실행한다. 원하는 대로 서버 어댑터를 고를 수 있고 비동기 어댑터도 쓸 수 있다. 다음으로 고성능 로드 밸런서가 역방향 프록시 역할을 하며 각 요청을 무작위 포트로 전달하고, 그래서 동작 중인 모든 백엔드로 부하를 분산시킨다. 이렇게 하면 모든 CPU 코어를 쓸 수 있고 심지어 여러 물리적 서버로 부하를 나눌 수도 있다.</p>
 <p>아주 빠른 로드 밸런서로 <a class="reference external" href="http://www.apsis.ch/pound">Pound</a>가 있지만 많이 쓰는 웹 서버 대부분에도 그런 일을 잘 해 주는 프록시 모듈이 있다.</p>
 <p>Pound 예시:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ListenHTTP</span>
-    <span class="n">Address</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+    <span class="n">Address</span> <span class="mf">0.0.0.0</span>
     <span class="n">Port</span>    <span class="mi">80</span>
 
     <span class="n">Service</span>
         <span class="n">BackEnd</span>
-            <span class="n">Address</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+            <span class="n">Address</span> <span class="mf">127.0.0.1</span>
             <span class="n">Port</span>    <span class="mi">8080</span>
         <span class="n">End</span>
         <span class="n">BackEnd</span>
-            <span class="n">Address</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+            <span class="n">Address</span> <span class="mf">127.0.0.1</span>
             <span class="n">Port</span>    <span class="mi">8081</span>
         <span class="n">End</span>
     <span class="n">End</span>
@@ -230,8 +231,8 @@
 </div>
 <p>Apache 예시:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Proxy</span> <span class="n">balancer</span><span class="p">:</span><span class="o">//</span><span class="n">mycluster</span><span class="o">&gt;</span>
-<span class="n">BalancerMember</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.50</span><span class="p">:</span><span class="mi">80</span>
-<span class="n">BalancerMember</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.51</span><span class="p">:</span><span class="mi">80</span>
+<span class="n">BalancerMember</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.50</span><span class="p">:</span><span class="mi">80</span>
+<span class="n">BalancerMember</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.51</span><span class="p">:</span><span class="mi">80</span>
 <span class="o">&lt;/</span><span class="n">Proxy</span><span class="o">&gt;</span>
 <span class="n">ProxyPass</span> <span class="o">/</span> <span class="n">balancer</span><span class="p">:</span><span class="o">//</span><span class="n">mycluster</span>
 </pre></div>
@@ -246,16 +247,16 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="cgi">
+</section>
+</section>
+<section id="cgi">
 <h2>옛 시절의 CGI<a class="headerlink" href="#cgi" title="Permalink to this headline">¶</a></h2>
 <p>CGI 서버는 요청마다 새 프로세스를 시작한다. 이로 인한 오버헤드가 크지만 때로는, 특히 저렴한 호스팅 환경에선 유일한 선택지일 수 있다. 서버 어댑터 <cite>cgi</cite>는 실제 CGI 서버를 띄우는 게 아니라 보틀 응용을 유효한 CGI 응용으로 바꿔 준다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;cgi&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -331,7 +332,7 @@
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

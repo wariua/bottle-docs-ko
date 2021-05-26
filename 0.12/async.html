@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>비동기 응용 입문 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -32,16 +33,16 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>비동기 응용 입문<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>비동기 설계 패턴은 <a class="reference external" href="http://www.python.org/dev/peps/pep-3333/">WSGI</a>의 동기적 성격과 잘 어울리지 않는다. 그래서 대부분의 비동기 프레임워크들(tornado, twisted, …)에선 비동기 기능을 드러내기 위한 특별한 API를 구현하고 있다. 보틀은 WSGI 프레임워크이고 WSGI의 동기적 성격을 공유하긴 하지만 정말 멋진 <a class="reference external" href="http://www.gevent.org/">gevent 프로젝트</a> 덕분에 보틀로도 비동기 응용을 작성하는 게 가능하다. 이 글에선 비동기식 WSGI로 보틀을 사용하는 방법을 다룬다.</p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>동기식 WSGI의 한계<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://www.python.org/dev/peps/pep-3333/">WSGI 명세 (pep 3333)</a>에서 규정하는 요청/응답 사이클을 간략하게 말하면 이렇다. 각 요청마다 응용 콜러블이 호출되고 그 콜러블은 바디 이터레이터를 반환해야 한다. 그러면 서버가 바디를 돌면서 각 덩어리를 소켓에 써넣는다. 바디 이터레이터가 끝나면 클라이언트 연결을 닫는다.</p>
 <p>간단명료하지만 문제가 있다. 이 모든 게 동기적으로 이뤄진다는 점이다. 응용에서 데이터를 기다려야 한다면 (IO, 소켓, 데이터베이스, …) 빈 문자열을 내놓거나 (바쁜 대기), 아니면 현재 스레드를 블록시켜야 한다. 두 해법 모두 처리 스레드를 점유하므로 새 요청에 답할 수 없게 된다. 그래서 스레드별로 동시에 한 요청만 처리할 수 있다.</p>
 <p>대부분 서버에서는 스레드의 비교적 높은 오버헤드를 피하기 위해 그 수를 제한한다. 20개나 그보다 적은 스레드로 이뤄진 풀을 많이 쓴다. 모든 스레드가 점유되면 새 연결은 모두 정지 상태가 되고, 밖에서 보기에 실질적으로 서버가 죽은 게 된다. 실시간 업데이트를 위해 오래 폴링하는 AJAX 요청을 써서 채팅을 구현하려 한다면 동시 연결 20개가 한계가 될 것이다. 꽤 소규모의 채팅이다.</p>
-</div>
-<div class="section" id="greenlet">
+</section>
+<section id="greenlet">
 <h2>해결사 Greenlet<a class="headerlink" href="#greenlet" title="Permalink to this headline">¶</a></h2>
 <p>대부분 서버에서는 스레드 간 전환과 새 스레드 생성의 높은 오버헤드 때문에 동시 스레드 수가 상당히 적도록 작업 스레드 풀 크기를 제한한다. 스레드가 프로세스(fork)에 비해 싸긴 하지만 새 연결마다 만들기엔 여전히 비용이 크다.</p>
 <p><a class="reference external" href="http://www.gevent.org/">gevent</a> 모듈은 거기에 <em>그린렛(greenlet)</em>을 추가한다. 그린렛은 전통적인 스레드와 비슷하게 동작하지만 생성 비용이 아주 작다. gevent 기반 서버에서는 거의 오버헤드 없이 (연결마다 하나씩) 그린렛 수천 개를 만들 수 있다. 그리고 개별 그린렛이 블록돼도 서버가 새 요청을 받는 데 아무 영향도 주지 않는다. 동시 연결 수에 실질적으로 제한이 없다.</p>
@@ -72,8 +73,8 @@ yield 해야 할 수도 있다. 더불어 많은 브라우저에선 URL당 동�
 1개로 제한돼 있다. 해당하는 경우 브라우저를 하나 더 띄우거나
 벤치마크 도구(예: <cite>ab</cite>, <cite>httperf</cite>)를 써서 성능을 측정할 수 있다.</p>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>이벤트 콜백<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>비동기 프레임워크(tornado, twisted, node.js 등)에서 아주 흔한 설계 패턴은 논블로킹 API를 쓰면서 비동기 이벤트에 콜백을 결속시키는 것이다. 명시적으로 닫기 전까진 소켓 객체를 계속 열어 두기 때문에 콜백에서 이후에 소켓에 쓰기를 할 수 있다. 다음은 <a class="reference external" href="http://www.tornadoweb.org/documentation#non-blocking-asynchronous-requests">tornado 라이브러리</a>를 기반으로 한 예이다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MainHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
@@ -98,8 +99,8 @@ yield 해야 할 수도 있다. 더불어 많은 브라우저에선 URL당 동�
 </pre></div>
 </div>
 <p>서버 관점에서 이 큐 객체는 이터러블이다. 비어 있으면 블록하고 <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>을 만나면 바로 멈춘다. 이는 WSGI을 준수한다. 응용에서 보기에 그 큐 객체는 논블로킹 소켓처럼 동작한다. 언제든 거기에 쓰기를 할 수 있고 이리저리 전달할 수 있으며, 심지어 거기에 비동기적으로 쓰기를 하는 새 (유사) 스레드를 시작할 수도 있다. 대부분의 경우 이런 식으로 긴 폴링을 구현한다.</p>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h2>마지막으로: 웹소켓<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>저수준 세부 사항에 대해선 잠시 잊고서 웹소켓에 대해 얘기해 보자. 이 글을 읽고 있다면 아마 웹소켓이 뭔지 알고 있을 텐데, 브라우저(클라이언트)와 웹 응용(서버) 사이의 양방향 통신 채널이다.</p>
 <p>고맙게도 <a class="reference external" href="http://pypi.python.org/pypi/gevent-websocket/">gevent-websocket</a> 패키지가 어려운 일을 다 해 준다. 다음은 메시지를 받아서 그냥 클라이언트로 돌려 보내는 단순한 웹소켓 종점이다.</p>
@@ -144,8 +145,8 @@ yield 해야 할 수도 있다. 더불어 많은 브라우저에선 URL당 동�
 &lt;/html&gt;
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -229,7 +230,7 @@ yield 해야 할 수도 있다. 더불어 많은 브라우저에선 URL당 동�
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

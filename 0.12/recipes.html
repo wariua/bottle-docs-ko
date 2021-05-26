@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>각종 해결법 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -32,10 +33,10 @@
 
           <div class="body" role="main">
             
-  <span class="target" id="module-bottle"></span><div class="section" id="id2">
+  <span class="target" id="module-bottle"></span><section id="id2">
 <h1>각종 해결법<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
 <p>다음은 흔한 사용 방식들을 위한 코드 조각과 예시 모음이다.</p>
-<div class="section" id="id3">
+<section id="id3">
 <h2>세션 추적하기<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>세션 내장 지원이 없다. (마이크로 프레임워크에선) 그걸 <em>제대로</em> 할 수 있는 방법이 없기 때문이다. 요구 사항과 환경에 따라서 <a class="reference external" href="http://beaker.groovie.org/">beaker</a> 미들웨어를 적당한 백엔드로 사용할 수도 있고 직접 구현할 수도 있다. 다음은 파일 기반 백엔드의 beaker 세션 예시다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bottle</span>
@@ -59,8 +60,8 @@
 <span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>폼나게 디버깅하기: 디버깅용 미들웨어<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>보틀에선 WSGI 서버가 죽는 걸 방지하기 위해 앱 코드에서 던진 모든 예외를 잡는다. 내장 <a class="reference internal" href="api.html#bottle.debug" title="bottle.debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">debug()</span></code></a> 모드로는 충분치 않아서 예외가 디버깅용 미들웨어로 전파되기를 바란다면 그 동작을 끌 수 있다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bottle</span>
@@ -71,9 +72,9 @@
 </pre></div>
 </div>
 <p>그러면 보틀은 자체 예외(<a class="reference internal" href="api.html#bottle.HTTPError" title="bottle.HTTPError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPError</span></code></a>, <a class="reference internal" href="api.html#bottle.HTTPResponse" title="bottle.HTTPResponse"><code class="xref py py-exc docutils literal notranslate"><span class="pre">HTTPResponse</span></code></a>, <a class="reference internal" href="api.html#bottle.BottleException" title="bottle.BottleException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BottleException</span></code></a>)만 잡고 미들웨어에서 나머지를 처리할 수 있다.</p>
-<p><a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>와 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a> 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. <a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>에선 <a class="reference external" href="https://werkzeug.palletsprojects.com/en/1.0.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v1.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a>를, <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>에선 <code class="xref py py-class docutils literal notranslate"><span class="pre">paste.evalexception.middleware.EvalException</span></code>를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 <strong>운용 환경에선 이용하지 말아야 한다</strong>.</p>
-</div>
-<div class="section" id="id5">
+<p><a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>와 <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a> 라이브러리에는 아주 강력한 디버깅용 WSGI 미들웨어가 딸려 있다. <a class="reference external" href="http://werkzeug.pocoo.org/documentation/dev/debug.html">werkzeug</a>에선 <a class="reference external" href="https://werkzeug.palletsprojects.com/en/2.0.x/debug/#werkzeug.debug.DebuggedApplication" title="(in Werkzeug v2.0.x)"><code class="xref py py-class docutils literal notranslate"><span class="pre">werkzeug.debug.DebuggedApplication</span></code></a>를, <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a>에선 <code class="xref py py-class docutils literal notranslate"><span class="pre">paste.evalexception.middleware.EvalException</span></code>를 보라. 둘 모두 스택 검사를 지원할 뿐 아니라 그 스택 문맥에서 파이썬 코드를 실행할 수도 있다. 따라서 <strong>운용 환경에선 이용하지 말아야 한다</strong>.</p>
+</section>
+<section id="id5">
 <h2>보틀 응용 유닛 테스트<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>일반적으로 WSGI 환경을 돌리지 않고 웹 응용에 정의된 메소드에 대해 유닛 테스트를 수행한다.</p>
 <p><a class="reference external" href="http://readthedocs.org/docs/nose">Nose</a>를 쓰는 간단한 예:</p>
@@ -95,8 +96,8 @@
 </pre></div>
 </div>
 <p>이 예에서 보틀 route() 메소드는 절대 실행되지 않는다. index()만 테스트 한다.</p>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h2>보틀 응용 기능 테스트<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>동작 중인 WSGI 서버가 있으면 어떤 HTTP 기반 테스트 시스템이든 함께 쓸 수 있지만 어떤 테스팅 프레임워크는 WSGI와 더 밀접하게 동작해서 통제된 환경에서 WSGI 응용을 호출할 수 있고 트레이스백도 있으며 디버깅 도구들을 모두 이용 가능하다. <a class="reference external" href="http://www.wsgi.org/en/latest/testing.html">WSGI 테스팅 도구들</a>이 좋은 출발점이다.</p>
 <p><a class="reference external" href="http://webtest.pythonpaste.org/">WebTest</a>와 <a class="reference external" href="http://readthedocs.org/docs/nose">Nose</a>를 쓰는 예:</p>
@@ -117,8 +118,8 @@
     <span class="k">assert</span> <span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;401 Unauthorized&#39;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h2>다른 WSGI 앱 내장하기<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>권장하는 방식은 아니지만 (보틀 앞에 미들웨어를 쓰는 방식이 좋다.) 보틀 앱 안에서 다른 WSGI 응용을 호출해서 보틀이 유사 미들웨어가 되게 할 수 있다. 다음이 예이다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">route</span>
@@ -137,8 +138,8 @@
 </pre></div>
 </div>
 <p>다시 말하지만 하위 프로젝트를 구현하는 권장하는 방식이 아니다. 여러 사람들이 요청해서, 그리고 보틀이 어떻게 WSGI로 연결되는지 보여 주기 위해 있는 예시일 뿐이다.</p>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h2>마지막 슬래시 무시하기<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>보틀에서 <code class="docutils literal notranslate"><span class="pre">/example</span></code>과 <code class="docutils literal notranslate"><span class="pre">/example/</span></code>은 서로 다른 라우트다. <a class="footnote-reference brackets" href="#id11" id="id10">1</a>. 두 URL을 같은 걸로 취급하려면 <code class="docutils literal notranslate"><span class="pre">&#64;route</span></code> 데코레이터를 두 개 붙여 주면 된다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@route</span><span class="p">(</span><span class="s1">&#39;/test&#39;</span><span class="p">)</span>
@@ -165,8 +166,8 @@
 <dd><p>왜냐면 다르기 때문이다. &lt;<a class="reference external" href="http://www.ietf.org/rfc/rfc3986.txt">http://www.ietf.org/rfc/rfc3986.txt</a>&gt; 참고.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="id12">
+</section>
+<section id="id12">
 <h2>킵얼라이브 요청<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -190,8 +191,8 @@
 </pre></div>
 </div>
 <p>브라우저로 <code class="docutils literal notranslate"><span class="pre">http://localhost:8080/stream</span></code> 주소를 열면 ‘START’, ‘MIDDLE’, ‘END’가 (8초 후에 한번에 다 나오는 게 아니라) 하나씩 나오는 걸 볼 수 있다.</p>
-</div>
-<div class="section" id="gzip">
+</section>
+<section id="gzip">
 <h2>보틀에서 Gzip 압축하기<a class="headerlink" href="#gzip" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -211,8 +212,8 @@
 <li><p>실시간으로 압축하는 것보다 디스크 탐색 시간이 더 길 수 있으므로 작은 파일은 캐싱하지 않아야 한다.</p></li>
 </ul>
 <p>이런 요건들 때문에 보틀 프로젝트에서 권하는 건 보틀이 도는 WSGI 서버에서 Gzip 압축을 다루는 게 가장 좋다는 것이다. <a class="reference external" href="http://www.cherrypy.org">cherrypy</a> 같은 WSGI 서버에서 이를 위해 쓸 수 있는 <a class="reference external" href="http://www.cherrypy.org/wiki/GzipFilter">GzipFilter</a> 미들웨어를 제공한다.</p>
-</div>
-<div class="section" id="id13">
+</section>
+<section id="id13">
 <h2>훅 플러그인 쓰기<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <p>예를 들어 모든 URL에서 반환하는 컨텐츠에 대해 교차 출처 리소스
 공유(CORS)를 허용하고 싶다면 훅 데코레이터를 써서 콜백 함수를
@@ -234,8 +235,8 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">before_request</span></code>를 써서 함수가 호출되기 전에 어떤 동작을
 취할 수도 있다.</p>
-</div>
-<div class="section" id="id14">
+</section>
+<section id="id14">
 <h2>Heroku에서 보틀 쓰기<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p>인기 있는 클라우드 응용 플랫폼인 <a class="reference external" href="http://heroku.com">Heroku</a>에서 이제 그 인프라
 위에서 파이썬 응용을 돌리는 걸 지원한다.</p>
@@ -255,8 +256,8 @@
 </div>
 <p>Heroku의 앱 스택에선 <cite>os.environ</cite> 딕셔너리를 이용해 응용에서
 열어야 하는 포트를 전달한다.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -346,7 +347,7 @@
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

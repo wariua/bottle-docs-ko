@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Bottle-SQLite &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -32,7 +33,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="bottle-sqlite">
+  <section id="bottle-sqlite">
 <h1>Bottle-SQLite<a class="headerlink" href="#bottle-sqlite" title="Permalink to this headline">¶</a></h1>
 <p>SQLite is a self-contained SQL database engine that runs locally and does not
 require any additional server software or setup. The sqlite3 module is part of the
@@ -42,7 +43,7 @@ databases such as PostgreSQL or MySQL.</p>
 <p>This plugin simplifies the use of sqlite databases in your Bottle applications.
 Once installed, all you have to do is to add a <code class="docutils literal notranslate"><span class="pre">db</span></code> keyword argument
 (configurable) to route callbacks that need a database connection.</p>
-<div class="section" id="installation">
+<section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install with one of the following commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install bottle-sqlite
@@ -55,8 +56,8 @@ $ cd bottle/plugins/sqlite
 $ python setup.py install
 </pre></div>
 </div>
-</div>
-<div class="section" id="usage">
+</section>
+<section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>Once installed to an application, the plugin passes an open
 <a class="reference external" href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlite3.Connection</span></code></a> instance to all routes that require a <code class="docutils literal notranslate"><span class="pre">db</span></code> keyword
@@ -81,8 +82,8 @@ accessed both by index (like tuples) and case-insensitively by name. At the end 
 the request cycle, outstanding transactions are committed and the connection is
 closed automatically. If an error occurs, any changes to the database since the
 last commit are rolled back to keep the database in a consistent state.</p>
-</div>
-<div class="section" id="configuration">
+</section>
+<section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>The following configuration options exist for the plugin class:</p>
 <ul class="simple">
@@ -113,8 +114,8 @@ last commit are rolled back to keep the database in a consistent state.</p>
     <span class="o">...</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -207,7 +208,7 @@ last commit are rolled back to keep the database in a consistent state.</p>
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

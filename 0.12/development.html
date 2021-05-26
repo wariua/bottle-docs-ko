@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>개발자를 위해 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -32,10 +33,10 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>개발자를 위해<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>보틀 개발과 릴리스 작업에 관심 있는 개발자와 패키지 제작자를 위한 문서다. 기여하고 싶다면 언제든 환영이다!</p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>참여하기<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>공동체에 참여해서 최신 소식을 받을 수 있는 방법이 여러 가지 있다. 다음이 그 중 일부다.</p>
 <ul class="simple">
@@ -44,8 +45,8 @@
 <li><p><strong>IRC</strong>: <a class="reference external" href="irc://irc.freenode.net/bottlepy">irc.freenode.net의 #bottlepy</a> 가입하거나 <a class="reference external" href="http://webchat.freenode.net/?channels=bottlepy">웹 채팅 인터페이스</a> 이용.</p></li>
 <li><p><strong>구글 플러스</strong>: 가끔씩 Google+ 페이지에 <a class="reference external" href="https://plus.google.com/b/104025895326575643538/104025895326575643538/posts">보틀, 릴리스, 기술적 내용에 대한 글</a>이 올라간다.</p></li>
 </ul>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h2>소스 받기<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>보틀 <a class="reference external" href="https://github.com/defnull/bottle">개발용 저장소</a>와 <a class="reference external" href="https://github.com/defnull/bottle/issues">이슈 트래커</a> 모두 <a class="reference external" href="https://github.com/defnull/bottle">github</a>에 있다. 기여를 할 생각이라면 거기 계정을 만들어서 주 저장소를 포크하는 방식이 좋다. 그러면 변경 내용과 아이디어를 다른 개발자들이 보면서 함께 토론할 수 있게 된다. 계정이 없어도 저장소를 복제하거나 최신 개발 버전을 소스 아카이브로 다운로드하는 건 가능하다.</p>
 <ul class="simple">
@@ -53,8 +54,8 @@
 <li><p><strong>git/https:</strong> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/defnull/bottle.git</span></code></p></li>
 <li><p><strong>다운로드:</strong> 개발 브랜치를 <a class="reference external" href="http://github.com/defnull/bottle/tarball/master">tar 아카이브</a> 또는 <a class="reference external" href="http://github.com/defnull/bottle/zipball/master">zip 파일</a>로.</p></li>
 </ul>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h2>릴리스와 업데이트<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>보틀은 비정기적으로 릴리스되고 <a class="reference external" href="http://pypi.python.org/pypi/bottle">PyPI</a>를 통해 배포된다. 릴리스 후보 버전과 과거 릴리스의 버그 수정 버전은 위에서 언급한 git 저장소에서만 얻을 수 있다. 다만 일부 리눅스 배포판에서 과거 릴리스의 패키지를 제공할 수도 있다.</p>
 <p>보틀 버전 번호는 세 부분(<strong>major.minor.revision</strong>)으로 이뤄져 있다. 이 버전 번호는 새 기능을 알리는 것이 <em>아니라</em> 중요한 버그 수정 및/또는 API 변경을 나타낸다. 중요한 버그는 최근의 최소 두 개 마이너 릴리스에서 수정이 이뤄지며 가능한 모든 채널(메일링 리스트, 트위터, github)로 알린다. 중요하지 않은 버그나 기능은 백포트를 보장하지 않는다. 다만 이는 나중에 바뀔 수 있다.</p>
@@ -68,8 +69,8 @@
 <dt>릴리스 전 버전</dt><dd><p>릴리스 후보는 리비전 번호에 <code class="docutils literal notranslate"><span class="pre">rc</span></code> 표시가 붙어 있다. API가 거의 안정적이고 테스트 준비가 되었지만 아직 공식적으로 릴리스되지는 않은 버전이다. 운용 환경에 이 버전을 사용해선 안 된다.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h2>저장소 구조<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>소스 저장소는 다음 구조로 돼 있다.</p>
 <dl class="simple">
@@ -87,8 +88,8 @@
 <p>아, 그리고 절대로 릴리스 번호는 바꾸지 말아 달라. 통합 때 우리가 바꾼다. 대기 중인 요청들을 우리가 어떤 순서로 당겨 갈지 알 수 없잖은가. :)</p>
 <p class="rubric">배포판 관리자는 어떻게 하면 되나?</p>
 <p>버그 수정과 새 릴리스는 태그를 (그리고 메일링 리스트를) 지켜보면 된다. git 저장소에서 특정 릴리스를 가져오고 싶다면 브랜치 말고 태그를 믿으면 된다. 브랜치에는 아직 릴리스되지 않은 변경 사항이 포함돼 있을 수 있지만 태그는 버전 번호를 바꾼 바로 그 커밋을 나타낸다.</p>
-</div>
-<div class="section" id="id11">
+</section>
+<section id="id11">
 <h2>패치 제출하기<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <p>변경 사항을 주 개발 브랜치로 합치는 최선의 방법은 github에서 주 저장소를 포크하고 새 피처 브랜치를 만들어서 변경 사항을 적용한 다음 pull 요청을 보내는 것이다. 아래에 길잡이가 될 수도 있는 몇 가지 git 작업 흐름 예시들이 있다. git 호환 패치를 메일링 리스트에 제출하는 것도 괜찮다. 어느 경우든 다음 기본 규칙을 따라 달라.</p>
 <ul class="simple">
@@ -97,8 +98,8 @@
 <li><p><strong>한 번에 패치 하나씩:</strong> 버그 수정이든 기능 추가든 한 번에 한 개씩만 하자. 한꺼번에 적용할 수 있도록 패치들을 설계하자. 패치를 깔끔하고 작게, 한 가지에 집중하도록 작성하자.</p></li>
 <li><p><strong>업스트림과 동기화:</strong> 패치 작업 중에 <code class="docutils literal notranslate"><span class="pre">upstream/master</span></code> 브랜치에 변경이 있었으면 rebase나 pull을 해서 패치가 충돌 없이 적용되게 만들자.</p></li>
 </ul>
-</div>
-<div class="section" id="id12">
+</section>
+<section id="id12">
 <h2>문서 빌드하기<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>문서를 빌드하려면 Sphinx 최신 버전이 필요하다. 배포판 패키지 저장소를 이용해 <strong class="command">virtualenv</strong>를 설치한 다음 sphinx를 직접 설치해서 최신 버전을 받는 방법을 권장한다.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 필요한 패키지 설치</span>
@@ -127,8 +128,8 @@ make latex
 make pdf
 </pre></div>
 </div>
-</div>
-<div class="section" id="git">
+</section>
+<section id="git">
 <h2>GIT 작업 흐름 예시<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h2>
 <p>아래 예시에선 (무료인) <a class="reference external" href="https://github.com">github 계정</a>이 있다고 가정한다. 필수는 아니지만 일이 훨씬 쉬워진다.</p>
 <p>일단은 공식 저장소의 포크(개인용 복제본)를 만들어야 한다. <a class="reference external" href="https://github.com/defnull/bottle">보틀 프로젝트 페이지</a>에서 “fork” 버튼을 누르기만 하면 된다. 포크가 끝나면 새 저장소에 대한 짧은 소개가 보일 것이다.</p>
@@ -172,8 +173,8 @@ make pdf
 <li><p>해당 시  <code class="docutils literal notranslate"><span class="pre">upstream/master</span></code>까지 포함해서 영향 받는 각 브랜치에 대해 그렇게 한다. 반복 작업을 줄이는 데 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cherry-pick</span></code>이 도움이 될 수 있다.</p></li>
 <li><p>혼동을 피하기 위해 기반이 된 릴리스를 따라 브랜치 이름을 짓는다. 예: <code class="docutils literal notranslate"><span class="pre">my_bugfix-x.y</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">my_bugfix-dev</span></code></p></li>
 </ol>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -260,7 +261,7 @@ make pdf
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>설정 (초안) &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -32,10 +33,10 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>설정 (초안)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>보틀 응용에서 <a class="reference internal" href="api.html#bottle.Bottle.config" title="bottle.Bottle.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Bottle.config</span></code></a>에 설정을 저장할 수 있다. dict스러운 객체로, 응용별 설정을 위한 중심 저장소다. 이 딕셔너리는 프레임워크의 많은 부분을 제어하고 (신식) 플러그인들에 할 일을 알려 주며, 응용 자체 설정을 저장하는 데도 사용 가능하다.</p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>설정 기본<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="api.html#bottle.Bottle.config" title="bottle.Bottle.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Bottle.config</span></code></a> 객체는 일반 딕셔너리와 아주 비슷하게 동작한다. dict 공통 메소드들이 모두 기대처럼 동작한다. 몇 가지 예로 시작해 보자.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bottle</span>
@@ -72,8 +73,8 @@
     <span class="k">return</span> <span class="n">user</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;myapp.admin_user&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>이름 관행<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>일을 편하게 만들기 위해 플러그인과 응용에서 설정 매개변수 이름에 대한 간단한 규칙 몇 가지를 따르는 게 좋다.</p>
 <ul class="simple">
@@ -82,8 +83,8 @@
 <li><p>보틀에서 자기 설정에 루트 네임스페이스를 쓴다. 플러그인에선 모든 변수들을 각자의 네임스페이스에 저장해야 한다. (예: <code class="docutils literal notranslate"><span class="pre">sqlite.db</span></code>, <code class="docutils literal notranslate"><span class="pre">werkzeug.use_debugger</span></code>)</p></li>
 <li><p>응용에서 별도의 네임스페이스를 써야 한다. (예: <code class="docutils literal notranslate"><span class="pre">myapp.*</span></code>)</p></li>
 </ul>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>파일에서 설정 읽어 오기<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>프로그래머 아닌 사람이 응용 설정을 할 수 있게 하고 싶은 경우, 아니면 데이터베이스
 포트 바꾸자고 파이썬 모듈을 건드리는 건 싫을 때 설정 파일이 유용하다. 보다시피
@@ -104,8 +105,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;/etc/myapp.conf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="dict">
+</section>
+<section id="dict">
 <h2>중첩 <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>에서 설정 읽어 오기<a class="headerlink" href="#dict" title="Permalink to this headline">¶</a></h2>
 <p>유용한 또 다른 메소드로 <a class="reference internal" href="#bottle.ConfigDict.load_dict" title="bottle.ConfigDict.load_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ConfigDict.load_dict()</span></code></a>가 있다. 이 메소드는
 중첩 딕셔너리 구조를 통째로 받아서 평탄한 키와 값 목록으로 바꿔 주며
@@ -127,8 +128,8 @@
     <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">load_dict</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h2>설정 변경 주시하기<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="api.html#bottle.Bottle.config" title="bottle.Bottle.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Bottle.config</span></code></a>의 값이 바뀔 때마다 응용 객체의 <code class="docutils literal notranslate"><span class="pre">config</span></code> 훅이 실행된다. 이 훅을 이용해 런타임에 설정 변경에 반응할 수 있다. 예를 들어 새 데이터베이스에 재연결하거나, 백그라운드 서비스의 디버그 설정을 바꾸거나, 작업 스레드 풀 크기를 조정할 수 있다. 훅 콜백은 인자 두 개(key, new_value)를 받으며 딕셔너리에서 값이 실제로 바뀌기 전에 호출된다. 훅 콜백에서 예외를 던지면 그 변경이 취소되고 이전 값이 유지된다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">hook</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">)</span>
@@ -138,8 +139,8 @@
 </pre></div>
 </div>
 <p>딕셔너리에 저장되려는 값을 훅 콜백에서 <em>바꾸지는</em> 못한다. 그건 필터의 역할이다.</p>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h2>필터 및 기타 메타데이터<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#bottle.ConfigDict" title="bottle.ConfigDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDict</span></code></a>에서는 설정 키별로 메타데이터를 함께 저장할 수 있다. 현재 두 가지 메타 필드가 정의돼 있다.</p>
 <dl class="simple">
@@ -169,20 +170,20 @@
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;some.int&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;not an int&#39;</span> <span class="c1"># ValueError 발생</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="api">
+</section>
+<section id="api">
 <h2>API 문서<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="bottle.ConfigDict">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">ConfigDict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">ka</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ConfigDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">ka</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>dict스러운 설정 저장소. 네임스페이스, 값 검사, 메타데이터,
 변경 주시 등을 추가로 지원.</p>
 <p>이 저장소는 빠른 읽기 접근이 가능하게 최적화돼 있다. 키를
 가져오거나 비변경 dict 메소드(예: <cite>dict.get()</cite>) 사용 시
 원래 dict 대비 오버헤드가 전혀 없다.</p>
 <dl class="py method">
-<dt id="bottle.ConfigDict.load_config">
-<code class="sig-name descname"><span class="pre">load_config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.load_config" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.load_config">
+<span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.load_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>*.ini 방식 설정 파일에서 값 읽어 들이기.</p>
 <p>설정 파일에 섹션이 있으면 그 이름을 네임스페이스로 해서
 값을 넣는다. 두 가지 특수 섹션 <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code>와 <code class="docutils literal notranslate"><span class="pre">bottle</span></code>은
@@ -190,8 +191,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.load_dict">
-<code class="sig-name descname"><span class="pre">load_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.load_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.load_dict" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.load_dict">
+<span class="sig-name descname"><span class="pre">load_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.load_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.load_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>딕셔너리 구조에서 값 가져오기. 중첩 구조를 써서 네임스페이스를
 나타낼 수 있다.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ConfigDict</span><span class="p">()</span><span class="o">.</span><span class="n">load_dict</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;space&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}}})</span>
@@ -201,48 +202,48 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">ka</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">ka</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>첫 번째 매개변수가 문자열이면 모든 키 이름 앞에 그 네임스페이스를
 붙인다. 그 경우 외에는 일반 dict.update()처럼 동작한다.
 예: <code class="docutils literal notranslate"><span class="pre">update('some.namespace',</span> <span class="pre">key='value')</span></code></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.setdefault">
-<code class="sig-name descname"><span class="pre">setdefault</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.setdefault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.setdefault" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.setdefault">
+<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.setdefault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.setdefault" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert key with a value of default if key is not in the dictionary.</p>
 <p>Return the value for key if key is in the dictionary, else default.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.clear">
-<code class="sig-name descname"><span class="pre">clear</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None.</span>&#160; <span class="pre">Remove</span> <span class="pre">all</span> <span class="pre">items</span> <span class="pre">from</span> <span class="pre">D.</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.clear" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None.</span>&#160; <span class="pre">Remove</span> <span class="pre">all</span> <span class="pre">items</span> <span class="pre">from</span> <span class="pre">D.</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.clear" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.meta_get">
-<code class="sig-name descname"><span class="pre">meta_get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metafield</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.meta_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.meta_get" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.meta_get">
+<span class="sig-name descname"><span class="pre">meta_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metafield</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.meta_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.meta_get" title="Permalink to this definition">¶</a></dt>
 <dd><p>키에 대한 메타 필드 값을 반환.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.meta_set">
-<code class="sig-name descname"><span class="pre">meta_set</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metafield</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.meta_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.meta_set" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.meta_set">
+<span class="sig-name descname"><span class="pre">meta_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metafield</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.meta_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.meta_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>키에 대한 메타 필드에 새 값 설정. 기존 키에 대한 변경
 핸들러 실행을 일으킨다.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.ConfigDict.meta_list">
-<code class="sig-name descname"><span class="pre">meta_list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.meta_list" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.ConfigDict.meta_list">
+<span class="sig-name descname"><span class="pre">meta_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bottle.html#ConfigDict.meta_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bottle.ConfigDict.meta_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>키에 대해 정의된 메타 필드 이름들의 이터러블 반환.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -329,7 +330,7 @@
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

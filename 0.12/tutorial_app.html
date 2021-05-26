@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>따라하기: 할일 목록 응용 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -32,7 +33,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="id3">
+  <section id="id3">
 <h1>따라하기: 할일 목록 응용<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -52,7 +53,7 @@
 <li><p><a class="reference internal" href="#id10" id="id16">전체 예시 코드</a></p></li>
 </ul>
 </div>
-<div class="section" id="id5">
+<section id="id5">
 <h2><a class="toc-backref" href="#id11">목표</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>이 따라하기가 끝나면 간단한 웹 기반 할일 목록 앱이 생기게 된다. 그 목록에는 항목마다 텍스트(최대 100글자)와 상태(0은 완료, 1은 미완료)가 있다. 웹 기반 사용자 인터페이스를 통해 미완료 항목을 보고 편집할 수 있으며 새 항목을 추가할 수 있다.</p>
 <p>개발 중에는 모든 페이지를 <code class="docutils literal notranslate"><span class="pre">localhost</span></code>에서만 볼 수 있지만 이후에 Apache mod_wsgi 사용법을 포함해 응용을 “진짜” 서버에 얹는 방법을 보게 될 것이다.</p>
@@ -67,8 +68,8 @@
 <li><p>오류 잡아내기</p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h2><a class="toc-backref" href="#id12">시작하기 전에…</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p class="rubric">보틀 설치</p>
 <p>꽤 최근 파이썬(2.5 또는 이상 버전)이 설치돼 있다고 하면 거기에 보틀만 설치해 주면 된다. 보틀은 파이썬 자체 말고 다른 의존성이 없다.</p>
@@ -88,8 +89,8 @@
 </pre></div>
 </div>
 <p>데이터베이스 <cite>todo.db</cite>가 생기고 그 안의 <code class="docutils literal notranslate"><span class="pre">todo</span></code>라는 테이블에 칼럼 <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">task</span></code>, <code class="docutils literal notranslate"><span class="pre">status</span></code>가 있다. <code class="docutils literal notranslate"><span class="pre">id</span></code>는 각 행의 고유 ID이고 이후 행을 참조하는 데 쓴다. <code class="docutils literal notranslate"><span class="pre">task</span></code> 칼럼은 작업을 설명하는 텍스트를 담으며 최대 100글자 길이다. 마지막의 <code class="docutils literal notranslate"><span class="pre">status</span></code> 칼럼은 작업 미완료(1) 또는 완료(0)를 표시하는 데 쓴다.</p>
-</div>
-<div class="section" id="id7">
+</section>
+<section id="id7">
 <h2><a class="toc-backref" href="#id13">보틀 이용해 웹 기반 할일 목록 만들기</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>이제 웹 기반 응용을 만들기 위해 보틀을 등장시킬 차례다. 하지만 먼저 보틀의 기본 개념 하나를 살펴볼 필요가 있다. 바로 라우트다.</p>
 <p class="rubric">라우트란</p>
@@ -390,8 +391,8 @@
 <p class="rubric">정리</p>
 <p>지금까지 내용을 모두 읽었으면 보틀이라는 WSGI 프레임워크가 어떻게 동작하는지 대략 이해할 수 있을 것이다. 그리고 각자의 응용에 보틀을 이용하기 위해 필요한 지식을 모두 얻은 것이다.</p>
 <p>다음 장에선 더 큰 프로젝트에서 보틀을 쓰는 법을 간단히 소개한다. 그리고 높은 부하, 즉 대량의 웹 트래픽 하에서 더 잘 동작하는 웹 서버들과 함께 보틀을 돌리는 방법을 살펴볼 것이다.</p>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h2><a class="toc-backref" href="#id14">서버 구성</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>지금까지 보틀의 표준 서버를 사용했는데, 파이썬에 딸려 있는 <a class="reference external" href="http://docs.python.org/library/wsgiref.html#module-wsgiref.simple_server">WSGI 참조 서버</a>다. 개발 용도에는 잘 맞지만 큰 응용에는 적합하지 않다. 하지만 다른 방법들을 보기 전에 표준 서버의 설정을 바꾸는 방법부터 살펴보자.</p>
 <p class="rubric">다른 포트와 IP로 보틀 돌리기</p>
@@ -454,13 +455,13 @@
 </pre></div>
 </div>
 <p>서버를 재시작하고 나면 <code class="docutils literal notranslate"><span class="pre">http://www.mypage.com/todo</span></code>에서 할일 목록을 볼 수 있을 것이다.</p>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h2><a class="toc-backref" href="#id15">끝으로</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>보틀 소개 및 따라하기가 이제 끝났다. 보틀의 기본 개념들을 배우고 보틀 프레임워크를 이용해 첫 번째 응용을 작성했다. 그리고 큰 작업에 맞게 조정하는 방법과 Apache 웹 서버에서 mod_wsgi로 보틀을 돌리는 방법을 살펴봤다.</p>
 <p>시작할 때 말한 것처럼 이 따라하기가 보틀의 모든 면과 가능성을 보여 주진 못한다. 가령 파일 객체 및 스트림 받기와 인증 데이터 다루기를 여기선 건너뛰었다. 또한 템플릿 안에서 다른 템플릿을 호출할 수 있다는 것도 보여 주지 않았다. 그런 사항에 대한 소개는 <a class="reference external" href="http://bottlepy.org/docs/dev/tutorial.html">보틀 문서</a>를 참고하면 된다.</p>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h2><a class="toc-backref" href="#id16">전체 예시 코드</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>조금씩 조금씩 개발한 할일 목록 예시의 전체 코드다.</p>
 <p>주된 응용 코드 <code class="docutils literal notranslate"><span class="pre">todo.py</span></code>:</p>
@@ -616,8 +617,8 @@
 <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -703,7 +704,7 @@
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

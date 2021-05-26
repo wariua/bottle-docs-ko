@@ -4,11 +4,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>플러그인 개발 안내서 &#8212; Bottle 0.12.18 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -31,14 +32,14 @@
 
           <div class="body" role="main">
             
-  <span class="target" id="module-bottle"></span><div class="section" id="id1">
+  <span class="target" id="module-bottle"></span><section id="id1">
 <h1>플러그인 개발 안내서<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>이 안내서에서는 플러그인 API와 새 플러그인을 작성하는 방법을 설명한다. <a class="reference internal" href="tutorial.html#plugins"><span class="std std-ref">플러그인</span></a> 절을 아직 안 읽었으면 먼저 읽기를 권한다. <a class="reference internal" href="plugins/index.html"><span class="doc">사용 가능한 플러그인들</span></a>에서 몇몇 사례를 볼 수도 있다.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>작업 중인 문서다. 오류가 있거나 특정 부분의 설명이 명확하지 않다면 <a class="reference external" href="mailto:bottlepy&#37;&#52;&#48;googlegroups&#46;com">메일링 리스트</a>로 알려 주거나 <a class="reference external" href="https://github.com/defnull/bottle/issues">버그 보고</a>를 해 주길 바란다.</p>
 </div>
-<div class="section" id="id4">
+<section id="id4">
 <h2>플러그인 기본 동작 방식<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>플러그인 API는 <a class="reference external" href="http://docs.python.org/glossary.html#term-decorator">데코레이터</a>  개념을 바탕으로 한다. 간단히 말해 플러그인이란 응용의 각 라우트 콜백에 적용되는 데코레이터다.</p>
 <p>물론 단순화하면 그렇다는 것이고 플러그인은 라우트 콜백을 꾸미는 것보다 훨씬 많은 걸 할 수 있다. 하지만 시작점으로는 충분하다. 코드를 좀 보자.</p>
@@ -62,54 +63,54 @@
 <p>플러그인은 온디맨드 방식이다. 즉 라우트에 처음으로 요청이 있을 때 적용된다. 다중 스레드 환경에서 이게 제대로 동작하려면 플러그인이 스레드에 안전해야 한다. 대부분의 경우는 문제가 되지 않지만 유념하고 있어야 한다.</p>
 <p>라우트에 플러그인들을 모두 적용하고 나면 포장된 콜백을 캐싱해서 이후 요청은 캐싱된 버전을 바로 사용해 처리한다. 즉 개별 라우트에 대해 일반적으로 플러그인이 한 번만 적용된다. 하지만 그 캐시는 설치 플러그인 목록이 바뀔 때마다 비워진다. 따라서 플러그인이 같은 라우트를 여러 번 꾸밀 수 있도록 해야 한다.</p>
 <p>하지만 데코레이터 API는 상당히 제한적이다. 꾸미고 있는 라우트나 연관 응용 객체에 대해 전혀 알 수 없으며 모든 라우트에서 공유하는 데이터를 저장할 효율적인 방법도 없다. 하지만 걱정 말자. 플러그인은 데코레이터 함수만 가능한 게 아니다. 호출 가능하거나 어떤 API를 구현하고 있기만 하다면 뭐든 보틀에서 플러그인으로 받아들인다. 아래 설명하는 그 API를 통해 전체 과정을 상당히 통제할 수 있다.</p>
-</div>
-<div class="section" id="api">
+</section>
+<section id="api">
 <h2>플러그인 API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#bottle.Plugin" title="bottle.Plugin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plugin</span></code></a>은 진짜 클래스가 아니라 (<a class="reference internal" href="tutorial.html#module-bottle" title="bottle"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bottle</span></code></a>로부터 임포트할 수 없다.) 플러그인이 구현해야 할 인터페이스다. 다음 API를 준수하기만 한다면 어떤 타입의 어떤 객체든 플러그인으로 받아들인다.</p>
 <dl class="py class">
-<dt id="bottle.Plugin">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Plugin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Plugin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin" title="Permalink to this definition">¶</a></dt>
 <dd><p>플러그인은 호출 가능하거나 <a class="reference internal" href="#bottle.Plugin.apply" title="bottle.Plugin.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply()</span></code></a>를 구현해야 한다. <a class="reference internal" href="#bottle.Plugin.apply" title="bottle.Plugin.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply()</span></code></a>가 정의돼 있으면 항상 그 방식을 플러그인 직접 호출보다 우선한다. 다른 메소드와 속성들은 모두 선택적이다.</p>
 <dl class="py attribute">
-<dt id="bottle.Plugin.name">
-<code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#bottle.Plugin.name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#bottle.Plugin.name" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="api.html#bottle.Bottle.uninstall" title="bottle.Bottle.uninstall"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.uninstall()</span></code></a>과 <a class="reference internal" href="api.html#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a>의 <cite>skip</cite> 매개변수는 플러그인 또는 그 타입을 나타내는 이름 문자열을 받는다. name 속성이 있는 플러그인에만 동작한다.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="bottle.Plugin.api">
-<code class="sig-name descname"><span class="pre">api</span></code><a class="headerlink" href="#bottle.Plugin.api" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin.api">
+<span class="sig-name descname"><span class="pre">api</span></span><a class="headerlink" href="#bottle.Plugin.api" title="Permalink to this definition">¶</a></dt>
 <dd><p>플러그인 API는 계속 진화하고 있다. 이 정수 속성은 어느 버전을 사용해야 할지를 보틀에게 알려 준다. 속성이 없으면 첫 버전을 상정한다. 최신 버전은 <code class="docutils literal notranslate"><span class="pre">2</span></code>다. 자세한 내용은 <a class="reference internal" href="#plugin-changelog"><span class="std std-ref">플러그인 API 변경 사항</span></a> 참고.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.Plugin.setup">
-<code class="sig-name descname"><span class="pre">setup</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.setup" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>응용에 플러그인이 설치되자마자 호출된다. (<a class="reference internal" href="api.html#bottle.Bottle.install" title="bottle.Bottle.install"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.install()</span></code></a> 참고.) 유일한 매개변수는 결속된 응용 객체다.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.Plugin.__call__">
-<code class="sig-name descname"><span class="pre">__call__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.__call__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="#bottle.Plugin.apply" title="bottle.Plugin.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply()</span></code></a>가 정의돼 있지 않으면 플러그인 자체를 데코레이터로 사용해서 각 라우트 콜백에 직접 적용한다. 유일한 매개변수는 꾸며야 할 콜백이다. 이 메소드가 뭘 반환하든 그게 원래 콜백을 대체한다. 받은 콜백을 포장하거나 대체할 필요가 없다면 callback 매개변수를 변경 없이 반환하면 된다.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.Plugin.apply">
-<code class="sig-name descname"><span class="pre">apply</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.apply" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.apply" title="Permalink to this definition">¶</a></dt>
 <dd><p>정의돼 있으면 <a class="reference internal" href="#bottle.Plugin.__call__" title="bottle.Plugin.__call__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__call__()</span></code></a> 대신 이 메소드를 써서 라우트 콜백을 꾸민다. 추가로 있는 <cite>route</cite> 매개변수는 <a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 인스턴스로, 그 라우트에 대한 많은 메타 정보와 문맥을 제공한다. 자세한 내용은 <a class="reference internal" href="#route-context"><span class="std std-ref">라우트 문맥</span></a> 참고.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="bottle.Plugin.close">
-<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.close" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="bottle.Plugin.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bottle.Plugin.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>플러그인이 제거되거나 응용이 끝나기 직전에 호출된다. (<a class="reference internal" href="api.html#bottle.Bottle.uninstall" title="bottle.Bottle.uninstall"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.uninstall()</span></code></a> 또는 <a class="reference internal" href="api.html#bottle.Bottle.close" title="bottle.Bottle.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.close()</span></code></a> 참고.)</p>
 </dd></dl>
 
 </dd></dl>
 
 <p><a class="reference internal" href="api.html#bottle.Bottle.route" title="bottle.Bottle.route"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.route()</span></code></a> 데코레이터를 통해 라우트에 직접 적용된 플러그인에 대해선 <a class="reference internal" href="#bottle.Plugin.setup" title="bottle.Plugin.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.setup()</span></code></a>과 <a class="reference internal" href="#bottle.Plugin.close" title="bottle.Plugin.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.close()</span></code></a>가 호출되지 <em>않는다</em>. 응용에 설치된 플러그인에 대해서만 호출된다.</p>
-<div class="section" id="plugin-changelog">
+<section id="plugin-changelog">
 <span id="id6"></span><h3>플러그인 API 변경 사항<a class="headerlink" href="#plugin-changelog" title="Permalink to this headline">¶</a></h3>
 <p>플러그인 API는 계속 진화하고 있으며 보틀 0.10에서 라우트 문맥 딕셔너리 관련 이슈를 해결하기 위해 바뀐 적이 있다. 0.9 플러그인과의 하위 호환성을 보장하기 위해 선택적인 <a class="reference internal" href="#bottle.Plugin.api" title="bottle.Plugin.api"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Plugin.api</span></code></a> 속성을 추가해서 어떤 API를 써야 하는지 알려 주도록 했다. API 차이를 요약하면 다음과 같다.</p>
 <ul class="simple">
@@ -124,9 +125,9 @@
 </ul>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="route-context">
+</section>
+</section>
+<section id="route-context">
 <span id="id7"></span><h2>라우트 문맥<a class="headerlink" href="#route-context" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#bottle.Plugin.apply" title="bottle.Plugin.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.apply()</span></code></a>로 전달되는 <a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 인스턴스는 연관 라우트에 대한 자세한 정보를 제공한다. 중요한 속성들로 다음이 있다.</p>
 <table class="docutils align-default">
@@ -170,20 +171,20 @@
 </tbody>
 </table>
 <p>아마 <a class="reference internal" href="api.html#bottle.Route.config" title="bottle.Route.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Route.config</span></code></a>가 가장 중요한 속성일 것이다. 그 딕셔너리가 라우트별 데이터이긴 하지만 모든 플러그인들이 공유한다는 걸 유념해야 한다. 고유 프리픽스를 붙이는 것도 당연히 좋은 생각이고, 플러그인에 설정이 많이 필요하다면 <cite>config</cite> 딕셔너리 안의 별도 네임스페이스에 저장하면 된다. 그러면 플러그인들 사이의 이름 충돌을 피할 수 있다.</p>
-<div class="section" id="route">
+<section id="route">
 <h3><a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 객체 바꾸기<a class="headerlink" href="#route" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 속성 중 일부가 변경 가능하긴 하지만 다른 플러그인에 의도치 않은 영향을 줄 수도 있다. 문제 있는 라우트가 있을 때 유용한 오류 메시지를 제공해서 사용자가 문제를 고치게 하지 않고 그냥 몽키패치하는 건 안 좋은 생각일 가능성이 높다.</p>
 <p>하지만 몇몇 드문 경우들에선 이 규칙을 깨는 게 정당화될 수도 있다. <a class="reference internal" href="api.html#bottle.Route" title="bottle.Route"><code class="xref py py-class docutils literal notranslate"><span class="pre">Route</span></code></a> 인스턴스를 변경한 후에는 <code class="xref py py-exc docutils literal notranslate"><span class="pre">RouteReset</span></code>을 예외로 던져야 한다. 그러면 현 라우트가 캐시에서 제거되고 모든 플러그인들이 다시 적용된다. 하지만 라우터는 갱신되지 않는다. <cite>rule</cite>이나 <cite>method</cite> 값을 바꿔도 라우터에는 아무 영향이 없고 플러그인에만 효과가 있다. 다만 이는 향후에 바뀔 수도 있다.</p>
-</div>
-</div>
-<div class="section" id="id8">
+</section>
+</section>
+<section id="id8">
 <h2>런타임 최적화<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>라우트에 모든 플러그인들이 적용되고 나면 포장된 라우트 콜백을 캐싱해서 이후 요청들의 처리 속도를 높인다. 작성하려는 플러그인의 동작 방식이 설정에 따라 달라지며 런타임에 그 설정을 바꿀 수 있게 하고 싶다면 매 요청마다 그 설정을 읽어야 한다. 아주 간단하다.</p>
 <p>하지만 성능상의 이유 때문에 그때 그때 필요에 따라 다른 래퍼를 선택하거나, 클로저를 쓰거나, 런타임에 플러그인을 켜고 끄는 걸 택할 수도 있다. 내장된 HooksPlugin을 예로 들어 보자. 훅이 전혀 설치돼 있지 않으면 영향 받은 모든 라우트에서 플러그인 스스로를 제거해서 사실상 오버헤드가 전혀 없다. 그러다 첫 번째 훅을 설치하면 플러그인 스스로를 활성화해서 다시 효력이 생긴다.</p>
 <p>이게 가능하려면 콜백 캐시를 통제할 수 있어야 한다. <a class="reference internal" href="api.html#bottle.Route.reset" title="bottle.Route.reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Route.reset()</span></code></a>은 그 한 라우트에 대한 캐시를 지우고 <a class="reference internal" href="api.html#bottle.Bottle.reset" title="bottle.Bottle.reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Bottle.reset()</span></code></a>은 응용의 모든 라우트에 대한 캐시 전체를 한꺼번에 지운다. 다음 요청에서 모든 플러그인들이 라우트에 처음 적용 요청된 것처럼 재적용된다.</p>
 <p>당연하지만 두 메소드 모두 라우트 콜백 내에서 호출 시 현재 요청에는 영향을 주지 않는다. 현재 요청을 재시작하게 하고 싶으면 <code class="xref py py-exc docutils literal notranslate"><span class="pre">RouteReset</span></code>을 예외로 던지면 된다.</p>
-</div>
-<div class="section" id="sqliteplugin">
+</section>
+<section id="sqliteplugin">
 <h2>예시 플러그인: SQLitePlugin<a class="headerlink" href="#sqliteplugin" title="Permalink to this headline">¶</a></h2>
 <p>이 플러그인은 포장되는 콜백에 sqlite3 데이터베이스 연결 핸들을 추가 키워드 인자로 제공하되, 콜백에서 받으려는 경우에만 그렇게 한다. 원치 않으면 그 라우트를 무시하며 어떤 오버헤드도 더해지지 않는다. 래퍼가 반환 값에는 영향을 주지 않지만 플러그인 관련 예외를 올바로 처리해 준다. <a class="reference internal" href="#bottle.Plugin.setup" title="bottle.Plugin.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Plugin.setup()</span></code></a>으로 응용을 조사해서 충돌하는 플러그인을 찾아 본다.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
@@ -272,8 +273,8 @@
 </pre></div>
 </div>
 <p>첫 번째 라우트에선 데이터베이스 연결이 필요하기 때문에 키워드 인자 <code class="docutils literal notranslate"><span class="pre">db</span></code>를 요청해서 플러그인에서 핸들을 만들게 한다. 두 번째 라우트에는 데이터베이스가 필요 없고, 그래서 플러그인에서 무시한다. 세 번째 라우트는 키워드 인자 ‘db’를 받긴 하지만 sqlite 플러그인을 명시적으로 건너뛴다. 이렇게 하면 플러그인에서 그 인자를 덮어 쓰지 않아서 같은 이름의 URL 인자 값이 그대로 오게 된다.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -357,7 +358,7 @@
       &copy;2009-2021, Marcel Hellkamp.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
